@@ -31,7 +31,7 @@ class AdminUserSeeder extends Seeder
             'name' => 'member',
         ]);
         $id_permission=array();
-        for($i=1;$i<=51;$i++){
+        for($i=1;$i<=56;$i++){
            array_push($id_permission,$i);
         }
         foreach ($id_permission as $permission) {

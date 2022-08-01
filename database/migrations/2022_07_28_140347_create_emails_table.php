@@ -15,6 +15,15 @@ class CreateEmailsTable extends Migration
     {
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('host')->nullable();
+            $table->integer('port')->default(0);
+            $table->string('username')->nullable();
+            $table->string('password')->nullable();
+            $table->string('encryption')->nullable();
+            $table->string('receipt_subject')->nullable();
+            $table->string('receipt_body')->nullable();
             $table->timestamps();
         });
     }
