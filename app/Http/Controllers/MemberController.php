@@ -41,8 +41,8 @@ class MemberController extends Controller
            ];
            return response()->json($response,Response::HTTP_OK);
         } else{
-        $wilayah=Wilayah::where('id',$request->wilayah)->first();
-        $data=member::where('WilayahId',$wilayah->wilayah)->with('Wilayah','Cities','CompanyIndustry','provinsi')->get();
+        // $wilayah=Wilayah::where('id',$request->wilayah)->first();
+        $data=member::where('WilayahId',$request->wilayah)->with('Wilayah','Cities','CompanyIndustry','provinsi')->get();
          return response()->json([
              'data' => $data,           
          ]);   

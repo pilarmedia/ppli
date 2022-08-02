@@ -26,9 +26,48 @@ class RegistrasiMember extends Controller
 {
     public function index(){
         $data=register::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
+        $cek=auth()->user();
+        
+        $cekRegister=$cek->WilayahId;
+        // dd($cekRegister);
+        foreach ($data as $item) {
+            $conidition = true;
+            if($cek->roles == 'admin'){
+                $regis[] = [
+                    'id'=>$item->id,
+                    'name'=>$item->name,
+                    'nama_perusahaan'=>$item->email,
+                    'wilayah'=>$item->WilayahId,
+                    'cek'=>true
+                ];
+            } else{
+            if ($item->WilayahId == $cekRegister) {
+                    $regis[] = [
+                        'id'=>$item->id,
+                        'name'=>$item->name,
+                        'nama_perusahaan'=>$item->email,
+                        'wilayah'=>$item->WilayahId,
+                        'cek'=>true
+                    ];
+                    $conidition = false;
+                    continue;
+                }
+            
+            if ($conidition != false) {
+                $regis[] = [
+                    'id'=>$item->id,
+                    'name'=>$item->name,
+                    'nama_perusahaan'=>$item->NamaPerusahaan,
+                    'wilayah'=>$item->WilayahId,
+                    'cek'=>false
+                ];
+            }
+            }
+        }
+
         $response =[
             'message' => 'succes menampilkan data register',
-            'data' => $data
+            'data'=>$regis
        ];
        return response()->json($response,Response::HTTP_OK);
     }
