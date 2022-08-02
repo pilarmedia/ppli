@@ -8,6 +8,7 @@ use App\Http\Controllers\roleController;
 use App\Http\Controllers\emailController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\kontakController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RegistrasiMember;
 use App\Http\Controllers\jabatanController;
 use App\Http\Controllers\messageController;
@@ -120,7 +121,8 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::post('/wilayah', [WilayahController::class,'store'])->middleware('permission:wilayah-store');
       Route::get('/wilayah', [WilayahController::class,'index'])->middleware('permission:wilayah-index');
       Route::post('/wilayah/{id}', [WilayahController::class,'update'])->middleware('permission:wilayah-update');
-      Route::get('/wilayah/{id}', [WilayahController::class,'show'])->middleware('permission:wilayah-show');
+      Route::get('/wilayah/{id}', [WilayahController::class,'show']);
+      // ->middleware('permission:wilayah-show');
       Route::delete('/wilayah/{id}', [WilayahController::class,'destroy'])->middleware('permission:wilayah-delete');
    
       // templateEmail
@@ -174,7 +176,11 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::delete('user/delete/{id}', [OperatorController::class,'deleteUser']);
       Route::post('register/email/{id}',[messageController::class,'email']);
 
-         
+     
+      // member
+      Route::get('member/index',[MemberController::class,'index']);
+      Route::get('member/show/{id}',[MemberController::class,'show']);
+      Route::get('member/wlayah/show',[MemberController::class,'MemberWilayah']);
 
       Route::get('role/show',[roleController::class,'index']);
       Route::post('role/store',[roleController::class,'store']);

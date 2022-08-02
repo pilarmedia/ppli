@@ -49,6 +49,7 @@ class AuthController extends Controller
         $register=register::all();
         $wilayah=register::where('WilayahId',$user->WilayahId)->get();
         $data=[];
+        
         foreach ($register as $item) {
             $conidition = true;
             
