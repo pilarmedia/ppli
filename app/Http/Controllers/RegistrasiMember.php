@@ -264,7 +264,7 @@ class RegistrasiMember extends Controller
         }
     }
     public function showRegister($id){
-        $data=register::where('id',$id)->get();
+        $data=register::with('wilayah','Cities','CompanyIndustry','provinsi')->where('id',$id)->get();
        return response()->json($data, 200);
     }
     public function MemberStatus(Request $request){

@@ -180,7 +180,7 @@ use App\Http\Controllers\CompanyIndustryController;
       // member
       Route::get('member/index',[MemberController::class,'index']);
       Route::get('member/show/{id}',[MemberController::class,'show']);
-      Route::get('member/wlayah/show',[MemberController::class,'MemberWilayah']);
+      Route::post('member/wlayah/show',[MemberController::class,'MemberWilayah']);
 
       Route::get('role/show',[roleController::class,'index']);
       Route::post('role/store',[roleController::class,'store']);

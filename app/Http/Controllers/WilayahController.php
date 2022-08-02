@@ -23,7 +23,6 @@ class WilayahController extends Controller
     public function store(Request $request) {
         // return $request;
         $cek=Wilayah::where('HQ',1)->first();
-        
         $validator=Validator::make($request->all(),[
             'name' => 'required|string',
             'email' => 'required|string|email',
@@ -38,13 +37,24 @@ class WilayahController extends Controller
          Response::HTTP_UNPROCESSABLE_ENTITY);
        }
        if($cek != null and $request->HQ==1){
-        $response= [
-            'message'=>'HQ sudah ada'
-        ];
-        return response()->json($response,Response::HTTP_UNPROCESSABLE_ENTITY);
+            $cek->HQ=0;
+            $cek->save();
+            $data=array (
+                'name' => $request->name,
+                'email' =>$request->email,
+                'kota' =>$request->kota,
+                'alamat'=>$request->alamat,
+                'nomor' =>$request->nomor,
+                'HQ'=>1
+              );       
+          $wilayah=Wilayah::create($data);
+          $response= [
+            'message'=>'add succes ',
+            'data' => $wilayah
+           ];
+          return response()->json($response,Response::HTTP_CREATED);
        } 
-      
-       try {
+        try {   
             $data=array(
                 'name' => $request->name,
                 'email' =>$request->email,
@@ -54,21 +64,19 @@ class WilayahController extends Controller
                 'HQ'=>($request->HQ ? true : false)
               );       
              
-        $wilayah=Wilayah::create($data);
-        $response= [
-            'message'=>'add succes ',
-            'data' => $wilayah
-        ];
-        return response()->json($response,Response::HTTP_CREATED);
+            $wilayah=Wilayah::create($data);
+            $response= [
+                'message'=>'add succes ',
+                'data' => $wilayah
+              ];
+            return response()->json($response,Response::HTTP_CREATED);
        
-       } catch (QueryException $e) {
-        return response()->json([
+            } catch (QueryException $e) {
+            return response()->json([
             'message'=>"failed".$e->errorInfo
-        ]);
-       }    
-        return response()->json([
-        'status' => 'success',
-     ]);
+             ]);
+        }    
+    
  
     }
 
@@ -84,6 +92,7 @@ class WilayahController extends Controller
 
     public function update(Request $request, $id){
         // dd($request->name);
+        $cek=Wilayah::where('HQ',1)->first();
         $wilayah=Wilayah::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'name' => 'required|string',
@@ -96,6 +105,7 @@ class WilayahController extends Controller
              return response()->json($validator->errors(), 
              Response::HTTP_UNPROCESSABLE_ENTITY);
            }
+           
            try {
             $wilayah->update($request->all());
             $response= [
