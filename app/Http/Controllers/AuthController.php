@@ -46,10 +46,34 @@ class AuthController extends Controller
         foreach ($permission as $item) {
             $result[] = $item->name;
         }
+        $register=register::all();
+        $wilayah=register::where('WilayahId',$user->WilayahId)->get();
+        
+        foreach ($register as $item) {
+            $conidition = true;
+            foreach ($has_permission as $permission) {
+                if ($item->WilayahId === $permission->WilayahId) {
+                    $data[] = [
+                        'WilayahId'=>$item->WilayahId,
+                        'wilayah_permission' => true,
+                    ];
+                    $conidition = false;
+                    continue;
+                }
+            }
+            if ($conidition !== false) {
+                $data[] = [
+                    'WilayahId'=>$item->WilayahId,
+                    'wilayah_permission' => false,
+                ];
+            }
+        }
+
         return response()->json([
                 'status' => 'success',
                 'user' => $user,
                 'permission' =>$result,
+                'wilayah'=>$data,
                 'authorisation' => [
                     'token' => $token,
                     'type' => 'bearer',
