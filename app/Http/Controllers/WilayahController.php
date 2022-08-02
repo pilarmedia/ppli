@@ -29,7 +29,6 @@ class WilayahController extends Controller
             'kota' => 'required|string',
             'alamat' => 'required|string',
             'nomor'=>'required|numeric|min:6',
-            
        ]);
      
        if($validator->fails()){
@@ -105,9 +104,27 @@ class WilayahController extends Controller
              return response()->json($validator->errors(), 
              Response::HTTP_UNPROCESSABLE_ENTITY);
            }
+           if($cek != null and $request->HQ==1){
+                 $cek->HQ=0;
+                 $cek->save();   
+                 $wilayah->update($request->all());
+                 $response= [
+                      'message'=>'add succes ',
+                     'data' => $wilayah
+                    ];
+             return response()->json($response,Response::HTTP_CREATED);
+            } 
            
            try {
-            $wilayah->update($request->all());
+            $data=array(
+                'name' => $request->name,
+                'email' =>$request->email,
+                'kota' =>$request->kota,
+                'alamat'=>$request->alamat,
+                'nomor' =>$request->nomor,
+                'HQ'=>($request->HQ ? true : false)
+              );
+            $wilayah->update($data);
             $response= [
                 'message'=>'transaction update',
                 'data' => $wilayah

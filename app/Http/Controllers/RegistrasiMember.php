@@ -211,6 +211,7 @@ class RegistrasiMember extends Controller
             ]);
             $company=register::with('CompanyIndustry')->where('id',$data->id)->first();
             // dd($company->CompanyIndustry);
+            $result;
             foreach($company->CompanyIndustry as $item){
                 $result[]=$item->id;
             }

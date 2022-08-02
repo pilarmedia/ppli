@@ -118,12 +118,16 @@ use App\Http\Controllers\CompanyIndustryController;
         Route::delete('/statusRegister/{id}', [statusRegisterController::class,'destroy'])->middleware('permission:statusRegister-delete');
 
       // wilayah
-      Route::post('/wilayah', [WilayahController::class,'store'])->middleware('permission:wilayah-store');
-      Route::get('/wilayah', [WilayahController::class,'index'])->middleware('permission:wilayah-index');
-      Route::post('/wilayah/{id}', [WilayahController::class,'update'])->middleware('permission:wilayah-update');
+      Route::post('/wilayah', [WilayahController::class,'store']);
+      // ->middleware('permission:wilayah-store');
+      Route::get('/wilayah', [WilayahController::class,'index']);
+      // ->middleware('permission:wilayah-index');
+      Route::post('/wilayah/{id}', [WilayahController::class,'update']);
+      // ->middleware('permission:wilayah-update');
       Route::get('/wilayah/{id}', [WilayahController::class,'show']);
       // ->middleware('permission:wilayah-show');
-      Route::delete('/wilayah/{id}', [WilayahController::class,'destroy'])->middleware('permission:wilayah-delete');
+      Route::delete('/wilayah/{id}', [WilayahController::class,'destroy']);
+      // ->middleware('permission:wilayah-delete');
    
       // templateEmail
       Route::post('/email', [emailController::class,'store'])->middleware('permission:email-store');
@@ -142,14 +146,19 @@ use App\Http\Controllers\CompanyIndustryController;
 
 
        //company industri
-       Route::post('/industry', [CompanyIndustryController::class,'store'])->middleware('permission:industry-store');
-       Route::get('/industry', [CompanyIndustryController::class,'index'])->middleware('permission:industry-store');
-       Route::post('/industry/{id}', [CompanyIndustryController::class,'update'])->middleware('permission:industry-store');
-       Route::get('/industry/{id}', [CompanyIndustryController::class,'show'])->middleware('permission:industry-store');
+       Route::post('/industry', [CompanyIndustryController::class,'store']);
+      //  ->middleware('permission:industry-store');
+       Route::get('/industry', [CompanyIndustryController::class,'index']);
+      //  ->middleware('permission:industry-store');
+       Route::post('/industry/{id}', [CompanyIndustryController::class,'update']);
+      //  ->middleware('permission:industry-store');
+       Route::get('/industry/{id}', [CompanyIndustryController::class,'show']);
+      //  ->middleware('permission:industry-store');
        Route::delete('/industry/{id}', [CompanyIndustryController::class,'destroy'])->middleware('permission:industry-store');
 
       //  register
-       Route::post('update/member/{id}', [RegistrasiMember::class,'update'])->middleware('permission:industry-store');
+       Route::post('update/member/{id}', [RegistrasiMember::class,'update']);
+      //  ->middleware('permission:industry-store');
        Route::get('userRegister', [RegistrasiMember::class,'index']);
        Route::get('register/delete/{id}', [RegistrasiMember::class,'deleteRegister']);
        Route::get('register/show/{id}', [RegistrasiMember::class,'showRegister']);
