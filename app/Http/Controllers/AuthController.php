@@ -48,10 +48,11 @@ class AuthController extends Controller
         }
         $register=register::all();
         $wilayah=register::where('WilayahId',$user->WilayahId)->get();
-        
+        $data=[];
         foreach ($register as $item) {
             $conidition = true;
-            foreach ($has_permission as $permission) {
+            
+            foreach ($wilayah as $permission) {
                 if ($item->WilayahId === $permission->WilayahId) {
                     $data[] = [
                         'WilayahId'=>$item->WilayahId,
@@ -68,6 +69,7 @@ class AuthController extends Controller
                 ];
             }
         }
+       
 
         return response()->json([
                 'status' => 'success',

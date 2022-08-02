@@ -150,7 +150,7 @@ use App\Http\Controllers\CompanyIndustryController;
        Route::post('update/member/{id}', [RegistrasiMember::class,'update'])->middleware('permission:industry-store');
        Route::get('userRegister', [RegistrasiMember::class,'index']);
        Route::get('register/delete/{id}', [RegistrasiMember::class,'deleteRegister']);
- 
+       Route::get('register/show/{id}', [RegistrasiMember::class,'showRegister']);
 
 
        //log register

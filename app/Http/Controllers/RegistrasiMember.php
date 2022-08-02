@@ -65,7 +65,7 @@ class RegistrasiMember extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' =>Crypt::encryptString($request->password),
-            'Username' => $request->username,
+            'username' => $request->username,
             'NamaPerushaan'=>$request->namaPerushaan,
             'PhoneNumber' =>$request->nomor,
             'WilayahId' => $request->WilayahId,
@@ -262,6 +262,10 @@ class RegistrasiMember extends Controller
                 'message' =>"failed".$e->errorInfo
             ]);
         }
+    }
+    public function showRegister($id){
+        $data=register::where('id',$id)->get();
+       return response()->json($data, 200);
     }
     public function MemberStatus(Request $request){
         // dd($request->nama);
