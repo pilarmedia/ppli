@@ -38,7 +38,7 @@ class RegistrasiMember extends Controller
                     'name'=>$item->name,
                     'nama_perusahaan'=>$item->email,
                     'wilayah'=>$item->WilayahId,
-                    'cek'=>true
+                    'cekWilayah'=>true
                 ];
             } else{
             if ($item->WilayahId == $cekRegister) {
@@ -47,7 +47,7 @@ class RegistrasiMember extends Controller
                         'name'=>$item->name,
                         'nama_perusahaan'=>$item->email,
                         'wilayah'=>$item->WilayahId,
-                        'cek'=>true
+                        'cekWilayah'=>true
                     ];
                     $conidition = false;
                     continue;
@@ -59,7 +59,7 @@ class RegistrasiMember extends Controller
                     'name'=>$item->name,
                     'nama_perusahaan'=>$item->NamaPerusahaan,
                     'wilayah'=>$item->WilayahId,
-                    'cek'=>false
+                    'cekWilayah'=>false
                 ];
             }
             }
