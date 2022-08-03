@@ -16,9 +16,9 @@ class CreateAkunsTable extends Migration
         Schema::create('akuns', function (Blueprint $table) {
             $table->id();
             $table->foreignId('WilayahId')->constrained('wilayahs');
-            $table->string('kode');
+            $table->string('kode')->unique();
             $table->string('nama_kategori')->nullable();
-            $table->string('nama_akun')->nullable();
+            $table->string('nama_akun');
             $table->boolean('induk')->default(0);
             $table->string('kategori_akun');
             $table->timestamps();

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\akun;
 use App\Models\member;
 use App\Models\register;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,10 @@ class Wilayah extends Model
     public function register()
     {
         return $this->hasMany(register::class);
+    }
+    public function akun()
+    {
+        return $this->hasMany(akun::class);
     }
     
     

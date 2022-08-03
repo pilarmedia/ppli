@@ -19,6 +19,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\pengurusController;
 use App\Http\Controllers\provinsiController;
 use App\Http\Controllers\perushaanController;
+use App\Http\Controllers\MasterAkunController;
 use App\Http\Controllers\MasterBankController;
 use App\Http\Controllers\SelectOptionController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -78,6 +79,14 @@ use App\Http\Controllers\CompanyIndustryController;
          Route::post('/bank/{id}', [MasterBankController::class,'update']);
          Route::get('/bank/{id}', [MasterBankController::class,'show']);
          Route::delete('/bank/{id}', [MasterBankController::class,'destroy']);
+
+          //akun
+      Route::post('/akun/index', [MasterAkunController::class,'index']);
+      Route::get('/akun/selectOption', [MasterAkunController::class,'selectOption']);
+      Route::post('/akun', [MasterAkunController::class,'store']);
+      Route::post('/akun/{id}', [MasterAkunController::class,'update']);
+      Route::get('/akun/{id}', [MasterAkunController::class,'show']);
+      Route::delete('/akun/{id}', [MasterAkunController::class,'destroy']);
   
        //kegiatan
          Route::get('/kegiatan', [kegiatanController::class,'index'])->middleware('permission:kegiatan-index');
