@@ -40,7 +40,7 @@ class RegistrasiMember extends Controller
                 $regis[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
-                    'nama_perusahaan'=>$item->email,
+                    'nama_perusahaan'=>$item->NamaPerushaan,
                     'wilayah'=>$item->WilayahId,
                     'status'=>$item->status,
                     'cekWilayah'=>true
@@ -55,7 +55,7 @@ class RegistrasiMember extends Controller
                     $regis[] = [
                         'id'=>$item->id,
                         'name'=>$item->name,
-                        'nama_perusahaan'=>$item->email,
+                        'nama_perusahaan'=>$item->NamaPerushaan,
                         'wilayah'=>$item->WilayahId,
                         'status'=>$item->status,
                         'cekWilayah'=>$nilai
@@ -68,7 +68,7 @@ class RegistrasiMember extends Controller
                 $regis[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
-                    'nama_perusahaan'=>$item->NamaPerusahaan,
+                    'nama_perusahaan'=>$item->NamaPerushaan,
                     'wilayah'=>$item->WilayahId,
                     'status'=>$item->status,
                     'cekWilayah'=>false
