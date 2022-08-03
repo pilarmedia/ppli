@@ -19,6 +19,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\pengurusController;
 use App\Http\Controllers\provinsiController;
 use App\Http\Controllers\perushaanController;
+use App\Http\Controllers\MasterBankController;
 use App\Http\Controllers\SelectOptionController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\statusRegisterController;
@@ -71,7 +72,14 @@ use App\Http\Controllers\CompanyIndustryController;
        Route::get('/dpw/{id}', [dpwController::class,'show'])->middleware('permission:dpw-show');
        Route::delete('/dpw/{id}', [dpwController::class,'destroy'])->middleware('permission:dpw-delete');
 
-         //kegiatan
+         //bank
+         Route::get('/bank', [MasterBankController::class,'index']);
+         Route::post('/bank', [MasterBankController::class,'store']);
+         Route::post('/bank/{id}', [MasterBankController::class,'update']);
+         Route::get('/bank/{id}', [MasterBankController::class,'show']);
+         Route::delete('/bank/{id}', [MasterBankController::class,'destroy']);
+  
+       //kegiatan
          Route::get('/kegiatan', [kegiatanController::class,'index'])->middleware('permission:kegiatan-index');
          Route::post('/kegiatan', [kegiatanController::class,'store'])->middleware('permission:kegiatan-store');
          Route::post('/kegiatan/{id}', [kegiatanController::class,'update'])->middleware('permission:kegiatan-update');

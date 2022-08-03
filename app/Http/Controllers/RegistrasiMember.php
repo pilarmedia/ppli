@@ -29,7 +29,7 @@ class RegistrasiMember extends Controller
         $cek=auth()->user();
         // dd($data->wilayah);
         $cekRegister=$cek->WilayahId;
-        $cekWilayah=Wilayah::where('id',1)->first();
+        $cekWilayah=Wilayah::where('id',$cekRegister)->first();
         // $cekStatus=register::where('email',$cek->email)->first();
 
         // dd($cekHQ);
@@ -47,9 +47,9 @@ class RegistrasiMember extends Controller
                 ];
             } else{
             if ($item->WilayahId == $cekRegister) {
-                    $nilai=false;
-                    if($item->status == 'Approved by DPP'){
-                        $nilai=true; 
+                    $nilai=true;
+                    if($item->status != 'Approved by DPP'){
+                        $nilai=false; 
                     }
                     // dd($nilai);
                     $regis[] = [
