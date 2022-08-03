@@ -29,25 +29,36 @@ class RegistrasiMember extends Controller
         $cek=auth()->user();
         
         $cekRegister=$cek->WilayahId;
-        // dd($cekRegister);
+        $cekWilayah=Wilayah::where('id',1)->first();
+        // $cekStatus=register::where('email',$cek->email)->first();
+
+        // dd($cekHQ);
+        // dd($cekStatus);
         foreach ($data as $item) {
             $conidition = true;
-            if($cek->roles == 'admin'){
+            if(($cek->roles == 'admin' ) || ($cekWilayah->HQ == '1') ){
                 $regis[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
                     'nama_perusahaan'=>$item->email,
                     'wilayah'=>$item->WilayahId,
+                    'status'=>$item->status,
                     'cekWilayah'=>true
                 ];
             } else{
             if ($item->WilayahId == $cekRegister) {
+                    $nilai=false;
+                    if($item->status == 'Approved by DPP'){
+                        $nilai=true; 
+                    }
+                    // dd($nilai);
                     $regis[] = [
                         'id'=>$item->id,
                         'name'=>$item->name,
                         'nama_perusahaan'=>$item->email,
                         'wilayah'=>$item->WilayahId,
-                        'cekWilayah'=>true
+                        'status'=>$item->status,
+                        'cekWilayah'=>$nilai
                     ];
                     $conidition = false;
                     continue;
@@ -59,6 +70,7 @@ class RegistrasiMember extends Controller
                     'name'=>$item->name,
                     'nama_perusahaan'=>$item->NamaPerusahaan,
                     'wilayah'=>$item->WilayahId,
+                    'status'=>$item->status,
                     'cekWilayah'=>false
                 ];
             }
