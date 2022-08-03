@@ -27,7 +27,7 @@ class RegistrasiMember extends Controller
     public function index(){
         $data=register::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
         $cek=auth()->user();
-        
+        // dd($data->wilayah);
         $cekRegister=$cek->WilayahId;
         $cekWilayah=Wilayah::where('id',1)->first();
         // $cekStatus=register::where('email',$cek->email)->first();
@@ -41,7 +41,7 @@ class RegistrasiMember extends Controller
                     'id'=>$item->id,
                     'name'=>$item->name,
                     'nama_perusahaan'=>$item->NamaPerushaan,
-                    'wilayah'=>$item->WilayahId,
+                    'wilayah'=>$item->wilayah->name,
                     'status'=>$item->status,
                     'cekWilayah'=>true
                 ];
@@ -56,7 +56,7 @@ class RegistrasiMember extends Controller
                         'id'=>$item->id,
                         'name'=>$item->name,
                         'nama_perusahaan'=>$item->NamaPerushaan,
-                        'wilayah'=>$item->WilayahId,
+                        'wilayah'=>$item->wilayah->name,
                         'status'=>$item->status,
                         'cekWilayah'=>$nilai
                     ];
@@ -69,7 +69,7 @@ class RegistrasiMember extends Controller
                     'id'=>$item->id,
                     'name'=>$item->name,
                     'nama_perusahaan'=>$item->NamaPerushaan,
-                    'wilayah'=>$item->WilayahId,
+                    'wilayah'=>$item->wilayah->name,
                     'status'=>$item->status,
                     'cekWilayah'=>false
                 ];
