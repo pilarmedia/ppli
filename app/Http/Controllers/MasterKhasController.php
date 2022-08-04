@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\khas;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -11,7 +12,7 @@ class MasterKhasController extends Controller
 {
     public function index(Request $request){
 
-            $data=khas::all();
+            $data=khas::with('akun')->get();
             $response =[
                 'message' => 'succes menampilkan akun',
                 'data' => $data
@@ -28,14 +29,11 @@ class MasterKhasController extends Controller
     }
 
     public function store(Request $request) {
-        $cek=akun::where('kode',$request->kode)->first();
-        if($cek){
-            return response()->json('kode sudah ada');
-        }
         $validator=Validator::make($request->all(),[
-            'kode'=>'required',
-            'nama_akun'=>'required',
-            'kategori_akun'=>'required',
+            'kode_akun'=>'required',
+            'nama'=>'required',
+            'saldo_awal'=>'required',
+            'keterangan'=>'required'
        ]);
       
        if($validator->fails()){
@@ -43,20 +41,19 @@ class MasterKhasController extends Controller
          Response::HTTP_UNPROCESSABLE_ENTITY);
        }
        try {
+            $user=auth()->user();
              $data=array(
-                'WilayahId'=>$request->wilayah,
-                'kode'=>$request->kode,
-                'nama_kategori'=>$request->nama_kategori,
-                'nama_akun'=>$request->nama_akun,
-                'induk'=>($request->induk ? true : false),
-                'kategori_akun'=>$request->kategori_akun,
+                'kode_akun'=>$request->kode_akun,
+                'nama'=>$request->nama,
+                'saldo_awal'=>$request->saldo_awal,
+                'saldo_akhir'=>$request->saldo_awal,
+                'keterangan'=>$request->keterangan,
+                'edit_by'=>$user->name,
               );
-            //   dd($data);
-        $akun=akun::create($data);
+        $khas=khas::create($data);
        
         $response= [
             'message'=>'add succes ',
-            'data' => $akun
         ];
         return response()->json($response,Response::HTTP_CREATED);
        
@@ -70,7 +67,7 @@ class MasterKhasController extends Controller
     }
 
     public function show($id)  {
-        $data=akun::where('id',$id)->first();
+        $data=khas::with('akun')->where('id',$id)->first();
         $response =[
             'message' => 'detail data',
             'data' => $data
@@ -79,40 +76,35 @@ class MasterKhasController extends Controller
     }
 
     public function update(Request $request, $id){
-        $akun=akun::findOrFail($id);
+        $khas=khas::findOrFail($id);
         $validator=Validator::make($request->all(),[
-            'wilayah'=>'required',
-            'kode'=>'required',
-            'nama_akun'=>'required',
-            'kategori_akun'=>'required',
+            'kode_akun'=>'required',
+            'nama'=>'required',
+            'saldo_awal'=>'required',
+            'keterangan'=>'required'
        ]);
-           if($validator->fails()){
-             return response()->json($validator->errors(), 
-             Response::HTTP_UNPROCESSABLE_ENTITY);
-           }
-        
-            
-                $akun->WilayahId=$request->wilayah;
-                $akun->kode=$request->kode;
-                $akun->nama_kategori=$request->nama_kategori;
-                $akun->nama_akun=$request->nama_akun;
-                $akun->induk=($request->induk ?true:false);
-                $akun->kategori_akun=$request->kategori_akun;
+      
+       if($validator->fails()){
+         return response()->json($validator->errors(), 
+         Response::HTTP_UNPROCESSABLE_ENTITY);
+       }
+       $user=auth()->user();
+                $khas->kode_akun=$request->kode_akun;
+                $khas->nama=$request->nama;
+                $khas->saldo_awal=$request->saldo_awal;
+                $khas->saldo_akhir=$request->saldo_awal;
+                $khas->keterangan=$request->keterangan;
+                $khas->edit_by=$user->name;
                 $akun->save();
             $response= [
                 'message'=>'akun update',
-                'data' => $akun
+                'data' => $khas
             ];
             return response()->json($response,Response::HTTP_OK);
-        //    } catch (QueryException $e) {
-        //     return response()->json([
-        //         'message'=>"failed".$e->errorInfo
-        //     ]);
-        //    }
     }
 
     public function destroy($id){
-        $data=akun::findOrFail($id);
+        $data=khas::findOrFail($id);
         try {
             $data->delete();
         $response=[

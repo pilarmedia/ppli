@@ -22,6 +22,7 @@ use App\Http\Controllers\provinsiController;
 use App\Http\Controllers\perushaanController;
 use App\Http\Controllers\MasterAkunController;
 use App\Http\Controllers\MasterBankController;
+use App\Http\Controllers\MasterKhasController;
 use App\Http\Controllers\pengumumanController;
 use App\Http\Controllers\SelectOptionController;
 use App\Http\Controllers\SettingEmailController;
@@ -101,6 +102,14 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::post('/akun/{id}', [MasterAkunController::class,'update']);
       Route::get('/akun/{id}', [MasterAkunController::class,'show']);
       Route::delete('/akun/{id}', [MasterAkunController::class,'destroy']);
+
+       //akun
+       Route::post('/khas/index', [MasterKhasController::class,'index']);
+       Route::get('/khas/selectOption', [MasterKhasController::class,'selectOption']);
+       Route::post('/khas', [MasterKhasController::class,'store']);
+       Route::post('/khas/{id}', [MasterKhasController::class,'update']);
+       Route::get('/khas/{id}', [MasterKhasController::class,'show']);
+       Route::delete('/khas/{id}', [MasterKhasController::class,'destroy']);
   
        //kegiatan
          Route::get('/kegiatan', [kegiatanController::class,'index'])->middleware('permission:kegiatan-index');
