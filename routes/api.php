@@ -39,7 +39,6 @@ use App\Http\Controllers\CompanyIndustryController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('setting/test',[pengumumanController::class, 'sendEmail']);
 
 
       // Route::group(['middleware' => ['permission:update-provinsi']], function () {
@@ -69,8 +68,6 @@ Route::post('setting/test',[pengumumanController::class, 'sendEmail']);
        Route::post('/provinsi', [provinsiController::class,'store'])->middleware('permission:provinsi-store');
        Route::post('/provinsi/{id}', [provinsiController::class,'update'])->middleware('permission:provinsi-update');
        Route::get('/provinsi/{id}', [provinsiController::class,'show'])->middleware('permission:provinsi-show');
-       
-       
        Route::delete('/provinsi/{id}', [provinsiController::class,'destroy'])->middleware('permission:provinsi-delete');
        
          
@@ -87,6 +84,15 @@ Route::post('setting/test',[pengumumanController::class, 'sendEmail']);
          Route::post('/bank/{id}', [MasterBankController::class,'update']);
          Route::get('/bank/{id}', [MasterBankController::class,'show']);
          Route::delete('/bank/{id}', [MasterBankController::class,'destroy']);
+
+        //bank
+        Route::get('/pengumuman', [pengumumanController::class,'index']);
+        Route::post('/pengumuman', [pengumumanController::class,'store']);
+        Route::post('/pengumuman/{id}', [pengumumanController::class,'update']);
+        Route::get('/pengumuman/{id}', [pengumumanController::class,'show']);
+        Route::delete('/pengumuman/{id}', [pengumumanController::class,'destroy']);
+        // Route::post('setting/test',[pengumumanController::class, 'sendEmail']);
+
 
           //akun
       Route::post('/akun/index', [MasterAkunController::class,'index']);

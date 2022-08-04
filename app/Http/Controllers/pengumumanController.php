@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 
 class pengumumanController extends Controller
 {
-
     public function index(){
         $data=pengumuman::with('wilayah')->where('status','tampil')->get();
         $response =[
