@@ -35,7 +35,7 @@ class kegiatanController extends Controller
                 'sifat_kegiatan'=>$request->sifat_kegiatan,
                 'lokasi_kegiatan'=>$request->lokasi_kegiatan,
                 'tanggal_rencana'=>$request->tanggal_rencana,
-                'tanggal_realisasi'=>$request->keterangan,
+                'tanggal_realisasi'=>$request->tanggal_realisasi,
                 'keterangan'=>$request->keterangan
               );
         $kegiatan=kegiatan::create($data);

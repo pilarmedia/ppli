@@ -20,6 +20,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\pengurusController;
 use App\Http\Controllers\provinsiController;
 use App\Http\Controllers\perushaanController;
+use App\Http\Controllers\transaksiController;
 use App\Http\Controllers\MasterAkunController;
 use App\Http\Controllers\MasterBankController;
 use App\Http\Controllers\MasterKhasController;
@@ -104,14 +105,14 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::delete('/akun/{id}', [MasterAkunController::class,'destroy']);
 
          //transaksi
-         Route::post('/transaksi/index', [MasterAkunController::class,'index']);
-         Route::get('/transaksi/selectOption/member', [MasterAkunController::class,'selectOptionMember']);
-         Route::get('/transaksi/selectOption/khas', [MasterAkunController::class,'selectOptionKhas']);
-         Route::get('/transaksi/selectOption/akun', [MasterAkunController::class,'selectOptionAkun']);
-         Route::post('/transaksi', [MasterAkunController::class,'store']);
-         Route::post('/transaksi/{id}', [MasterAkunController::class,'update']);
-         Route::get('/transaksi/{id}', [MasterAkunController::class,'show']);
-         Route::delete('/transaksi/{id}', [MasterAkunController::class,'destroy']);
+         Route::post('/transaksi/index', [transaksiController::class,'index']);
+         Route::get('/transaksi/selectOption/member', [transaksiController::class,'selectOptionMember']);
+         Route::get('/transaksi/selectOption/khas', [transaksiController::class,'selectOptionKhas']);
+         Route::get('/transaksi/selectOption/akun', [transaksiController::class,'selectOptionAkun']);
+         Route::post('/transaksi', [transaksiController::class,'store']);
+         Route::post('/transaksi/{id}', [transaksiController::class,'update']);
+         Route::get('/transaksi/{id}', [transaksiController::class,'show']);
+         Route::delete('/transaksi/{id}', [transaksiController::class,'destroy']);
 
        //khas
        Route::post('/khas/index', [MasterKhasController::class,'index']);

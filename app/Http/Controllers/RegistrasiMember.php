@@ -31,11 +31,12 @@ class RegistrasiMember extends Controller
         $cekRegister=$cek->WilayahId;
         $cekWilayah=Wilayah::where('id',$cekRegister)->first();
         // $cekStatus=register::where('email',$cek->email)->first();
-
+        $regis=array();
         // dd($cekHQ);
         // dd($cekStatus);
         foreach ($data as $item) {
             $conidition = true;
+            
             if(($cek->roles == 'admin' ) || ($cekWilayah->HQ == '1') ){
                 $regis[] = [
                     'id'=>$item->id,
