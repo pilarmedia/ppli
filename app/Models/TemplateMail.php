@@ -9,4 +9,5 @@ class TemplateMail extends Model
 {
     use HasFactory; 
     protected $fillable = ['kode','tujuan','judul_email','isi_email'];
-      }
+
+  }

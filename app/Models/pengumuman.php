@@ -9,4 +9,8 @@ class pengumuman extends Model
 {
     use HasFactory;
     protected $fillable = ['WilayahId','judul','keterangan','status'];
+    public function Wilayah ()
+    {
+        return $this->belongsTo(Wilayah::class,'WilayahId','id');
+    }
 }

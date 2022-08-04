@@ -29,7 +29,7 @@ class pengumumanController extends Controller
 
     public function store(Request $request) {
         $validator=Validator::make($request->all(),[
-            'wilayah' => 'required|string',
+            'wilayah' => 'required',
             'judul'=>'required',
             'keterangan'=>'required',
             'status'=>'required'
@@ -41,7 +41,7 @@ class pengumumanController extends Controller
        }
        try {
              $data=array(
-                'WilayahId' =>$request->Wilayah,
+                'WilayahId' =>$request->wilayah,
                 'judul'=>$request->judul,
                 'keterangan'=>$request->keterangan,
                 'status'=>$request->status
@@ -72,7 +72,7 @@ class pengumumanController extends Controller
     public function update(Request $request, $id){
         $data=pengumuman::findOrFail($id);
         $validator=Validator::make($request->all(),[
-            'wilayah' => 'required|string',
+            'wilayah' => 'required',
             'judul'=>'required',
             'keterangan'=>'required',
             'status'=>'required'
@@ -85,7 +85,7 @@ class pengumumanController extends Controller
            try {
             $data->update($request->all());
             $response= [
-                'message'=>'transaction update',
+                'message'=>'pengumuman update',
                 'data' => $data
             ];
             return response()->json($response,Response::HTTP_OK);
