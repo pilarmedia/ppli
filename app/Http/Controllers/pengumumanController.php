@@ -12,6 +12,9 @@ use App\Models\Wilayah;
 use Swift_SmtpTransport;
 use App\Models\pengumuman;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class pengumumanController extends Controller
 {
