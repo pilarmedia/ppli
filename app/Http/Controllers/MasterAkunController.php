@@ -81,7 +81,7 @@ class MasterAkunController extends Controller
     }
 
     public function show($id)  {
-        $data=akun::where('id',$id)->first();
+        $data=akun::with('wilayah')->where('id',$id)->first();
         $response =[
             'message' => 'detail data',
             'data' => $data
