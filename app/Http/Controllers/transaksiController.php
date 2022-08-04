@@ -128,7 +128,7 @@ class transaksiController extends Controller
            }
            try {
             if($data->khas == $request->khas){
-                
+                // if()
             }
            } catch (QueryException $e) {
             return response()->json([
