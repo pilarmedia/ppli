@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\akun;
 use App\Models\khas;
 use App\Models\transaksi;
 use Illuminate\Http\Request;
@@ -14,6 +15,30 @@ class transaksiController extends Controller
         $data=transaksi::with('khas','akun','member')->get();
         $response =[
             'message' => 'succes menampilkan transaksi',
+            'data' => $data
+       ];
+       return response()->json($response,Response::HTTP_OK);
+    }
+    public function selectOptionMember(){
+        $data=member::all();
+        $response =[
+            'message' => 'succes menampilkan member',
+            'data' => $data
+       ];
+       return response()->json($response,Response::HTTP_OK);
+    }
+    public function selectOptionKhas(){
+        $data=khas::all();
+        $response =[
+            'message' => 'succes menampilkan member',
+            'data' => $data
+       ];
+       return response()->json($response,Response::HTTP_OK);
+    }
+    public function selectOptionAkun(){
+        $data=akun::all();
+        $response =[
+            'message' => 'succes menampilkan member',
             'data' => $data
        ];
        return response()->json($response,Response::HTTP_OK);
@@ -77,20 +102,26 @@ class transaksiController extends Controller
 
     public function show($id)  {
         // dd($id);
-        $bank=transaksi::with('khas','akun','member')->where('id',$id)->first();
+        $data=transaksi::with('khas','akun','member')->where('id',$id)->first();
         $response =[
             'message' => 'detail data',
-            'data' => $bank
+            'data' => $data
        ];
        return response()->json($response,Response::HTTP_OK);
     }
 
     public function update(Request $request, $id){
         // dd($request->name);
-        $data=bank::findOrFail($id);
+        $data=transaksi::findOrFail($id);
         $validator=Validator::make($request->all(),[
-            'name' => 'required',
-           ]);
+            'tanggal'=>'required',
+            'KhasId'=>'required',
+            'jenis_transaksi'=>'required',
+            'AkunId'=>'required',
+            'MemberId'=>'required',
+            'keterangan'=>'reqired',
+            'jumlah'=>'required'
+       ]);
            if($validator->fails()){
              return response()->json($validator->errors(), 
              Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -110,7 +141,7 @@ class transaksiController extends Controller
     }
 
     public function destroy($id){
-        $data=bank::findOrFail($id);
+        $data=transaksi::findOrFail($id);
         try {
             $data->delete();
         $response=[

@@ -103,7 +103,17 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::get('/akun/{id}', [MasterAkunController::class,'show']);
       Route::delete('/akun/{id}', [MasterAkunController::class,'destroy']);
 
-       //akun
+         //transaksi
+         Route::post('/transaksi/index', [MasterAkunController::class,'index']);
+         Route::get('/transaksi/selectOption/member', [MasterAkunController::class,'selectOptionMember']);
+         Route::get('/transaksi/selectOption/khas', [MasterAkunController::class,'selectOptionKhas']);
+         Route::get('/transaksi/selectOption/akun', [MasterAkunController::class,'selectOptionAkun']);
+         Route::post('/transaksi', [MasterAkunController::class,'store']);
+         Route::post('/transaksi/{id}', [MasterAkunController::class,'update']);
+         Route::get('/transaksi/{id}', [MasterAkunController::class,'show']);
+         Route::delete('/transaksi/{id}', [MasterAkunController::class,'destroy']);
+
+       //khas
        Route::post('/khas/index', [MasterKhasController::class,'index']);
        Route::get('/khas/selectOption', [MasterKhasController::class,'selectOption']);
        Route::post('/khas', [MasterKhasController::class,'store']);

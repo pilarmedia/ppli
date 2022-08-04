@@ -22,8 +22,9 @@ class pengumumanController extends Controller
         $data=pengumuman::with('wilayah')->where('status','tampil')->get();
         $tanggal=null;
         foreach($data as $item){
-            $newtime[] = strtotime($item->created_at);
-            $tanggal[] = date('M d, Y',$newtime);
+            $newtime = strtotime($item->created_at);
+            $item->created_at= date('M d, Y',$newtime);
+            $item->save();
         }
       
         $response =[
