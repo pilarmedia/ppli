@@ -62,9 +62,12 @@ class pengumumanController extends Controller
 
     public function show($id)  {
         $data=pengumuman::with('wilayah')->where('id',$id)->first();
+        $newtime = strtotime($data->created_at);
+        $tanggal = date('M d, Y',$newtime);
         $response =[
             'message' => 'detail data',
-            'data' => $data
+            'data' => $data,
+            'tanggal'=>$tanggal
        ];
        return response()->json($response,Response::HTTP_OK);
     }

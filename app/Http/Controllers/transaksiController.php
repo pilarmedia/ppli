@@ -49,16 +49,22 @@ class transaksiController extends Controller
         if($transaksi->keterangan == "pemasukan"){
             $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
             $khas->save();
-        }
-        if($transaksi->keterangan == "pengeluaran"){
+            $response= [
+                'message'=>'add succes ',
+                'cek1' => $transaksi,
+                'cek2' => $khas
+            ];
+            return response()->json($response,Response::HTTP_CREATED);
+        }else{
             $khas->saldo_akhir=$khas->saldo_akhir-$transaksi->jumlah;
             $khas->save();
+            $response= [
+                'message'=>'add succes ',
+                'cek1' => $transaksi,
+                'cek2' => $khas
+            ];
+            return response()->json($response,Response::HTTP_CREATED);
         }
-        $response= [
-            'message'=>'add succes ',
-            'data' => $transaksi
-        ];
-        return response()->json($response,Response::HTTP_CREATED);
        
        } catch (QueryException $e) {
         return response()->json([
@@ -71,7 +77,7 @@ class transaksiController extends Controller
 
     public function show($id)  {
         // dd($id);
-        $bank=bank::where('id',$id)->first();
+        $bank=transaksi::with('khas','akun','member')->where('id',$id)->first();
         $response =[
             'message' => 'detail data',
             'data' => $bank
