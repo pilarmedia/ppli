@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\email;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dpwController;
@@ -21,7 +22,9 @@ use App\Http\Controllers\provinsiController;
 use App\Http\Controllers\perushaanController;
 use App\Http\Controllers\MasterAkunController;
 use App\Http\Controllers\MasterBankController;
+use App\Http\Controllers\pengumumanController;
 use App\Http\Controllers\SelectOptionController;
+use App\Http\Controllers\SettingEmailController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\statusRegisterController;
 use App\Http\Controllers\CompanyIndustryController;
@@ -36,6 +39,8 @@ use App\Http\Controllers\CompanyIndustryController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('setting/test',[pengumumanController::class, 'sendEmail']);
+
 
       // Route::group(['middleware' => ['permission:update-provinsi']], function () {
 
@@ -45,6 +50,9 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::post('logout', [AuthController::class,'logout']);
       Route::post('forgot', [ForgotPasswordController::class,'forgot']);
       Route::get('me', [AuthController::class,'userProfile']);
+
+      // setting email
+      Route::post('setting/email',[SettingEmailController::class, 'postEmailAccount']);
 
         // select option
       Route::get('/select/wilayah',[SelectOptionController::class,'wilayah']);

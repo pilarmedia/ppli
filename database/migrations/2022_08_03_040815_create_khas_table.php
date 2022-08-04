@@ -15,6 +15,12 @@ class CreateKhasTable extends Migration
     {
         Schema::create('khas', function (Blueprint $table) {
             $table->id();
+            $table->string('kode')->unique();
+            $table->string('nama');
+            $table->bigInteger('saldo_awal')->nullable();
+            $table->bigInteger('saldo_akhir')->nullable();
+            $table->bigInteger('keterangan')->nullable();
+            $table->string('edit_by');
             $table->timestamps();
         });
     }

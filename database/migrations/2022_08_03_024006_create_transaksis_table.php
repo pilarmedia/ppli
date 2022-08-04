@@ -16,6 +16,12 @@ class CreateTransaksisTable extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
+            $table->foreignId('KhasId')->constrained('khas');
+            $table->string('jenis_transaksi');
+            $table->foreignId('AkunId')->constrained('akuns');
+            $table->foreignId('MemberId')->constrained('members');
+            $table->string('keterangan')->nullable();
+            $table->bigInteger('jumlah')->nullable();
             $table->timestamps();
         });
     }

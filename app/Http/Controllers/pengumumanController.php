@@ -2,50 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\email;
 use Exception;
-use Illuminate\Http\Request;
+use Throwable;
 use Swift_Mailer;
 use Swift_Message;
+use App\Models\email;
+use App\Models\member;
+use App\Models\Wilayah;
 use Swift_SmtpTransport;
+use Illuminate\Http\Request;
 
-class SettingEmailController extends Controller
+class pengumumanController extends Controller
 {
-    public function getEmailAccount(){
-        try {
-            $data = email::firstOrFail();
-                return response()->json([
-                'data' => $data,
-                'message' => 'Email fetched Successfully',
-                ], 200);
-            } catch (\Throwable$th) {
-                return response()->json('Dont have Email Account', 404);
-            }
-    }
     
-    public function postEmailAccount(Request $request){
-        $this->validate($request, [
-            'name' => 'required',
-            'host' => 'required',
-            'port' => 'required',
-            'encryption' => 'required',
-            'username' => 'required',
-            'password' => 'required',
-            ]);
-            // dd($request);
-            $data = email::first();
-            //   return $data;
-            if (!$data) {
-                email::create($request->all());
-            } else {
-                $data->update($request->all());
-            }
-            // dd($data);
-            return response()->json('Email Account created successfully', 200);
-        }
-    
-        public static function validateTransport()
-        {
+    public static function validateTransport(){
             $dt = email::firstOrFail();
             if (!$dt) {
                 throw new Exception('Email setting is not set');
@@ -68,20 +38,23 @@ class SettingEmailController extends Controller
             if (!$dt->encryption) {
                 throw new Exception('Encryption is not set');
             }
-        }
+    }
     
         public function sendEmail(Request $request)
         {
             $this->validate($request, [
-                'subject' => 'required',
-                'destinations' => 'required',
-                'destination_name' => 'required',
+                'judul' => 'required',
+                'wilayah' => 'required',
                 'body' => 'required',
             ]);
-    
+             
+            // $pengumuman=array(
+
+            // );
+
             try {
                 $data = email::firstOrFail();
-            } catch (\Throwable$th) {
+            } catch (Throwable$th) {
                 return response()->json('Dont have Email Account', 404);
             }
     
@@ -91,23 +64,27 @@ class SettingEmailController extends Controller
                 ->setPassword($data->password);
     
             $mailer = new Swift_Mailer($transport);
-    
-            foreach ($request->destinations as $destination) {
+            $wilayah=Wilayah::where('id',$request->wilayah)->first();
+            $tujuan=member::where('WilayahId',$request->wilayah)->get();
+            // dd($tujauan);
+            foreach ($tujuan as $destination) {
                 $message = (new Swift_Message($data->receipt_subject))
                     ->setFrom([$data->username => $data->name])
-                    ->setTo([$destination => $request->destination_name])
+                    ->setTo([$destination->email => $wilayah->name])
                     ->setBody($request->body, 'text/html');
     
                 try {
                     $result = $mailer->send($message);
                   
     
-                    return response()->json('Email sent successfully', 200);
+                   
                 } catch (\Throwable$th) {
     
                     return response()->json('Email sent failed', 500);
                 }
+                
             }
+            return response()->json('Email sent successfully', 200);
         }
     
 }

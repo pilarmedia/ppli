@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class khas extends Model
+class pengumuman extends Model
 {
     use HasFactory;
-    protected $fillable = ['kode','nama','saldo_awal','saldo_akhir','keterangan','edit_by'];
+    protected $fillable = ['WilayahId','judul','keterangan'];
 }
