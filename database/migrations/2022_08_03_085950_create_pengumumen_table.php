@@ -18,6 +18,7 @@ class CreatePengumumenTable extends Migration
             $table->foreignId('WilayahId')->constrained('wilayahs');
             $table->string('judul');
             $table->string('keterangan');
+            $table->string('status');
             $table->timestamps();
         });
     }
