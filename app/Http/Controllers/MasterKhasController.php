@@ -40,8 +40,9 @@ class MasterKhasController extends Controller
          return response()->json($validator->errors(), 
          Response::HTTP_UNPROCESSABLE_ENTITY);
        }
-       try {
+    //    try {
             $user=auth()->user();
+            // dd($user);
              $data=array(
                 'kode_akun'=>$request->kode_akun,
                 'nama'=>$request->nama,
@@ -50,6 +51,7 @@ class MasterKhasController extends Controller
                 'keterangan'=>$request->keterangan,
                 'edit_by'=>$user->name,
               );
+            //   dd($data);
         $khas=khas::create($data);
        
         $response= [
@@ -57,11 +59,11 @@ class MasterKhasController extends Controller
         ];
         return response()->json($response,Response::HTTP_CREATED);
        
-       } catch (QueryException $e) {
-        return response()->json([
-            'message'=>"failed".$e->errorInfo
-        ]);
-       }    
+    //    } catch (QueryException $e) {
+    //     return response()->json([
+    //         'message'=>"failed".$e->errorInfo
+    //     ]);
+    //    }    
   
  
     }
@@ -95,7 +97,7 @@ class MasterKhasController extends Controller
                 $khas->saldo_akhir=$request->saldo_awal;
                 $khas->keterangan=$request->keterangan;
                 $khas->edit_by=$user->name;
-                $akun->save();
+                $khas->save();
             $response= [
                 'message'=>'akun update',
                 'data' => $khas

@@ -17,9 +17,9 @@ class CreateKhasTable extends Migration
             $table->id();
             $table->foreignId('kode_akun')->constrained('akuns');
             $table->string('nama');
-            $table->bigInteger('saldo_awal')->nullable();
-            $table->bigInteger('saldo_akhir')->nullable();
-            $table->bigInteger('keterangan')->nullable();
+            $table->integer('saldo_awal')->nullable();
+            $table->integer('saldo_akhir')->nullable();
+            $table->string('keterangan')->nullable();
             $table->string('edit_by');
             $table->timestamps();
         });
