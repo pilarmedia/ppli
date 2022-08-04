@@ -47,7 +47,7 @@ class transaksiController extends Controller
     public function store(Request $request) {
         $validator=Validator::make($request->all(),[
             'tanggal'=>'required',
-            'KhasId'=>'required',
+            'khas'=>'required',
             'jenis_transaksi'=>'required',
             'AkunId'=>'required',
             'MemberId'=>'required',
@@ -61,13 +61,13 @@ class transaksiController extends Controller
        }
        try {
              $data=array(
-                'tanggal'=>'required',
-                'KhasId'=>'required',
-                'jenis_transaksi'=>'required',
-                'AkunId'=>'required',
-                'MemberId'=>'required',
-                'keterangan'=>'reqired',
-                'jumlah'=>'required'
+                'tanggal'=>$request->tanggal,
+                'KhasId'=>$request->khas,
+                'jenis_transaksi'=>$request->jenis_transaksi,
+                'AkunId'=>$request->AkunId,
+                'MemberId'=>$request->MemberId,
+                'keterangan'=>$request->keterangan,
+                'jumlah'=>$request->jumlah,
               );
         $transaksi=transaksi::create($data);
         $khas=khas::where('id',$request->KhasId)->first();
@@ -115,7 +115,7 @@ class transaksiController extends Controller
         $data=transaksi::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'tanggal'=>'required',
-            'KhasId'=>'required',
+            'khas'=>'required',
             'jenis_transaksi'=>'required',
             'AkunId'=>'required',
             'MemberId'=>'required',
@@ -127,9 +127,65 @@ class transaksiController extends Controller
              Response::HTTP_UNPROCESSABLE_ENTITY);
            }
            try {
-            if($data->khas == $request->khas){
-                // if()
+              $data->tanggal=$request->tanggal;
+              $data->KhasId=$request->khas;
+              $data->jenis_transaksi=$request->jenis_trasaksi;
+              $data->AkunId=$request->AkunId;
+              $data->MemberId=$request->MemberId;
+              $data->keterangan=$request->keterangan;
+              $data->jumlah=$request->jumlah;
+              $data->save();
+            if($data->KhasId == $request->khas){
+                $khas=khas::where('id',$data->khas)->first();
+                if($request->jenis_transaksi == $data->jenis_transaksi){
+                    if($data->jenis_transaksi= 'pemasukan'){
+                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                        $khas->save();
+                    }
+                    else{
+                        $khas->saldo_akhir=$khas->saldo_akhir+$data->jumlah-$request->jumlah;
+                        $khas->save();
+                    }
+                }else{
+                    if($data->jenis_transaksi= 'pemasukan'){
+                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                        $khas->save();
+                    }else{
+                        $khas->saldo_akhir=$khas->saldo_akhir+$data->jumlah+$request->jumlah;
+                        $khas->save();
+                    }
+                }
+            }else{
+                $khas_lama=khas::where('id',$data->khas)->first();
+                $khas_baru=khas::where('id',$request->khas)->first();
+                if($data->jenis_transaksi == $request->jenis_transaksi){
+                    if($data->jenis_transaksi= 'pemasukan'){
+                        $khas_lama->saldo_akhir=$khas_lama->saldo_akhir-$data->jumlah;
+                        $khas_lama->save();
+                        $khas_baru->saldo_akhir=$khas_baru->saldo_akhir+$request->jumlah;
+                        $khas_baru->save();
+                    }else{
+                        $khas_lama->saldo_akhir=$khas_lama->saldo_akhir+$data->jumlah;
+                        $khas_lama->save();
+                        $khas_baru->saldo_akhir=$khas_baru->saldo_akhir-$request->jumlah;
+                        $khas_baru->save();
+                    }
+                }else{
+                    if($data->jenis_transaksi= 'pemasukan'){
+                        $khas_lama->saldo_akhir=$khas_lama->saldo_akhir-$data->jumlah;
+                        $khas_lama->save();
+                        $khas_baru->saldo_akhir=$khas_baru->saldo_akhir-$request->jumlah;
+                        $khas_baru->save();
+                    }else{
+                        $khas_lama->saldo_akhir=$khas_lama->saldo_akhir+$data->jumlah;
+                        $khas_lama->save();
+                        $khas_baru->saldo_akhir=$khas_baru->saldo_akhir+$request->jumlah;
+                        $khas_baru->save();
+                    }
+                }
+                
             }
+
            } catch (QueryException $e) {
             return response()->json([
                 'message'=>"failed".$e->errorInfo
