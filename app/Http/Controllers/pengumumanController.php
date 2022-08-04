@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Exception;
 use Throwable;
 use Swift_Mailer;
@@ -20,17 +21,11 @@ class pengumumanController extends Controller
 {
     public function index(){
         $data=pengumuman::with('wilayah')->where('status','tampil')->get();
-        $tanggal=null;
-        foreach($data as $item){
-            $newtime = strtotime($item->created_at);
-            $item->created_at= date('M d, Y',$newtime);
-            $item->save();
-        }
       
         $response =[
             'message' => 'succes menampilkan data',
             'data' => $data,
-            'tanggal'=>$tanggal
+
        ];
        return response()->json($response,Response::HTTP_OK);
     }
@@ -48,11 +43,14 @@ class pengumumanController extends Controller
          Response::HTTP_UNPROCESSABLE_ENTITY);
        }
        try {
+        date_default_timezone_set('Asia/Jakarta');
+        $ldate = new DateTime('now');
              $data=array(
                 'WilayahId' =>$request->wilayah,
                 'judul'=>$request->judul,
                 'keterangan'=>$request->keterangan,
-                'status'=>$request->status
+                'status'=>$request->status,
+                'tanggal'=>$ldate
               );
         $pengumuman=pengumuman::create($data);
         $response= [
@@ -94,7 +92,11 @@ class pengumumanController extends Controller
          Response::HTTP_UNPROCESSABLE_ENTITY);
        }
            try {
-            $data->update($request->all());
+            $data->Wilayah=$request->wilayah;
+            $data->judul=$request->judul;
+            $data->keterangan=$request->keterangan;
+            $data->status=$request->status;
+            $data->save();
             $response= [
                 'message'=>'pengumuman update',
                 'data' => $data

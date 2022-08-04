@@ -127,12 +127,9 @@ class transaksiController extends Controller
              Response::HTTP_UNPROCESSABLE_ENTITY);
            }
            try {
-            $data->update($request->all());
-            $response= [
-                'message'=>'transaction update',
-                'data' => $data
-            ];
-            return response()->json($response,Response::HTTP_OK);
+            if($data->khas == $request->khas){
+                
+            }
            } catch (QueryException $e) {
             return response()->json([
                 'message'=>"failed".$e->errorInfo
