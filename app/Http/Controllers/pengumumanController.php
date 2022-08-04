@@ -20,8 +20,12 @@ class pengumumanController extends Controller
 {
     public function index(){
         $data=pengumuman::with('wilayah')->where('status','tampil')->get();
-        $newtime = strtotime($data->created_at);
-        $tanggal = date('M d, Y',$newtime);
+        $tanggal=null;
+        foreach($data as $item){
+            $newtime[] = strtotime($item->created_at);
+            $tanggal[] = date('M d, Y',$newtime);
+        }
+      
         $response =[
             'message' => 'succes menampilkan data',
             'data' => $data,
