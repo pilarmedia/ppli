@@ -195,7 +195,7 @@ class transaksiController extends Controller
                 }
             }else{
                 $khas_lama=khas::where('id',$data->KhasId)->first();
-                $laporan_lama=laporan::where('KhasIid',$khas->id)->first();
+                $laporan_lama=laporan::where('KhasIid',$khas_lama->id)->first();
                 $laporan=laporan::where('id', $laporan_lama)->first();
                 $laporan->KhasId=$request->khas;
                 $khas_baru=khas::where('id',$request->khas)->first();
@@ -292,14 +292,25 @@ class transaksiController extends Controller
     }
     public function selectOptionTahun (){
 
-       $tes= khas::all()->groupBy(function($date) {
-            return Carbon::parse($date->created_at)->format('Y-m');
-        })->sortBy('created_at');
-        $data=array();
-        foreach($tes as $key=>$item){
-            $data[]=$key;
-        }
+    //    $tes= khas::all()->groupBy(function($date) {
+    //         return Carbon::parse($date->created_at)->format('Y-m');
+    //     })->sortBy('created_at');
+
         
-       return response()->json($tes, 200);
+    //     $data=array();
+    //     foreach($tes as $key=>$item){
+    //         $data[]=$key;
+    //     }
+    $data=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
+//    for($i=1;$i<13;$i++){
+//     $tes = DB::table('khas')
+//     ->whereYear('created_at', '2022')
+//     ->whereMonth('created_at',$i)
+//     ->get()->sum('saldo_akhir');
+//     $data[]=$tes;
+//    }
+
+    // $data=khas::all();
+       return response()->json($data, 200);
     }
 }
