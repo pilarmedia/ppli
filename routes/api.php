@@ -21,6 +21,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\pengurusController;
 use App\Http\Controllers\provinsiController;
 use App\Http\Controllers\perushaanController;
+use App\Http\Controllers\tipeMitraController;
 use App\Http\Controllers\transaksiController;
 use App\Http\Controllers\MasterAkunController;
 use App\Http\Controllers\MasterBankController;
@@ -94,6 +95,14 @@ use App\Http\Controllers\CompanyIndustryController;
         Route::post('/mitra/{id}', [mitraController::class,'update']);
         Route::get('/mitra/{id}', [mitraController::class,'show']);
         Route::delete('/mitra/{id}', [mitraController::class,'destroy']);
+          
+        
+        //tipe mitra
+        Route::get('/tipeMitra', [tipeMitraController::class,'index']);
+        Route::post('/tipeMitra', [tipeMitraController::class,'store']);
+        Route::post('/tipeMitra/{id}', [tipeMitraController::class,'update']);
+        Route::get('/tipeMitra/{id}', [tipeMitraController::class,'show']);
+        Route::delete('/tipeMitra/{id}', [tipeMitraController::class,'destroy']);
 
         //pengumuman
         Route::get('/pengumuman', [pengumumanController::class,'index']);

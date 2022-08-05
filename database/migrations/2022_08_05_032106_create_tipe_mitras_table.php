@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMitrasTable extends Migration
+class CreateTipeMitrasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateMitrasTable extends Migration
      */
     public function up()
     {
-        Schema::create('mitras', function (Blueprint $table) {
+        Schema::create('tipe_mitras', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kontakId')->constrained('kontaks');
-            $table->string('tipe_mitra');
-            $table->date('tanggal_bergabung');
-            $table->string('deskripsi');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateMitrasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mitras');
+        Schema::dropIfExists('tipe_mitras');
     }
 }

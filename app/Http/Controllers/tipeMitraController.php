@@ -2,91 +2,84 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\mitra;
+use App\Models\tipeMitra;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class mitraController extends Controller
+class tipeMitraController extends Controller
 {
     public function index()
     {
-        $data=mitra::with('kontak')->get();
+        $data=tipeMitra::all();
         $response =[
-            'message' => 'succes menampilkan mitra',
+            'message' => 'succes menampilkan tipe mitra',
             'data' => $data
        ];
        return response()->json($response,Response::HTTP_OK);
     }
 
-   
     public function store(Request $request)
     {
         $validator=Validator::make($request->all(),[
-            'kontakId'=>'required',
-            'tipe_mitra'=>'required',
-            'tanggal_bergabung'=>'required',
-            'deskripsi'=>'required'
+            'name' => 'required|string'
        ]);
       
        if($validator->fails()){
          return response()->json($validator->errors(), 
          Response::HTTP_UNPROCESSABLE_ENTITY);
        }
-    //    try {
+       try {
              $data=array(
-                'kontakId'=>$request->kontakId,
-                'tipe_mitra'=>$request->tipe_mitra,
-                'tanggal_bergabung'=>$request->tanggal_bergabung,
-                'deskripsi'=>$request->deskripsi
+                'name' => $request->name,
               );
-        $mitra=mitra::create($data);
+        $tipeMitra=tipeMitra::create($data);
         $response= [
             'message'=>'add succes ',
+            'data' => $tipeMitra
         ];
         return response()->json($response,Response::HTTP_CREATED);
        
-    //    } catch (QueryException $e) {
-    //     return response()->json([
-    //         'message'=>"failed".$e->errorInfo
-    //     ]);
-    //    }    
- 
+       } catch (QueryException $e) {
+        return response()->json([
+            'message'=>"failed".$e->errorInfo
+        ]);
+       }    
+    return response()->json([
+        'status' => 'success',
+    ]);
  
     }
 
     public function show($id)
     {
-
-        $data=mitra::with('kontak')->where('id',$id)->first();
+        // dd($id);
+        $data=tipeMitra::find($id);
         $response =[
             'message' => 'detail data',
             'data' => $data
        ];
        return response()->json($response,Response::HTTP_OK);
     }
- 
 
+  
     public function update(Request $request, $id)
     {
-        
-        $data=mitra::findOrFail($id);
+        // dd($request->name);
+        $tipeMitra=tipeMitra::findOrFail($id);
         $validator=Validator::make($request->all(),[
-            'kontakId'=>'required',
-            'tipe_mitra'=>'required',
-            'tanggal_bergabung'=>'required',
-            'deskripsi'=>'required'
-         ]);
+            'name' => 'required'
+           ]);
            if($validator->fails()){
              return response()->json($validator->errors(), 
              Response::HTTP_UNPROCESSABLE_ENTITY);
            }
            try {
-            $data->update($request->all());
+            $tipeMitra->update($request->all());
             $response= [
-                'message'=>' update berhasil',
-             
+                'message'=>'transaction update',
+                'data' => $tipeMitra
             ];
             return response()->json($response,Response::HTTP_OK);
            } catch (QueryException $e) {
@@ -96,14 +89,13 @@ class mitraController extends Controller
            }
     }
 
-  
     public function destroy($id)
     {
-        $data=mitra::findOrFail($id);
+        $tipeMitra=tipeMitra::findOrFail($id);
         try {
-            $industri->delete();
+            $tipeMitra->delete();
         $response=[
-            'message' =>'mitra deleted'
+            'message' =>'transaction deleted'
         ];
         return response()->json($response,Response::HTTP_OK);
         } catch (QueryException $e) {
