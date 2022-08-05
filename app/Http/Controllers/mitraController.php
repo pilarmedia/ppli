@@ -111,7 +111,7 @@ class mitraController extends Controller
     {
         $data=mitra::findOrFail($id);
         try {
-            $industri->delete();
+            $data->delete();
         $response=[
             'message' =>'mitra deleted'
         ];

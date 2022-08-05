@@ -18,6 +18,7 @@ class CreateLaporansTable extends Migration
             $table->foreignId('KhasId')->constrained('khas');
             $table->integer('debit')->nullable();
             $table->integer('kredit')->nullable();
+            $table->integer('saldo_akhir')->nullable();
             $table->timestamps();
         });
     }

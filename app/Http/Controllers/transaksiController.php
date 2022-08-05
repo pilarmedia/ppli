@@ -76,10 +76,20 @@ class transaksiController extends Controller
               );
         $transaksi=transaksi::create($data);
         $khas=khas::where('id',$request->khas)->first();
+
         if($request->jenis_transaksi === "pemasukan"){
             // dd( $khas->saldo_akhir);
+
             $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
             $khas->save();
+            $data2=array(
+                'KhasId'=>$khas->id,
+                'debit'=>$request->jumlah,
+                'kredit'=>0,
+                'saldo_akhir'=>$request->saldo_awal
+              );
+            //   dd($data2);
+              $laporan=laporan::create($data2);
             $response= [
                 'message'=>'add succes ',
                 'cek1' => $transaksi,
@@ -89,6 +99,14 @@ class transaksiController extends Controller
         }else{
             $khas->saldo_akhir=$khas->saldo_akhir-$transaksi->jumlah;
             $khas->save();
+            $data2=array(
+                'KhasId'=>$khas->id,
+                'debit'=>0,
+                'kredit'=>$request->jumlah,
+                'saldo_akhir'=>$request->$khas->saldo_akhir
+              );
+            //   dd($data2);
+              $laporan=laporan::create($data2);
             $response= [
                 'message'=>'add succes ',
                 'cek1' => $transaksi,
@@ -137,29 +155,45 @@ class transaksiController extends Controller
             if($data->KhasId == $request->khas){
                 // dd($data);
                 $khas=khas::where('id',$data->KhasId)->first();
+                $laporan=laporan::where('KhasIid',$khas->id)->first();
                 // dd($khas);
                 if($request->jenis_transaksi == $data->jenis_transaksi){
                     if($data->jenis_transaksi == 'pemasukan'){
                         // dd($khas->saldo_akhir);
                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
                         $khas->save();
+                        $laporan->debit=$request->jumlah;
+                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                        $laporan->save();
+                        
                     }
                     else{
                         $khas->saldo_akhir=$khas->saldo_akhir+$data->jumlah-$request->jumlah;
                         $khas->save();
+                        $laporan->kredit=$request->jumlah;
+                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                        $laporan->save();
                     }
                 }else{
                     if($data->jenis_transaksi == 'pemasukan'){
                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
                         $khas->save();
+                        $laporan->kredit=$request->jumlah;
+                        $laporan->debit=0;
+                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                        $laporan->save();
                     }else{
                         $khas->saldo_akhir=$khas->saldo_akhir+$data->jumlah+$request->jumlah;
                         $khas->save();
+                        $laporan->debit=$request->jumlah;
+                        $laporan->kredit=0;
+                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                        $laporan->save();
                     }
                 }
             }else{
                 $khas_lama=khas::where('id',$data->KhasId)->first();
-                // dd($khas_lama);
+                // $laporan
                 $khas_baru=khas::where('id',$request->khas)->first();
                 if($data->jenis_transaksi == $request->jenis_transaksi){
                     if($data->jenis_transaksi == 'pemasukan'){

@@ -60,9 +60,10 @@ class MasterKhasController extends Controller
             'KhasId'=>$khas->id,
             'debit'=>$request->saldo_awal,
             'kredit'=>0,
+            'saldo_akhir'=>$request->saldo_awal
           );
         //   dd($data2);
-          $bjk=laporan::create($data2);
+          $laporan=laporan::create($data2);
        
         $response= [
             'message'=>'add succes ',
