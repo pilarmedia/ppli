@@ -157,7 +157,7 @@ class transaksiController extends Controller
             if($data->KhasId == $request->khas){
                 // dd($data);
                 $khas=khas::where('id',$data->KhasId)->first();
-                $laporan=laporan::where('KhasIid',$khas->id)->first();
+                $laporan=laporan::where('KhasId',$khas->id)->first();
                 // dd($khas);
                 if($request->jenis_transaksi == $data->jenis_transaksi){
                     if($data->jenis_transaksi == 'pemasukan'){
