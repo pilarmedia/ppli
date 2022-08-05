@@ -193,7 +193,9 @@ class transaksiController extends Controller
                 }
             }else{
                 $khas_lama=khas::where('id',$data->KhasId)->first();
-                // $laporan
+                $laporan_lama=laporan::where('KhasIid',$khas->id)->first();
+                $laporan=laporan::where('id', $laporan_lama)->first();
+                $laporan->KhasId=$request->khas;
                 $khas_baru=khas::where('id',$request->khas)->first();
                 if($data->jenis_transaksi == $request->jenis_transaksi){
                     if($data->jenis_transaksi == 'pemasukan'){
@@ -201,11 +203,17 @@ class transaksiController extends Controller
                         $khas_lama->save();
                         $khas_baru->saldo_akhir=$khas_baru->saldo_akhir+$request->jumlah;
                         $khas_baru->save();
+                        $laporan->debit=$request->jumlah;
+                        $laporan->saldo_akhir=$khas_baru->saldo_akhir;
+                        $laporan->save();
                     }else{
                         $khas_lama->saldo_akhir=$khas_lama->saldo_akhir+$data->jumlah;
                         $khas_lama->save();
                         $khas_baru->saldo_akhir=$khas_baru->saldo_akhir-$request->jumlah;
                         $khas_baru->save();
+                        $laporan->kredit=$request->jumlah;
+                        $laporan->saldo_akhir=$khas_baru->saldo_akhir;
+                        $laporan->save();
                     }
                 }else{
                     if($data->jenis_transaksi == 'pemasukan'){
@@ -213,11 +221,19 @@ class transaksiController extends Controller
                         $khas_lama->save();
                         $khas_baru->saldo_akhir=$khas_baru->saldo_akhir-$request->jumlah;
                         $khas_baru->save();
+                        $laporan->kredit=$request->jumlah;
+                        $laporan->debit=0;
+                        $laporan->saldo_akhir=$khas_baru->saldo_akhir;
+                        $laporan->save();
                     }else{
                         $khas_lama->saldo_akhir=$khas_lama->saldo_akhir+$data->jumlah;
                         $khas_lama->save();
                         $khas_baru->saldo_akhir=$khas_baru->saldo_akhir+$request->jumlah;
                         $khas_baru->save();
+                        $laporan->debit=$request->jumlah;
+                        $laporan->kredit=0;
+                        $laporan->saldo_akhir=$khas_baru->saldo_akhir;
+                        $laporan->save();
                     }
                 }
                 
@@ -245,8 +261,17 @@ class transaksiController extends Controller
 
     public function destroy($id){
         $data=transaksi::findOrFail($id);
+        $khas=khas::where('id',$data->KhasId)->first();
         try {
             $data->delete();
+            if($data->jenis_transaksi == 'pemasukan'){
+                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah;
+                $khas->save();
+            }else{
+                $khas->saldo_akhir=$khas->saldo_akhir+$data->jumlah;
+                $khas->save();
+            }
+           
         $response=[
             'message' =>'transaksi deleted'
         ];
