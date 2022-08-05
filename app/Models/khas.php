@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\akun;
 use App\Models\laporan;
+use App\Models\transaksi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -18,5 +19,9 @@ class khas extends Model
     public function laporan()
     {
         return $this->hasMany(laporan::class);
+    }
+    public function transaksi()
+    {
+        return $this->hasMany(transaksi::class);
     }
 }

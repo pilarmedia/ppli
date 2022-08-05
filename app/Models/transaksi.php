@@ -14,7 +14,7 @@ class transaksi extends Model
     protected $fillable = ['tanggal','KhasId','jenis_transaksi','AkunId','MemberId','keterangan','jumlah'];
     public function khas ()
     {
-        return $this->belongsTo(khas::class,'khasId','id');
+        return $this->belongsTo(khas::class,'KhasId','id');
     }
     public function akun ()
     {

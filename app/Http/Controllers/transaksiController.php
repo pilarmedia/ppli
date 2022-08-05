@@ -105,7 +105,7 @@ class transaksiController extends Controller
                 'KhasId'=>$khas->id,
                 'debit'=>0,
                 'kredit'=>$request->jumlah,
-                'saldo_akhir'=>$request->$khas->saldo_akhir
+                'saldo_akhir'=>$khas->saldo_akhir
               );
             //   dd($data2);
               $laporan=laporan::create($data2);
@@ -302,13 +302,13 @@ class transaksiController extends Controller
     //         $data[]=$key;
     //     }
     $data=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
-//    for($i=1;$i<13;$i++){
-//     $tes = DB::table('khas')
-//     ->whereYear('created_at', '2022')
-//     ->whereMonth('created_at',$i)
-//     ->get()->sum('saldo_akhir');
-//     $data[]=$tes;
-//    }
+   for($i=1;$i<13;$i++){
+    $tes = DB::table('khas')
+    ->whereYear('created_at', '2022')
+    ->whereMonth('created_at',$i)
+    ->get()->sum('saldo_akhir');
+    $data[]=$tes;
+   }
 
     // $data=khas::all();
        return response()->json($data, 200);
