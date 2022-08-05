@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\mitra;
+use App\Models\kontak;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
