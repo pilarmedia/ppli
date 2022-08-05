@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\akun;
 use App\Models\khas;
+use App\Models\member;
 use App\Models\laporan;
 use App\Models\transaksi;
 use Illuminate\Http\Request;
@@ -287,5 +289,17 @@ class transaksiController extends Controller
         // dd('a');
         $data=laporan::with('khas')->get();
         return response()->json($data,200);
+    }
+    public function selectOptionTahun (){
+
+       $tes= khas::all()->groupBy(function($date) {
+            return Carbon::parse($date->created_at)->format('Y-m');
+        })->sortBy('created_at');
+        $data=array();
+        foreach($tes as $key=>$item){
+            $data[]=$key;
+        }
+        
+       return response()->json($tes, 200);
     }
 }
