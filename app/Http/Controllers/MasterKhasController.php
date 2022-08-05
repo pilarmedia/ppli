@@ -30,9 +30,10 @@ class MasterKhasController extends Controller
 
     public function store(Request $request) {
         $validator=Validator::make($request->all(),[
-            'kode_akun'=>'required',
+            'kode'=>'required',
             'nama'=>'required',
             'saldo_awal'=>'required',
+            'kode_akun'=>'required',
             'keterangan'=>'required'
        ]);
       
@@ -44,8 +45,9 @@ class MasterKhasController extends Controller
             $user=auth()->user();
             // dd($user);
              $data=array(
-                'kode_akun'=>$request->kode_akun,
+                'kode'=>$request->kode,
                 'nama'=>$request->nama,
+                'kode_akun'=>$request->kode_akun,
                 'saldo_awal'=>$request->saldo_awal,
                 'saldo_akhir'=>$request->saldo_awal,
                 'keterangan'=>$request->keterangan,
@@ -97,9 +99,10 @@ class MasterKhasController extends Controller
                 $khas->saldo_akhir=$request->saldo_awal;
                 $khas->keterangan=$request->keterangan;
                 $khas->edit_by=$user->name;
+                $khas->kode=$request->kode;
                 $khas->save();
             $response= [
-                'message'=>'akun update',
+                'message'=>'khas update',
                 'data' => $khas
             ];
             return response()->json($response,Response::HTTP_OK);

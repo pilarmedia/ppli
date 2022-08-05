@@ -15,6 +15,7 @@ class CreateKhasTable extends Migration
     {
         Schema::create('khas', function (Blueprint $table) {
             $table->id();
+            $table->string('kode')->unique();
             $table->foreignId('kode_akun')->constrained('akuns');
             $table->string('nama');
             $table->integer('saldo_awal')->nullable();
