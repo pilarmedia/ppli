@@ -195,7 +195,7 @@ class transaksiController extends Controller
                 }
             }else{
                 $khas_lama=khas::where('id',$data->KhasId)->first();
-                $laporan_lama=laporan::where('KhasIid',$khas_lama->id)->first();
+                $laporan_lama=laporan::where('KhasId',$khas_lama->id)->first();
                 $laporan=laporan::where('id', $laporan_lama)->first();
                 $laporan->KhasId=$request->khas;
                 $khas_baru=khas::where('id',$request->khas)->first();
@@ -307,10 +307,14 @@ class transaksiController extends Controller
     ->whereYear('created_at', '2022')
     ->whereMonth('created_at',$i)
     ->get()->sum('saldo_akhir');
-    $data[]=$tes;
+    $result[] = [
+        'bulan' => $data[$i-1],
+        'data' => $tes
+    ];
    }
 
+
     // $data=khas::all();
-       return response()->json($data, 200);
+       return response()->json($result, 200);
     }
 }
