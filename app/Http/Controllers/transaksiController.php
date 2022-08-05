@@ -196,7 +196,7 @@ class transaksiController extends Controller
             }else{
                 $khas_lama=khas::where('id',$data->KhasId)->first();
                 $laporan_lama=laporan::where('KhasId',$khas_lama->id)->first();
-                $laporan=laporan::where('id', $laporan_lama)->first();
+                $laporan=laporan::where('id', $laporan_lama->id)->first();
                 $laporan->KhasId=$request->khas;
                 $khas_baru=khas::where('id',$request->khas)->first();
                 if($data->jenis_transaksi == $request->jenis_transaksi){
