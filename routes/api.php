@@ -7,6 +7,7 @@ use App\Http\Controllers\dpwController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\roleController;
 use App\Http\Controllers\emailController;
+use App\Http\Controllers\mitraController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\kontakController;
 use App\Http\Controllers\MemberController;
@@ -87,7 +88,14 @@ use App\Http\Controllers\CompanyIndustryController;
          Route::get('/bank/{id}', [MasterBankController::class,'show']);
          Route::delete('/bank/{id}', [MasterBankController::class,'destroy']);
 
-        //bank
+          //mitra
+        Route::get('/mitra', [mitraController::class,'index']);
+        Route::post('/mitra', [mitraController::class,'store']);
+        Route::post('/mitra/{id}', [mitraController::class,'update']);
+        Route::get('/mitra/{id}', [mitraController::class,'show']);
+        Route::delete('/mitra/{id}', [mitraController::class,'destroy']);
+
+        //pengumuman
         Route::get('/pengumuman', [pengumumanController::class,'index']);
         Route::post('/pengumuman', [pengumumanController::class,'store']);
         Route::post('/pengumuman/{id}', [pengumumanController::class,'update']);
@@ -105,14 +113,16 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::delete('/akun/{id}', [MasterAkunController::class,'destroy']);
 
          //transaksi
-         Route::post('/transaksi/index', [transaksiController::class,'index']);
+         Route::get('/transaksi/index', [transaksiController::class,'index']);
          Route::get('/transaksi/selectOption/member', [transaksiController::class,'selectOptionMember']);
          Route::get('/transaksi/selectOption/khas', [transaksiController::class,'selectOptionKhas']);
          Route::get('/transaksi/selectOption/akun', [transaksiController::class,'selectOptionAkun']);
+         Route::get('/transaksi/selectOption/tahun', [transaksiController::class,'selectOptionRekap']);
          Route::post('/transaksi', [transaksiController::class,'store']);
          Route::post('/transaksi/{id}', [transaksiController::class,'update']);
          Route::get('/transaksi/{id}', [transaksiController::class,'show']);
          Route::delete('/transaksi/{id}', [transaksiController::class,'destroy']);
+         
 
        //khas
        Route::post('/khas/index', [MasterKhasController::class,'index']);

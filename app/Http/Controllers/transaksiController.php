@@ -6,6 +6,7 @@ use App\Models\akun;
 use App\Models\khas;
 use App\Models\transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 class transaksiController extends Controller
 {
     public function index(){
+        // dd('b');
         $data=transaksi::with('khas','akun','member')->get();
+        // dd('a');
         $response =[
             'message' => 'succes menampilkan transaksi',
             'data' => $data
@@ -128,7 +131,7 @@ class transaksiController extends Controller
              return response()->json($validator->errors(), 
              Response::HTTP_UNPROCESSABLE_ENTITY);
            }
-        //    try {
+           try {
             
             if($data->KhasId == $request->khas){
                 // dd($data);
@@ -194,18 +197,15 @@ class transaksiController extends Controller
               $data->save();
 
             $response= [
-                'message'=>'add succes ',
-                'cek1' => $data,
-                'cek2' => $khas_lama,
-                'cek3' => $khas_baru,
+                'message'=>'update succes ',
                 // 'cek2' => $khas_lama
             ];
             return response()->json($response,Response::HTTP_CREATED);
-        //    } catch (QueryException $e) {
-        //     return response()->json([
-        //         'message'=>"failed".$e->errorInfo
-        //     ]);
-        //    }
+           } catch (QueryException $e) {
+            return response()->json([
+                'message'=>"failed".$e->errorInfo
+            ]);
+           }
     }
 
     public function destroy($id){
@@ -213,7 +213,7 @@ class transaksiController extends Controller
         try {
             $data->delete();
         $response=[
-            'message' =>'bank deleted'
+            'message' =>'transaksi deleted'
         ];
         return response()->json($response,Response::HTTP_OK);
         } catch (QueryException $e) {
@@ -222,6 +222,10 @@ class transaksiController extends Controller
             ]);
         }
         
+    }
+
+    public function selectOptionRekap(){
+    
     }
 
     public function rekap(){
