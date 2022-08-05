@@ -19,6 +19,10 @@ class mitraController extends Controller
        ];
        return response()->json($response,Response::HTTP_OK);
     }
+    public function selectOption(){
+        $konta=kontak::all();
+        return response()->json($data, 200);
+    }
 
    
     public function store(Request $request)

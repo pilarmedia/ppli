@@ -15,6 +15,9 @@ class CreateLaporansTable extends Migration
     {
         Schema::create('laporans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('KhasId')->constrained('khas');
+            $table->integer('debit')->nullable();
+            $table->integer('kredit')->nullable();
             $table->timestamps();
         });
     }

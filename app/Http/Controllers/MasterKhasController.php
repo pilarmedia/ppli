@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\khas;
+use App\Models\laporan;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -55,6 +56,13 @@ class MasterKhasController extends Controller
               );
             //   dd($data);
         $khas=khas::create($data);
+          $data2=array(
+            'KhasId'=>$khas->id,
+            'debit'=>$request->saldo_awal,
+            'kredit'=>0,
+          );
+        //   dd($data2);
+          $bjk=laporan::create($data2);
        
         $response= [
             'message'=>'add succes ',
@@ -84,7 +92,7 @@ class MasterKhasController extends Controller
         $validator=Validator::make($request->all(),[
             'kode_akun'=>'required',
             'nama'=>'required',
-            'saldo_awal'=>'required',
+            // 'saldo_awal'=>'required',
             'keterangan'=>'required'
        ]);
       
@@ -95,8 +103,8 @@ class MasterKhasController extends Controller
        $user=auth()->user();
                 $khas->kode_akun=$request->kode_akun;
                 $khas->nama=$request->nama;
-                $khas->saldo_awal=$request->saldo_awal;
-                $khas->saldo_akhir=$request->saldo_awal;
+                // $khas->saldo_awal=$request->saldo_awal;
+                // $khas->saldo_akhir=$request->saldo_awal;
                 $khas->keterangan=$request->keterangan;
                 $khas->edit_by=$user->name;
                 $khas->kode=$request->kode;

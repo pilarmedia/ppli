@@ -2,10 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\khas;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class laporan extends Model
 {
     use HasFactory;
+    protected $fillable = ['KhasId','kredit','debit'];
+    public function khas ()
+    {
+        return $this->belongsTo(khas::class,'KhasId','id');
+    }
 }

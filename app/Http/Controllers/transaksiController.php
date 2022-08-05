@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\akun;
 use App\Models\khas;
+use App\Models\laporan;
 use App\Models\transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -223,12 +224,9 @@ class transaksiController extends Controller
         }
         
     }
-
-    public function selectOptionRekap(){
-    
-    }
-
-    public function rekap(){
-        
+    public function laporan(){
+        // dd('a');
+        $data=laporan::with('khas')->get();
+        return response()->json($data,200);
     }
 }

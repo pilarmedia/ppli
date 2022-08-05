@@ -91,6 +91,7 @@ use App\Http\Controllers\CompanyIndustryController;
 
           //mitra
         Route::get('/mitra', [mitraController::class,'index']);
+        Route::get('/mitra/selectOption', [mitraController::class,'selectOption']);
         Route::post('/mitra', [mitraController::class,'store']);
         Route::post('/mitra/{id}', [mitraController::class,'update']);
         Route::get('/mitra/{id}', [mitraController::class,'show']);
@@ -131,10 +132,11 @@ use App\Http\Controllers\CompanyIndustryController;
          Route::post('/transaksi/{id}', [transaksiController::class,'update']);
          Route::get('/transaksi/{id}', [transaksiController::class,'show']);
          Route::delete('/transaksi/{id}', [transaksiController::class,'destroy']);
+         Route::get('/laporan', [transaksiController::class,'laporan']);
          
 
        //khas
-       Route::post('/khas/index', [MasterKhasController::class,'index']);
+       Route::get('/khas/index', [MasterKhasController::class,'index']);
        Route::get('/khas/selectOption', [MasterKhasController::class,'selectOption']);
        Route::post('/khas', [MasterKhasController::class,'store']);
        Route::post('/khas/{id}', [MasterKhasController::class,'update']);
@@ -165,7 +167,7 @@ use App\Http\Controllers\CompanyIndustryController;
          Route::delete('/jabatan/{id}', [jabatanController::class,'destroy'])->middleware('permission:jabatan-delete');
   
 
-          //  pengurus
+       //pengurus
        Route::get('/pengurus', [pengurusController::class,'index'])->middleware('permission:pengurus-index');
        Route::post('/pengurus', [pengurusController::class,'store'])->middleware('permission:pengurus-store');
        Route::post('/pengurus/{id}', [pengurusController::class,'update'])->middleware('permission:pengurus-update');
