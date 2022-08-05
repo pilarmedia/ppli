@@ -91,7 +91,8 @@ use App\Http\Controllers\CompanyIndustryController;
 
           //mitra
         Route::get('/mitra', [mitraController::class,'index']);
-        Route::get('/mitra/selectOption', [mitraController::class,'selectOption']);
+        Route::get('/mitra/selectOption', [mitraController::class,'selectOptionKontak']);
+        Route::get('/mitra/selectOption/mitra', [mitraController::class,'selectOptionTipeMitra']);
         Route::post('/mitra', [mitraController::class,'store']);
         Route::post('/mitra/{id}', [mitraController::class,'update']);
         Route::get('/mitra/{id}', [mitraController::class,'show']);

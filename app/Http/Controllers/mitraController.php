@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\mitra;
 use App\Models\kontak;
+use App\Models\tipeMitra;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -20,8 +21,12 @@ class mitraController extends Controller
        ];
        return response()->json($response,Response::HTTP_OK);
     }
-    public function selectOption(){
+    public function selectOptionKontak(){
         $data=kontak::all();
+        return response()->json($data, 200);
+    }
+    public function selectOptionTipeMitra(){
+        $data=tipeMitra::all();
         return response()->json($data, 200);
     }
 
