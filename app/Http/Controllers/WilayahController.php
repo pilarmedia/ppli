@@ -26,7 +26,7 @@ class WilayahController extends Controller
         $validator=Validator::make($request->all(),[
             'name' => 'required|string',
             'email' => 'required|string|email',
-            'kota' => 'required|string',
+            'kota' => 'required',
             'alamat' => 'required|string',
             'nomor'=>'required|numeric|min:6',
        ]);
