@@ -44,13 +44,13 @@ class RegistrasiMember extends Controller
                     'nama_perusahaan'=>$item->NamaPerushaan,
                     'wilayah'=>$item->wilayah->name,
                     'status'=>$item->status,
-                    'cekWilayah'=>true
+                    'cekWilayah'=>false
                 ];
             } else{
             if ($item->WilayahId == $cekRegister) {
-                    $nilai=true;
+                    $nilai=false;
                     if($item->status != 'Approved by DPP'){
-                        $nilai=false; 
+                        $nilai=true; 
                     }
                     // dd($nilai);
                     $regis[] = [
@@ -72,7 +72,7 @@ class RegistrasiMember extends Controller
                     'nama_perusahaan'=>$item->NamaPerushaan,
                     'wilayah'=>$item->wilayah->name,
                     'status'=>$item->status,
-                    'cekWilayah'=>false
+                    'cekWilayah'=>true
                 ];
             }
             }
