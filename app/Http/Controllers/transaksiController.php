@@ -319,7 +319,7 @@ class transaksiController extends Controller
          ->whereYear('created_at', $request->tahun)
          ->whereMonth('created_at',$i)
          ->get()->sum('kredit');
-         $result[] = [
+         $result[$i] = [
              'bulan' => $data[$i-1],
              'debit' => $debit,
              'kredit' => $kredit
