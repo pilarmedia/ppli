@@ -128,7 +128,7 @@ class transaksiController extends Controller
 
     public function show($id)  {
         // dd($id);
-        $data=transaksi::with('khas','akun','member')->where('id',$id)->first();
+        $data=transaksi::with('akun','member','khas')->where('id',$id)->first();
         $response =[
             'message' => 'detail data',
             'data' => $data
@@ -312,9 +312,15 @@ class transaksiController extends Controller
         'data' => $tes
     ];
    }
+   $tes= khas::all()->groupBy(function($date) {
+            return Carbon::parse($date->created_at)->format('Y-m');
+        })->sortBy('created_at');
+//    dd($tes);
+$data=array();
+    foreach($tes as $key=>$item){
+        $data[]=$key;
+    }
 
-
-    // $data=khas::all();
-       return response()->json($result, 200);
+       return response()->json($tes, 200);
     }
 }
