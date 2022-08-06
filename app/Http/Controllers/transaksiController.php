@@ -54,7 +54,7 @@ class transaksiController extends Controller
     public function store(Request $request) {
         $validator=Validator::make($request->all(),[
             'tanggal'=>'required',
-            'khas'=>'required',
+            'KhasId'=>'required',
             'jenis_transaksi'=>'required',
             'AkunId'=>'required',
             'MemberId'=>'required',
@@ -69,7 +69,7 @@ class transaksiController extends Controller
        try {
              $data=array(
                 'tanggal'=>$request->tanggal,
-                'KhasId'=>$request->khas,
+                'KhasId'=>$request->KhasId,
                 'jenis_transaksi'=>$request->jenis_transaksi,
                 'AkunId'=>$request->AkunId,
                 'MemberId'=>$request->MemberId,
@@ -77,7 +77,7 @@ class transaksiController extends Controller
                 'jumlah'=>$request->jumlah,
               );
         $transaksi=transaksi::create($data);
-        $khas=khas::where('id',$request->khas)->first();
+        $khas=khas::where('id',$request->KhasId)->first();
 
         if($request->jenis_transaksi === "pemasukan"){
             // dd( $khas->saldo_akhir);
