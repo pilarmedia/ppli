@@ -18,7 +18,7 @@ class register extends Model
         'name',
         'email',
         'password',
-        'username',
+        'Username',
         'Email_verified_at',
         'Password',
         'NamaPerushaan',

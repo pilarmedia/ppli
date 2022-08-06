@@ -137,6 +137,9 @@ use App\Http\Controllers\CompanyIndustryController;
          Route::get('/transaksi/selectOption/tahun', [transaksiController::class,'selectOptionTahun']);
          Route::post('/rekap/transaksi', [transaksiController::class,'rekap']);
 
+         Route::post('/transaksi/selectOption/akun2', [transaksiController::class,'jenis_transaksi']);
+
+         
          
 
        //khas

@@ -93,7 +93,7 @@ class RegistrasiMember extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
-            'username'=>'required|string',
+            'Username'=>'required|string',
             'namaPerushaan'=>'required|string',
             'nomor'=>'required|string|numeric|min:6',
             'provinsiId'=>'required',
@@ -103,10 +103,10 @@ class RegistrasiMember extends Controller
             'alasan'=>'required',
         ]);
 
-       $registrasi=register::where('username',$request->username)->first();
+       $registrasi=register::where('Username',$request->Username)->first();
         if($registrasi){
             return response()->json([
-                'message'=>"username sudah tersedia"
+                'message'=>"Username sudah tersedia"
             ]); 
         }
         if (!$cek){
@@ -117,7 +117,7 @@ class RegistrasiMember extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' =>Crypt::encryptString($request->password),
-            'username' => $request->username,
+            'Username' => $request->Username,
             'NamaPerushaan'=>$request->namaPerushaan,
             'PhoneNumber' =>$request->nomor,
             'WilayahId' => $request->WilayahId,
@@ -152,9 +152,7 @@ class RegistrasiMember extends Controller
         // dd($tujuan
         Mail::to($tujuan)->send(new MailToDPW($name,$mail));
         return response()->json([
-            'status' => 'success',
             'message' => 'User created successfully',
-            'user' => $user,
         ]);
     } else{
         return response()->json([
@@ -221,7 +219,7 @@ class RegistrasiMember extends Controller
                 'name' => $data->name,
                 'email' => $data->email,
                 'password' => Hash::make($pass),
-                'username' => $data->Username,
+                'Username' => $data->Username,
                 'NamaPerushaan'=>$data->NamaPerushaan,
                 'PhoneNumber' =>$data->PhoneNumber,
                 // 'CompanyIndustryId' => $data->CompanyIndustryId,
@@ -287,7 +285,6 @@ class RegistrasiMember extends Controller
             return response()->json([
                 'status' => 'success update',
                 'message' => 'User created successfully',
-                'user' => $user,
                 'authorisation' => [
                     'token' => $token,
                     'type' => 'bearer',

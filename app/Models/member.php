@@ -32,7 +32,9 @@ class member extends Model
         
         'RegisterDate',
         'status',
-        'roles'
+        'roles',
+        'gambar',
+        'path'
     ];
     public function Cities ()
     {

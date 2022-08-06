@@ -337,4 +337,7 @@ class transaksiController extends Controller
        ];
        return response()->json($response,Response::HTTP_OK);
     }
+    public function jenis_transaksi(Request $request){
+        $data=akun::where('kategori_akun',$request->jenis_transaksi)->get();
+    }
 }
