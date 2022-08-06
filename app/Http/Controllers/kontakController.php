@@ -29,7 +29,7 @@ class kontakController extends Controller
             'alamat'=>'required',
             'email'=>'required|email',
             'nomor'=>'required|numeric|min:6',
-            'status'=>'required|'
+            'status'=>'required'
        ]);
       
        if($validator->fails()){
@@ -42,6 +42,7 @@ class kontakController extends Controller
                 'alamat'=>$request->alamat,
                 'email'=>$request->email,
                 'nomor'=>$request->nomor,
+                'nama_perusahaan'=>$request->nama_perusahaan,
                 'status'=>$request->status,
                 'agama'=>$request->agama,
                 'tanggal_lahir'=>$request->tanggal_lahir,
@@ -65,13 +66,6 @@ class kontakController extends Controller
     ]);
  
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         // dd($id);

@@ -19,6 +19,7 @@ class CreateKontaksTable extends Migration
             $table->string('alamat')->nullable();
             $table->string('email');
             $table->string('nomor');
+            $table->string('nama_perusahaan');
             $table->string('status');
             $table->string('agama')->nullable();
             $table->string('tanggal_lahir')->nullable();
