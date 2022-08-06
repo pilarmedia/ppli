@@ -135,6 +135,8 @@ use App\Http\Controllers\CompanyIndustryController;
          Route::delete('/transaksi/{id}', [transaksiController::class,'destroy']);
          Route::get('/laporan', [transaksiController::class,'laporan']);
          Route::get('/transaksi/selectOption/tahun', [transaksiController::class,'selectOptionTahun']);
+         Route::post('/rekap/transaksi', [transaksiController::class,'rekap']);
+
          
 
        //khas

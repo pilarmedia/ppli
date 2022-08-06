@@ -292,35 +292,39 @@ class transaksiController extends Controller
     }
     public function selectOptionTahun (){
 
-    //    $tes= khas::all()->groupBy(function($date) {
-    //         return Carbon::parse($date->created_at)->format('Y-m');
-    //     })->sortBy('created_at');
+       $tes= khas::all()->groupBy(function($date) {
+            return Carbon::parse($date->created_at)->format('Y');
+        })->sortBy('created_at');
 
         
-    //     $data=array();
-    //     foreach($tes as $key=>$item){
-    //         $data[]=$key;
-    //     }
-    $data=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
-   for($i=1;$i<13;$i++){
-    $tes = DB::table('khas')
-    ->whereYear('created_at', '2022')
-    ->whereMonth('created_at',$i)
-    ->get()->sum('saldo_akhir');
-    $result[] = [
-        'bulan' => $data[$i-1],
-        'data' => $tes
-    ];
-   }
-   $tes= khas::all()->groupBy(function($date) {
-            return Carbon::parse($date->created_at)->format('Y-m');
-        })->sortBy('created_at');
-//    dd($tes);
-$data=array();
-    foreach($tes as $key=>$item){
-        $data[]=$key;
+        $data=array();
+        foreach($tes as $key=>$item){
+            $data[]=$key;
+        }
+
+       return response()->json($data, 200);
     }
 
-       return response()->json($tes, 200);
+    public function rekap(Request $request){
+        // dd('a');
+        $data=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
+        // dd($request->tahun);
+        for($i=1;$i<13;$i++){
+         $debit = DB::table('laporans')
+         ->whereYear('created_at',$request->tahun)
+         ->whereMonth('created_at',$i)
+         ->get()->sum('saldo_akhir');
+        //  dd($debit);
+         $kredit = DB::table('laporans')
+         ->whereYear('created_at', $request->tahun)
+         ->whereMonth('created_at',$i)
+         ->get()->sum('kredit');
+         $result[] = [
+             'bulan' => $data[$i-1],
+             'debit' => $debit,
+             'kredit' => $kredit
+         ];
+        }
+        return response()->json($result,200);
     }
 }
