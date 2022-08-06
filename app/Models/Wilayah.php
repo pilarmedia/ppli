@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\akun;
 use App\Models\member;
 use App\Models\register;
+use App\Models\iuranAnggota;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,6 +17,10 @@ class Wilayah extends Model
     public function member()
     {
         return $this->hasMany(member::class);
+    }
+    public function iuranAnggota()
+    {
+        return $this->hasMany(iuranAnggota::class);
     }
     public function register()
     {

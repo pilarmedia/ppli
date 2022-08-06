@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateIuranAnggotasTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('iuran_anggotas', function (Blueprint $table) {
@@ -18,6 +14,8 @@ class CreateIuranAnggotasTable extends Migration
             $table->foreignId('WilayahId')->constrained('wilayahs');
             $table->string('bulan');
             $table->integer('iuran');
+            $table->integer('setoran_DPP');
+            $table->string('tahun');
             $table->timestamps();
         });
     }

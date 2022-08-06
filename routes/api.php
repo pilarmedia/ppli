@@ -27,6 +27,7 @@ use App\Http\Controllers\MasterAkunController;
 use App\Http\Controllers\MasterBankController;
 use App\Http\Controllers\MasterKhasController;
 use App\Http\Controllers\pengumumanController;
+use App\Http\Controllers\iuranAnggotaController;
 use App\Http\Controllers\SelectOptionController;
 use App\Http\Controllers\SettingEmailController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -139,7 +140,10 @@ use App\Http\Controllers\CompanyIndustryController;
 
          Route::post('/transaksi/selectOption/akun2', [transaksiController::class,'jenis_transaksi']);
 
-         
+      // iuran
+      Route::post('/iuran/setting',[iuranAnggotaController::class,'index']); 
+      Route::get('/iuran/setting/show/{id}',[iuranAnggotaController::class,'show']);
+      Route::post('/iuran/setting/show/{id}',[iuranAnggotaController::class,'update']);
          
 
        //khas
