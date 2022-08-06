@@ -288,7 +288,11 @@ class transaksiController extends Controller
     public function laporan(){
         // dd('a');
         $data=laporan::with('khas')->get();
-        return response()->json($data,200);
+        $response =[
+            'message' => 'detail data',
+            'data' => $data
+       ];
+       return response()->json($response,Response::HTTP_OK);
     }
     public function selectOptionTahun (){
 
@@ -309,6 +313,7 @@ class transaksiController extends Controller
         // dd('a');
         $data=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
         // dd($request->tahun);
+        // $result=array();
         for($i=1;$i<13;$i++){
          $debit = DB::table('laporans')
          ->whereYear('created_at',$request->tahun)
@@ -319,12 +324,17 @@ class transaksiController extends Controller
          ->whereYear('created_at', $request->tahun)
          ->whereMonth('created_at',$i)
          ->get()->sum('kredit');
-         $result[$i] = [
+         $result[] = array(
              'bulan' => $data[$i-1],
              'debit' => $debit,
              'kredit' => $kredit
-         ];
+         );
+        
         }
-        return response()->json($result,200);
+        $response =[
+            'message' => 'detail data',
+            'data' => $result
+       ];
+       return response()->json($response,Response::HTTP_OK);
     }
 }
