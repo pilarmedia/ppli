@@ -141,7 +141,7 @@ class transaksiController extends Controller
         $data=transaksi::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'tanggal'=>'required',
-            'khas'=>'required',
+            'KhasId'=>'required',
             'jenis_transaksi'=>'required',
             'AkunId'=>'required',
             'MemberId'=>'required',
@@ -154,7 +154,7 @@ class transaksiController extends Controller
            }
            try {
             
-            if($data->KhasId == $request->khas){
+            if($data->KhasId == $request->KhasId){
                 // dd($data);
                 $khas=khas::where('id',$data->KhasId)->first();
                 $laporan=laporan::where('KhasId',$khas->id)->first();
@@ -197,8 +197,8 @@ class transaksiController extends Controller
                 $khas_lama=khas::where('id',$data->KhasId)->first();
                 $laporan_lama=laporan::where('KhasId',$khas_lama->id)->first();
                 $laporan=laporan::where('id', $laporan_lama->id)->first();
-                $laporan->KhasId=$request->khas;
-                $khas_baru=khas::where('id',$request->khas)->first();
+                $laporan->KhasId=$request->KhasId;
+                $khas_baru=khas::where('id',$request->KhasId)->first();
                 if($data->jenis_transaksi == $request->jenis_transaksi){
                     if($data->jenis_transaksi == 'pemasukan'){
                         $khas_lama->saldo_akhir=$khas_lama->saldo_akhir-$data->jumlah;
@@ -241,7 +241,7 @@ class transaksiController extends Controller
                 
             }
               $data->tanggal=$request->tanggal;
-              $data->KhasId=$request->khas;
+              $data->KhasId=$request->KhasId;
               $data->jenis_transaksi=$request->jenis_transaksi;
               $data->AkunId=$request->AkunId;
               $data->MemberId=$request->MemberId;
