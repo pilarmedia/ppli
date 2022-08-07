@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Models\iuran;
 use App\Models\member;
 use App\Models\iuranAnggota;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,13 +20,13 @@ class iuranController extends Controller
     public function updateShow(Request $request,$id){
         $data=iuran::where('tahun',$request->tahun)->where('memberId',$id)->get();
         return response()->json($data, 200);
-
     }
 
     public function update(Request $request,$id){
         $iuran=iuran::find($id)->first();
         $member=member::find($iuran->memberId);
         $iuranAnggota=iuranAnggota::where('WilayahId',$member->WilayahId)->get();
+        
         $validator=Validator::make($request->all(),[
             'tanggal_bayar'=>'required',
             'status'=>'required'
@@ -34,26 +35,32 @@ class iuranController extends Controller
              return response()->json($validator->errors(), 
              Response::HTTP_UNPROCESSABLE_ENTITY);
            }
-           $iuran->tanggal_bayar=$request->tanggal_bayar;
-           $iuran->status=$request->status;
-           $iuran->jumlah=$iuranAnggota->jumlah;
-           $iuran->save();
+           try {
+            // if ($request->status == 'lunas' && $iuran->status !='lunas'){
+            //     // $laporan=laporan::create()
+            // }
+            $iuran->tanggal_bayar=$request->tanggal_bayar;
+            $iuran->status=$request->status;
+            $iuran->jumlah=$iuranAnggota->jumlah;
+            $iuran->save();
+           
             
-           return response()->json('update berhasil', 200);
-        //    $iuran->jumlah=
+            return response()->json('update berhasil', 200);
+           } catch (QueryException $e) {
+            return response()->json([
+                'message'=>"failed".$e->errorInfo
+            ]);
+           }
+          
     }
-
     public function selectOption(){
         $tes= iuran::all()->groupBy(function($date) {
             return Carbon::parse($date->created_at)->format('Y');
         })->sortBy('created_at');
-
-        
         $data=array();
         foreach($tes as $key=>$item){
             $data[]=$key;
         }
-
        return response()->json($data, 200); 
     }
 }
