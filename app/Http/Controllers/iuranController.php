@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class iuranController extends Controller
 {
-    public function index (){
+    public function index (Request $request){
         // dd('a');
-        $data=iuran::with('member')->get();
+        $data=iuran::with('member')->where('tahun',$request->tahun)->where('bulan',$request->bulan)->get();
         return response()->json($data, 200);
     }
     public function updateShow(Request $request,$id){
