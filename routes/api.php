@@ -7,6 +7,7 @@ use App\Http\Controllers\dpwController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\roleController;
 use App\Http\Controllers\emailController;
+use App\Http\Controllers\iuranController;
 use App\Http\Controllers\mitraController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\kontakController;
@@ -141,6 +142,9 @@ use App\Http\Controllers\CompanyIndustryController;
          Route::post('/transaksi/selectOption/akun2', [transaksiController::class,'jenis_transaksi']);
 
       // iuran
+      Route::get('/iuran/index',[iuranController::class,'index']); 
+
+      // iuran setting
       Route::post('/iuran/setting',[iuranAnggotaController::class,'index']); 
       Route::get('/iuran/setting/show/{id}',[iuranAnggotaController::class,'show']);
       Route::post('/iuran/setting/show/{id}',[iuranAnggotaController::class,'update']);

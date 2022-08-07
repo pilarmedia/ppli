@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\iuran;
 use App\Models\Cities;
 use App\Models\Wilayah;
 use App\Models\pengurus;
@@ -43,6 +44,10 @@ class member extends Model
     public function provinsi ()
     {
         return $this->belongsTo(provinsi::class,'provinsiId','id');
+    }
+    public function iuran()
+    {
+        return $this->hasMany(iuran::class);
     }
     // public function CompanyIndustry ()
     // {

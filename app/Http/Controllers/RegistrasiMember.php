@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DateTime;
 use App\Models\User;
+use App\Models\iuran;
 use App\Models\kontak;
 use App\Models\member;
 use App\Mail\MailToDPW;
@@ -233,6 +234,7 @@ class RegistrasiMember extends Controller
                 'roles'=>'member'
             ]);
            
+           
             $kontak=kontak::create([
                 'nama'=>$data->name,
                 'email'=>$data->email,
@@ -260,6 +262,18 @@ class RegistrasiMember extends Controller
                 'status' =>'aktif',
                
             ]);
+            $bulan=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
+            $ldate = date('Y');
+            for($i=1;$i<13;$i++){
+                $result = array(
+                    'bulan' => $bulan[$i-1],
+                    'memberId' => $member->id,
+                    'tahun'=>$ldate,
+                    'status'=>'belum lunas'
+                ); 
+                $iuran=iuran::create($result);             
+               }
+
             $company=register::with('CompanyIndustry')->where('id',$data->id)->first();
             // dd($company->CompanyIndustry);
             $result;

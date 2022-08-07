@@ -15,9 +15,12 @@ class CreateIuransTable extends Migration
     {
         Schema::create('iurans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('jumlah');
-            $table->string('status');
+            $table->foreignId('memberId')->constrained('members');
+            $table->string('tahun');
+            $table->string('bulan');
+            $table->string('tanggal_bayar')->nullable();
+            $table->integer('jumlah')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
