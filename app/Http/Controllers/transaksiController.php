@@ -80,7 +80,10 @@ class transaksiController extends Controller
         $khas=khas::where('id',$request->KhasId)->first();
 
         if($request->jenis_transaksi === "pemasukan"){
-            // dd( $khas->saldo_akhir);
+            // if ($request->AkunId=='2'){
+            //     $iuran=
+
+            // }
 
             $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
             $khas->save();
@@ -88,7 +91,7 @@ class transaksiController extends Controller
                 'KhasId'=>$khas->id,
                 'debit'=>$request->jumlah,
                 'kredit'=>0,
-                'saldo_akhir'=>$request->saldo_awal
+                'saldo_akhir'=>$khas->saldo_akhir
               );
             //   dd($data2);
               $laporan=laporan::create($data2);
@@ -340,4 +343,8 @@ class transaksiController extends Controller
     public function jenis_transaksi(Request $request){
         $data=akun::where('kategori_akun',$request->jenis_transaksi)->get();
     }
+    // public function tes(Request $request){
+    //     $
+    //     // dd();
+    // }
 }

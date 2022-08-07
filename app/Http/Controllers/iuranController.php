@@ -36,9 +36,29 @@ class iuranController extends Controller
              Response::HTTP_UNPROCESSABLE_ENTITY);
            }
            try {
-            // if ($request->status == 'lunas' && $iuran->status !='lunas'){
-            //     // $laporan=laporan::create()
-            // }
+            if ($request->status == 'lunas' && $iuran->status !='lunas'){
+                $data=array(
+                    'tanggal'=>$request->tanggal_bayar,
+                    'KhasId'=>1,
+                    'jenis_transaksi'=>'pemasukan',
+                    'AkunId'=>2,
+                    'MemberId'=>$member->id,
+                    'keterangan'=>'iuran',
+                    'jumlah'=>$iuranAnggota->jumlah,
+                  );
+            $transaksi=transaksi::create($data);
+            $khas=khas::find(1);
+            $khas->saldo_akhir=$iuranAnggota->jumlah+$khas->saldo_akhir;
+            $khas->save();
+                $data2=array(
+                    'KhasId'=>1,
+                    'debit'=>$iuranAnggota->jumlah,
+                    'kredit'=>0,
+                    'saldo_akhir'=>$khas->saldo_akhir
+                );
+                //   dd($data2);
+                $laporan=laporan::create($data2);
+            }
             $iuran->tanggal_bayar=$request->tanggal_bayar;
             $iuran->status=$request->status;
             $iuran->jumlah=$iuranAnggota->jumlah;

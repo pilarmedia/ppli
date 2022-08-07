@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\khasSeeder;
 use Database\Seeders\TemplateEmail;
 use Database\Seeders\statusRegister;
 use Database\Seeders\AdminUserSeeder;
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminUserSeeder::class); 
         $this->call(status_Register::class);   
         $this->call(TemplateEmail::class);      
+        $this->call(khasSeeder::class);  
     }
 }

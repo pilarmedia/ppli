@@ -281,6 +281,8 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::get('member/index',[MemberController::class,'index']);
       Route::get('member/show/{id}',[MemberController::class,'show']);
       Route::post('member/wlayah/show',[MemberController::class,'MemberWilayah']);
+      Route::post('member/gambar/{id}',[MemberController::class,'gambar']);
+      Route::get('member/gambar/{id}',[MemberController::class,'getGambar']);
 
       Route::get('role/show',[roleController::class,'index']);
       Route::post('role/store',[roleController::class,'store']);

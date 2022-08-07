@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\member;
 use App\Models\Wilayah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -48,5 +49,20 @@ class MemberController extends Controller
          ]);   
          
         }
+     }
+     public function gambar(Request $request,$id){
+        $member=member::find($id);
+        $imageName = time().'.'.$request->gambar->getClientOriginalName();
+        $nama=Storage::putFileAs('gambar',$request->gambar,$imageName);
+        // dd($nama);
+        $member->gambar=$nama;
+        $member->save();
+        return response()->json('berhasil upload gambar', 200);
+     }
+     public function getGambar($id){
+        $member=member::find($id);
+        // dd($member->gambar);
+        $path = storage_path($member->gambar);
+        return response()->json($path, 200 );
      }
 }

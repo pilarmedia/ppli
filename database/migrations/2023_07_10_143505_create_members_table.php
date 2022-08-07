@@ -31,7 +31,6 @@ class CreateMembersTable extends Migration
             $table->date('RegisterDate')->nullable();
             $table->string('status')->nullable();
             $table->string('gambar')->nullable();
-            $table->string('path')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

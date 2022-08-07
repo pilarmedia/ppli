@@ -35,7 +35,7 @@ class member extends Model
         'status',
         'roles',
         'gambar',
-        'path'
+
     ];
     public function Cities ()
     {
