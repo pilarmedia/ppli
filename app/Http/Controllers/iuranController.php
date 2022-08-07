@@ -38,7 +38,22 @@ class iuranController extends Controller
            $iuran->status=$request->status;
            $iuran->jumlah=$iuranAnggota->jumlah;
            $iuran->save();
+            
            return response()->json('update berhasil', 200);
         //    $iuran->jumlah=
+    }
+
+    public function selectOption(){
+        $tes= iuran::all()->groupBy(function($date) {
+            return Carbon::parse($date->created_at)->format('Y');
+        })->sortBy('created_at');
+
+        
+        $data=array();
+        foreach($tes as $key=>$item){
+            $data[]=$key;
+        }
+
+       return response()->json($data, 200); 
     }
 }
