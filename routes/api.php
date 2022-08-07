@@ -143,6 +143,10 @@ use App\Http\Controllers\CompanyIndustryController;
 
       // iuran
       Route::get('/iuran/index',[iuranController::class,'index']); 
+      Route::post('/iuran/update/{id}',[iuranController::class,'update']); 
+      Route::post('/iuran/updateShow/{id}',[iuranController::class,'updateShow']); 
+
+
 
       // iuran setting
       Route::post('/iuran/setting',[iuranAnggotaController::class,'index']); 
