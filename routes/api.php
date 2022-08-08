@@ -312,6 +312,7 @@ use App\Http\Controllers\CompanyIndustryController;
     Route::delete('admin/delete/User/{id}',[roleController::class,'deleteUser']);
     Route::get('admin/show/role/{id}',[roleController::class,'showUser']);
     Route::get('admin/show/roles/{id}',[roleController::class,'showRole']);
+    Route::delete('admin/delete/roles/{id}',[roleController::class,'delete_role']);
 
 
    
