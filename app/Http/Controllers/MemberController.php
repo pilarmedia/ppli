@@ -11,15 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MemberController extends Controller
 {
-    public function index()
-    {
-        $data=member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
-        $response =[
-            'message' => 'succes menampilkan member',
-            'data' => $data
-       ];
-       return response()->json($response,Response::HTTP_OK);
-    }
+    // public function index()
+    // {
+    //     $data=member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
+    //     $response =[
+    //         'message' => 'succes menampilkan member',
+    //         'data' => $data
+    //    ];
+    //    return response()->json($response,Response::HTTP_OK);
+    // }
 
     public function show($id)
     {
@@ -67,4 +67,64 @@ class MemberController extends Controller
         // $path=
         return response()->json($path, 200 );
      }
+     public function index(){
+        $data=member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
+        $cek=auth()->user();
+        // dd($data->wilayah);
+        $cekRegister=$cek->WilayahId;
+        $cekWilayah=Wilayah::where('id',$cekRegister)->first();
+        // $cekStatus=register::where('email',$cek->email)->first();
+        $user=array();
+        // dd($cekHQ);
+        // dd($cekStatus);
+        foreach ($data as $item) {
+            $conidition = true;
+            
+            if(($cek->roles == 'admin' ) || ($cekWilayah->HQ == '1') ){
+                $user[] = [
+                    'id'=>$item->id,
+                    'name'=>$item->name,
+                    'nama_perusahaan'=>$item->NamaPerushaan,
+                    'wilayah'=>$item->wilayah->name,
+                    'status'=>$item->status,
+                    'cekWilayah'=>false
+                ];
+            } else{
+            if ($item->WilayahId == $cekRegister) {
+                    $nilai=false;
+                    if($item->status != 'Approved by DPP'){
+                        $nilai=true; 
+                    }
+                    // dd($nilai);
+                    $regis[] = [
+                        'id'=>$item->id,
+                        'name'=>$item->name,
+                        'nama_perusahaan'=>$item->NamaPerushaan,
+                        'wilayah'=>$item->wilayah->name,
+                        'status'=>$item->status,
+                        'cekWilayah'=>$nilai
+                    ];
+                    $conidition = false;
+                    continue;
+                }
+            
+            if ($conidition != false) {
+                $user[] = [
+                    'id'=>$item->id,
+                    'name'=>$item->name,
+                    'nama_perusahaan'=>$item->NamaPerushaan,
+                    'wilayah'=>$item->wilayah->name,
+                    'status'=>$item->status,
+                    'cekWilayah'=>true
+                ];
+            }
+            }
+        }
+
+        $response =[
+            'message' => 'succes menampilkan data register',
+            'data'=>$regis
+       ];
+       return response()->json($response,Response::HTTP_OK);
+    }
 }
