@@ -262,6 +262,12 @@ class RegistrasiMember extends Controller
                 'status' =>'aktif',
                
             ]);
+            $company=CompanyIndustry_register::where('register_id',$data->id)->first();
+            $result1;
+            foreach($company->CompanyIndustry as $item){
+                $result1[]=$item->id;
+            }
+            $member->CompanyIndustry()->attach($result1);
             $bulan=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
             $ldate = date('Y');
             for($i=1;$i<13;$i++){
@@ -274,13 +280,9 @@ class RegistrasiMember extends Controller
                 $iuran=iuran::create($result);             
                }
 
-            $company=register::with('CompanyIndustry')->where('id',$data->id)->first();
+          
             // dd($company->CompanyIndustry);
-            $result;
-            foreach($company->CompanyIndustry as $item){
-                $result[]=$item->id;
-            }
-            $member->CompanyIndustry()->attach($result);
+           
             $perusahaan=perusahaan::create([
                 'memberId'=>$member->id
             ]);
