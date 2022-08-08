@@ -376,13 +376,14 @@ class RegistrasiMember extends Controller
                 $result1[]=$item->CompanyIndustry_id;
             }
             // dd($result1);
+            $x=$member->id;
             $member->CompanyIndustry()->attach($result1);
             $bulan=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
             $ldate = date('Y');
             for($i=1;$i<13;$i++){
                 $result = array(
                     'bulan' => $bulan[$i-1],
-                    'memberId' => $member->id,
+                    'memberId' => $x,
                     'tahun'=>$ldate,
                     'status'=>'belum lunas'
                 ); 
