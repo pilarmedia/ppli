@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use Exception;
 use Throwable;
 use Swift_Mailer;
 use SmtpTransport;
 use Swift_Message;
-use Exception;
-use Swift_SmtpTransport;
 use App\Models\User;
 use App\Models\email;
 use App\Models\iuran;
@@ -18,11 +17,13 @@ use App\Mail\MailToDPW;
 use App\Mail\SendEmail;
 use App\Models\Wilayah;
 use App\Models\register;
+use Swift_SmtpTransport;
 use App\Models\perusahaan;
 use App\Models\TemplateMail;
 use Illuminate\Http\Request;
 use App\Models\logRegistrasi;
 use App\Models\CompanyIndustry;
+use App\Jobs\SendEmailRegisterJob;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -176,32 +177,39 @@ class RegistrasiMember extends Controller
 
             ]);
 
-            $data = email::firstOrFail();
-            self::validateTransport();
+            // $data = email::firstOrFail();
+            // self::validateTransport();
             $email = $request->email;
             $name= $request->name;
             $datamail= TemplateMail::where('kode','mail Verified')->first();
             $mail=$datamail->isi_email;
-        
-                $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
-                ->setUsername($data->username)
-                ->setPassword($data->password);
-                $mailer = new Swift_Mailer($transport);
+            $details['email'] =$email;
+            $details['name'] =$name;
+            $details['mail'] =$mail;
+            // dispatch(new SendEmailRegisterJob($details));
+                // $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
+                // ->setUsername($data->username)
+                // ->setPassword($data->password);
+                // $mailer = new Swift_Mailer($transport);
 
-                $message = (new Swift_Message($data->receipt_subject))
-                    ->setFrom([ $data->username=> $data->name])
-                    ->setTo([$email=> $request->name])
-                    ->setBody('saudara '.$name.' '.$mail, 'text/html');
+                // $message = (new Swift_Message($data->receipt_subject))
+                //     ->setFrom([ $data->username=> $data->name])
+                //     ->setTo([$email=> $request->name])
+                //     ->setBody('saudara '.$name.' '.$mail, 'text/html');
             $data1= TemplateMail::where('kode','Verified by DPP')->first();
             $mail=$data1->isi_email;
             $tujuan=Wilayah::where('HQ',1)->first();
-                $message2 = (new Swift_Message($data->receipt_subject))
-                    ->setFrom([ $data->username=> $data->name])
-                    ->setTo([$tujuan->email=> $tujuan->name])
-                    ->setBody($mail.' saudara '.$name, 'text/html');
+            $details['tujuan_email'] =$tujuan->email;
+            $details['tujuan_name'] =$tujuan->name;
+            $details['tujuan_mail'] =$mail;
+            dispatch(new SendEmailRegisterJob($details));
+            //     $message2 = (new Swift_Message($data->receipt_subject))
+            //         ->setFrom([ $data->username=> $data->name])
+            //         ->setTo([$tujuan->email=> $tujuan->name])
+            //         ->setBody($mail.' saudara '.$name, 'text/html');
 
-                $result = $mailer->send($message);
-                $result1 = $mailer->send($message2);
+            //     $result = $mailer->send($message);
+            //     $result1 = $mailer->send($message2);
         
         
             // Mail::to($email)->send(new SendEmail($name,$mail));
