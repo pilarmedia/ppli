@@ -97,8 +97,6 @@ class transaksiController extends Controller
               $laporan=laporan::create($data2);
             $response= [
                 'message'=>'add succes ',
-                'cek1' => $transaksi,
-                'cek2' => $khas
             ];
             return response()->json($response,Response::HTTP_CREATED);
         }else{
@@ -114,8 +112,7 @@ class transaksiController extends Controller
               $laporan=laporan::create($data2);
             $response= [
                 'message'=>'add succes ',
-                'cek1' => $transaksi,
-                'cek2' => $khas
+     
             ];
             return response()->json($response,Response::HTTP_CREATED);
         }

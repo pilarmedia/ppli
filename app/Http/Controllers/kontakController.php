@@ -21,8 +21,7 @@ class kontakController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         // return $request;
         $validator=Validator::make($request->all(),[
             'nama'=>'required',
@@ -52,7 +51,6 @@ class kontakController extends Controller
         $kontak=kontak::create($data);
         $response= [
             'message'=>'add succes ',
-            'data' => $kontak,
         ];
         return response()->json($response,Response::HTTP_CREATED);
        
@@ -61,13 +59,9 @@ class kontakController extends Controller
             'message'=>"failed".$e->errorInfo
         ]);
        }    
-    return response()->json([
-        'status' => 'success',
-    ]);
- 
+     
     }
-    public function show($id)
-    {
+    public function show($id) {
         // dd($id);
         $kontak=kontak::find($id);
         $response =[
@@ -77,8 +71,7 @@ class kontakController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         // dd($request->name);
         $kontak=kontak::findOrFail($id);
         $validator=Validator::make($request->all(),[
@@ -95,7 +88,6 @@ class kontakController extends Controller
             $kontak->update($request->all());
             $response= [
                 'message'=>'transaction update',
-                'data' => $kontak
             ];
             return response()->json($response,Response::HTTP_OK);
            } catch (QueryException $e) {
@@ -105,8 +97,7 @@ class kontakController extends Controller
            }
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $kontak=kontak::findOrFail($id);
         try {
             $kontak->delete();

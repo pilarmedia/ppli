@@ -50,7 +50,7 @@ class provinsiController extends Controller
         $provinsi=provinsi::create($data);
         $response= [
             'message'=>'add succes ',
-            'data' => $provinsi
+         
         ];
         return response()->json($response,Response::HTTP_CREATED);
        
@@ -65,12 +65,6 @@ class provinsiController extends Controller
  
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         // dd($id);
@@ -82,21 +76,7 @@ class provinsiController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         // dd($request->name);
@@ -111,8 +91,8 @@ class provinsiController extends Controller
            try {
             $provinsi->update($request->all());
             $response= [
-                'message'=>'transaction update',
-                'data' => $provinsi
+                'message'=>'provinsi update',
+            
             ];
             return response()->json($response,Response::HTTP_OK);
            } catch (QueryException $e) {

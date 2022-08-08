@@ -72,7 +72,6 @@ class pengurusController extends Controller
             $pengurus->update($request->all());
             $response= [
                 'message'=>'pengurus update',
-                'data' => $pengurus
             ];
             return response()->json($response,Response::HTTP_OK);
            } catch (QueryException $e) {

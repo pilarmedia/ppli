@@ -67,7 +67,6 @@ class MasterAkunController extends Controller
        
         $response= [
             'message'=>'add succes ',
-            'data' => $akun
         ];
         return response()->json($response,Response::HTTP_CREATED);
        
@@ -112,7 +111,6 @@ class MasterAkunController extends Controller
                 $akun->save();
             $response= [
                 'message'=>'akun update',
-                'data' => $akun
             ];
             return response()->json($response,Response::HTTP_OK);
         //    } catch (QueryException $e) {

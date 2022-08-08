@@ -7,8 +7,7 @@ use App\Models\logRegistrasi;
 
 class logRegistrasiController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $data=logRegistrasi::all();
         $response =[
             'message' => 'succes menampilkan log registrasi',

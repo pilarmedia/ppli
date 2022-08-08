@@ -35,7 +35,6 @@ class MasterBankController extends Controller
         $bank=bank::create($data);
         $response= [
             'message'=>'add succes ',
-            'data' => $bank
         ];
         return response()->json($response,Response::HTTP_CREATED);
        
@@ -71,8 +70,7 @@ class MasterBankController extends Controller
            try {
             $data->update($request->all());
             $response= [
-                'message'=>'transaction update',
-                'data' => $data
+                'message'=>'bank update',
             ];
             return response()->json($response,Response::HTTP_OK);
            } catch (QueryException $e) {

@@ -112,7 +112,6 @@ class MasterKhasController extends Controller
                 $khas->save();
             $response= [
                 'message'=>'khas update',
-                'data' => $khas
             ];
             return response()->json($response,Response::HTTP_OK);
     }

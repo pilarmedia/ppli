@@ -66,7 +66,7 @@ class WilayahController extends Controller
              }
           $response= [
             'message'=>'add succes ',
-            'data' => $wilayah
+  
            ];
           return response()->json($response,Response::HTTP_CREATED);
        } 
@@ -95,7 +95,7 @@ class WilayahController extends Controller
                }
             $response= [
                 'message'=>'add succes ',
-                'data' => $wilayah
+             
               ];
             return response()->json($response,Response::HTTP_CREATED);
        
@@ -139,7 +139,6 @@ class WilayahController extends Controller
                  $wilayah->update($request->all());
                  $response= [
                       'message'=>'add succes ',
-                     'data' => $wilayah
                     ];
              return response()->json($response,Response::HTTP_CREATED);
             } 
@@ -156,7 +155,7 @@ class WilayahController extends Controller
             $wilayah->update($data);
             $response= [
                 'message'=>'transaction update',
-                'data' => $wilayah
+        
             ];
             return response()->json($response,Response::HTTP_OK);
            } catch (QueryException $e) {

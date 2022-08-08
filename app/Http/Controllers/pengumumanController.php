@@ -97,7 +97,7 @@ class pengumumanController extends Controller
             $data->save();
             $response= [
                 'message'=>'pengumuman update',
-                'data' => $data
+
             ];
             return response()->json($response,Response::HTTP_OK);
            } catch (QueryException $e) {

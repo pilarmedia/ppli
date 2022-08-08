@@ -37,7 +37,7 @@ class tipeMitraController extends Controller
         $tipeMitra=tipeMitra::create($data);
         $response= [
             'message'=>'add succes ',
-            'data' => $tipeMitra
+        
         ];
         return response()->json($response,Response::HTTP_CREATED);
        
@@ -78,8 +78,8 @@ class tipeMitraController extends Controller
            try {
             $tipeMitra->update($request->all());
             $response= [
-                'message'=>'transaction update',
-                'data' => $tipeMitra
+                'message'=>'tipe mitra update',
+       
             ];
             return response()->json($response,Response::HTTP_OK);
            } catch (QueryException $e) {

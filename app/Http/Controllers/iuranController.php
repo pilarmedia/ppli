@@ -44,28 +44,50 @@ class iuranController extends Controller
                     'AkunId'=>2,
                     'MemberId'=>$member->id,
                     'keterangan'=>'iuran',
-                    'jumlah'=>$iuranAnggota->jumlah,
+                    'jumlah'=>$iuranAnggota->iuran,
                   );
             $transaksi=transaksi::create($data);
             $khas=khas::find(1);
-            $khas->saldo_akhir=$iuranAnggota->jumlah+$khas->saldo_akhir;
+            $khas->saldo_akhir=$iuranAnggota->iuran+$khas->saldo_akhir;
             $khas->save();
                 $data2=array(
                     'KhasId'=>1,
-                    'debit'=>$iuranAnggota->jumlah,
+                    'debit'=>$iuranAnggota->iuran,
                     'kredit'=>0,
                     'saldo_akhir'=>$khas->saldo_akhir
                 );
                 //   dd($data2);
                 $laporan=laporan::create($data2);
+                $iuran->tanggal_bayar=$request->tanggal_bayar;
+                $iuran->status=$request->status;
+                $iuran->jumlah=$iuranAnggota->iuran;
+                $iuran->save();
+               
+                return response()->json('update berhasil', 200);
+            } else{
+                
+            $transaksi=transaksi::where('MemberId',$member->id)->first();
+            $transaksi->delete();
+            $khas=khas::find(1);
+            $khas->saldo_akhir=$khas->saldo_akhir-$iuranAnggota->iuran;
+            $khas->save();
+                $data2=array(
+                    'KhasId'=>1,
+                    'debit'=>0,
+                    'kredit'=>$iuranAnggota->iuran,
+                    'saldo_akhir'=>$khas->saldo_akhir
+                );
+                //   dd($data2);
+                $laporan=laporan::create($data2);
+                $iuran->tanggal_bayar=$request->tanggal_bayar;
+                $iuran->status=$request->status;
+                $iuran->jumlah=$iuranAnggota->jumlah;
+                $iuran->save();
+               
+                return response()->json('update berhasil', 200);
+
             }
-            $iuran->tanggal_bayar=$request->tanggal_bayar;
-            $iuran->status=$request->status;
-            $iuran->jumlah=$iuranAnggota->jumlah;
-            $iuran->save();
-           
-            
-            return response()->json('update berhasil', 200);
+        
            } catch (QueryException $e) {
             return response()->json([
                 'message'=>"failed".$e->errorInfo

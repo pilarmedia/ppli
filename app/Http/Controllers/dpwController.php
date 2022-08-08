@@ -20,19 +20,6 @@ class dpwController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-  
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validator=Validator::make($request->all(),[
@@ -57,8 +44,7 @@ class dpwController extends Controller
               );
         $dpw=DPW::create($data);
         $response= [
-            'message'=>'add succes ',
-            'data' => $dpw
+            'message'=>'add succes '
         ];
         return response()->json($response,Response::HTTP_CREATED);
        

@@ -41,7 +41,6 @@ class kegiatanController extends Controller
         $kegiatan=kegiatan::create($data);
         $response= [
             'message'=>'add succes ',
-            'data' => $kegiatan
         ];
         return response()->json($response,Response::HTTP_CREATED);
        
@@ -78,7 +77,6 @@ class kegiatanController extends Controller
             $kegiatan->update($request->all());
             $response= [
                 'message'=>'kegiatan update',
-                'data' => $kegiatan
             ];
             return response()->json($response,Response::HTTP_OK);
            } catch (QueryException $e) {
@@ -88,8 +86,7 @@ class kegiatanController extends Controller
            }
     }
     
-    public function destroy($id)
-    {
+    public function destroy($id){
         $kegiatan=kegiatan::findOrFail($id);
         try {
             $kegiatan->delete();
