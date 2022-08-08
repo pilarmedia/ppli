@@ -239,7 +239,7 @@ class RegistrasiMember extends Controller
                 'nama'=>$data->name,
                 'email'=>$data->email,
                 'nomor'=>$data->PhoneNumber,
-                'nama_perusahaan'=>$data->$data->NamaPerushaan,
+                'nama_perusahaan'=>$data->NamaPerushaan,
                 'status'=>'aktif'
             ]);
             // $user=User::all();
