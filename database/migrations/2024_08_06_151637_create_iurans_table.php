@@ -15,7 +15,7 @@ class CreateIuransTable extends Migration
     {
         Schema::create('iurans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('memberId')->constrained('members');
+            $table->foreignId('memberId')->constrained('members')->onDelete('cascade');
             $table->string('tahun');
             $table->string('bulan');
             $table->string('tanggal_bayar')->nullable();

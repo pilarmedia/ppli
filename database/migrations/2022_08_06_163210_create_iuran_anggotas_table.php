@@ -11,7 +11,7 @@ class CreateIuranAnggotasTable extends Migration
     {
         Schema::create('iuran_anggotas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('WilayahId')->constrained('wilayahs');
+            $table->foreignId('WilayahId')->constrained('wilayahs')->onDelete('cascade');
             $table->string('bulan');
             $table->integer('iuran');
             $table->integer('setoran_DPP');
