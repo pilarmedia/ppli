@@ -275,7 +275,8 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::get('member', [OperatorController::class,'member']);
       Route::post('updateUser/{id}', [OperatorController::class,'updateUser']);
       Route::delete('user/delete/{id}', [OperatorController::class,'deleteUser']);
-      Route::post('register/email/{id}',[messageController::class,'email']);
+      // Route::post('register/email/{id}',[messageController::class,'email']);
+      Route::post('register/email/{id}',[messageController::class,'sendEmail']);
 
      
       // member
