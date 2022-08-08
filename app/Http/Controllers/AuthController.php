@@ -49,7 +49,7 @@ class AuthController extends Controller
         // $wilayah_permission=register::where('WilayahId',$user->WilayahId)->first();
         return response()->json([
                 'status' => 'success',
-                // 'user' => $user,
+                'user' => $user,
                 'permission' =>$result,
                 // 'wilayah'=>$wilayah_permission->WilayahId,
                 'authorisation' => [
