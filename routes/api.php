@@ -146,6 +146,7 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::post('/iuran/update/{id}',[iuranController::class,'update']); 
       Route::post('/iuran/updateShow/{id}',[iuranController::class,'updateShow']); 
       Route::get('/iuran/selectOption',[iuranController::class,'selectOption']); 
+      Route::get('/iuran/selectOptionBulan',[iuranController::class,'selectOptionBulan']); 
 
 
       // iuran setting

@@ -83,4 +83,9 @@ class iuranController extends Controller
         }
        return response()->json($data, 200); 
     }
+    public function selectOptionBulan(){
+        $data=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
+        return response()->json($data, 200); 
+
+    }
 }
