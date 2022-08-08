@@ -10,6 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MasterAkunController extends Controller
 {
+    public function getindex(){
+        $data=akun::with('wilayah')->get();
+        $response =[
+            'message' => 'succes menampilkan akun',
+            'data' => $data
+       ];
+       return response()->json($response,Response::HTTP_OK);
+    }
+
     public function index(Request $request){
         if($request->wilayah ==='0'){
             $data=akun::with('wilayah')->get();

@@ -118,6 +118,7 @@ use App\Http\Controllers\CompanyIndustryController;
 
 
           //akun
+      Route::get('/akun/getindex', [MasterAkunController::class,'getindex']);
       Route::post('/akun/index', [MasterAkunController::class,'index']);
       Route::get('/akun/selectOption', [MasterAkunController::class,'selectOption']);
       Route::post('/akun', [MasterAkunController::class,'store']);
