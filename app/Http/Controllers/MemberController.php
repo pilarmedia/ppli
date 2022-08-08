@@ -62,7 +62,7 @@ class MemberController extends Controller
      public function getGambar($id){
         $member=member::find($id);
         // dd($member->gambar);
-        $path = public_path($member->gambar);
+        $path = storage_path('app/'.$member->gambar);
         // return Response::download($path);  
         // $path=
         return response()->json($path, 200 );
