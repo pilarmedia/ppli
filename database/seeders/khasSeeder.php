@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use DateTime;
 use App\Models\akun;
 use App\Models\khas;
 use Illuminate\Database\Seeder;
@@ -33,6 +34,8 @@ class khasSeeder extends Seeder
         //   dd($data);
     $akun=akun::create($data1);
     $akun=akun::create($data2);
+    date_default_timezone_set('Asia/Jakarta');
+            $ldate = new DateTime('now');
         $data=array(
             'kode'=>'01',
             'nama'=>'iuran',
@@ -40,6 +43,7 @@ class khasSeeder extends Seeder
             'saldo_awal'=>0,
             'saldo_akhir'=>0,
             'keterangan'=>'iuran',
+            'tanggal'=>$ldate,
             'edit_by'=>'admin',
           );
         //   dd($data);

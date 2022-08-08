@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use App\Models\khas;
 use App\Models\laporan;
 use Illuminate\Http\Request;
@@ -45,6 +46,8 @@ class MasterKhasController extends Controller
     //    try {
             $user=auth()->user();
             // dd($user);
+            date_default_timezone_set('Asia/Jakarta');
+            $ldate = new DateTime('now');
              $data=array(
                 'kode'=>$request->kode,
                 'nama'=>$request->nama,
@@ -52,6 +55,7 @@ class MasterKhasController extends Controller
                 'saldo_awal'=>$request->saldo_awal,
                 'saldo_akhir'=>$request->saldo_awal,
                 'keterangan'=>$request->keterangan,
+                'tanggal'=>$ldate,
                 'edit_by'=>$user->name,
               );
             //   dd($data);
@@ -102,6 +106,8 @@ class MasterKhasController extends Controller
          Response::HTTP_UNPROCESSABLE_ENTITY);
        }
        $user=auth()->user();
+       date_default_timezone_set('Asia/Jakarta');
+            $ldate = new DateTime('now');
                 $khas->kode_akun=$request->kode_akun;
                 $khas->nama=$request->nama;
                 // $khas->saldo_awal=$request->saldo_awal;
@@ -109,6 +115,7 @@ class MasterKhasController extends Controller
                 $khas->keterangan=$request->keterangan;
                 $khas->edit_by=$user->name;
                 $khas->kode=$request->kode;
+                $khas->tanggal=$ldate;
                 $khas->save();
             $response= [
                 'message'=>'khas update',

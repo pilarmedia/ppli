@@ -21,6 +21,7 @@ class CreateKhasTable extends Migration
             $table->integer('saldo_awal')->nullable();
             $table->integer('saldo_akhir')->nullable();
             $table->string('keterangan')->nullable();
+            $table->string('tanggal')->nullable();
             $table->string('edit_by');
             $table->timestamps();
         });
