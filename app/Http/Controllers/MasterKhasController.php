@@ -11,11 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MasterKhasController extends Controller
 {
-    public function index(Request $request){
+    public function index(){
 
             $data=khas::with('akun')->get();
             $response =[
-                'message' => 'succes menampilkan akun',
+                'message' => 'succes menampilkan khas',
                 'data' => $data
            ];
            return response()->json($response,Response::HTTP_OK);       

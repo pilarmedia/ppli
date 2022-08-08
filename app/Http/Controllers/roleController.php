@@ -159,7 +159,7 @@ class roleController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
-            'username' => 'required',
+            'Username' => 'required',
             'roles' => 'required',
         ]);
 
@@ -174,7 +174,7 @@ class roleController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'username' => $request->username,
+                'Username' => $request->Username,
                 'roles' => $request->roles
             );
             $user = user::create($data);
