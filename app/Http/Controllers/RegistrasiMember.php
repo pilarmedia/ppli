@@ -16,6 +16,7 @@ use App\Models\TemplateMail;
 use Illuminate\Http\Request;
 use App\Models\logRegistrasi;
 use App\Models\CompanyIndustry;
+use App\Models\CompanyIndustry_register;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -262,11 +263,14 @@ class RegistrasiMember extends Controller
                 'status' =>'aktif',
                
             ]);
-            $company=CompanyIndustry_register::where('register_id',$data->id)->first();
-            $result1;
-            foreach($company->CompanyIndustry as $item){
-                $result1[]=$item->id;
+            $company=CompanyIndustry_register::where('register_id',$data->id)->get();
+            // dd($company->CompanyIndustry_id);
+
+            $result1=array();
+            foreach($company as $item){
+                $result1[]=$item->CompanyIndustry_id;
             }
+            // dd($result1);
             $member->CompanyIndustry()->attach($result1);
             $bulan=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
             $ldate = date('Y');
