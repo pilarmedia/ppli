@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\akun;
 use App\Models\khas;
+use App\Models\iuran;
 use App\Models\member;
 use App\Models\laporan;
 use App\Models\transaksi;
@@ -51,7 +52,20 @@ class transaksiController extends Controller
        ];
        return response()->json($response,Response::HTTP_OK);
     }
-
+    public function selectOptionIuran (Request $request){
+        $wilayah=member::where('id',$request->MemberId)->first()['WilayahId'];
+        $jumlah=0;
+        if($request->akun=='1'){
+            $jumlah=iuranAnggota::where('WilayahId',$wilayah)->first()['iuran'];
+            return response()->json($jumlah, 200); 
+        }
+        elseif($request->akun=='2'){
+            $jumlah=iuranAnggota::where('WilayahId',$wilayah)->first()['setoran_DPP'];
+            return response()->json($jumlah, 200); 
+        }else{
+            return response()->json($jumlah, 200);
+        }        
+    }
     public function store(Request $request) {
        
         $validator=Validator::make($request->all(),[
@@ -367,17 +381,6 @@ class transaksiController extends Controller
   
  
     }
-    public function selectOptionIuran (Request $request){
-        $wilayah=member::where('id',$request->MemberId)->first()['WilayahId'];
-        $jumlah=0;
-        if($request->akun=='1'){
-            $jumlah=iuranAnggota::where('WilayahId',$wilayah)->first()['iuran'];
-            return response()->json($jumlah, 200); 
-        }else{
-            return response()->json($jumlah, 200);
-        }        
-    }
-
     public function show($id)  {
         // dd($id);
         $data=transaksi::with('akun','member','khas')->where('id',$id)->first();
@@ -387,7 +390,6 @@ class transaksiController extends Controller
        ];
        return response()->json($response,Response::HTTP_OK);
     }
-
     public function update(Request $request, $id){
         // dd($request->name);
         $data=transaksi::findOrFail($id);
@@ -413,13 +415,530 @@ class transaksiController extends Controller
                 // dd($khas);
                 if($request->jenis_transaksi == $data->jenis_transaksi){
                     if($data->jenis_transaksi == 'pemasukan'){
-                        // dd($khas->saldo_akhir);
-                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
-                        $khas->save();
-                        $laporan->debit=$request->jumlah;
-                        $laporan->saldo_akhir=$khas->saldo_akhir;
-                        $laporan->save();
-                        
+                        // dd($request->AkunId);
+                        if($data->AkunId=='2' && $request->AkunId !='2'){
+                            $bulan1=$data->tanggal;
+                            $tes=date_parse($bulan1);
+                            
+                                if($tes['month']=='1'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                   
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+
+                                }
+                                elseif($tes['month']=='2'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                            
+                                }
+                                elseif($tes['month']=='3'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();        
+                                    
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+
+                                }
+                                elseif($tes['month']=='4'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();
+                                    
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                            
+                                }
+                                elseif($tes['month']=='5'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                            
+                                }
+                                elseif($tes['month']=='6'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                            
+                                }
+                                elseif($tes['month']=='7'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                  
+                                }
+                                elseif($tes['month']=='8'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                }
+                                elseif($tes['month']=='9'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                }
+                                elseif($tes['month']=='10'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                  
+                                }
+                                elseif($tes['month']=='11'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                }
+                                elseif($tes['month']=='12'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
+                                    $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->save(); 
+                                    
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+
+                                }
+                           
+                        }elseif($data->AkunId !='2' && $request->AkunId =='2'){
+                            $bulan1=$data->tanggal;
+                            $tes=date_parse($bulan1);
+                                if($tes['month']=='1'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                }
+                                elseif($tes['month']=='2'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                            
+                                }
+                                elseif($tes['month']=='3'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();        
+                                    
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+
+                                }
+                                elseif($tes['month']=='4'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();
+                                    
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                            
+                                }
+                                elseif($tes['month']=='5'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                
+                                }
+                                elseif($tes['month']=='6'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                            
+                                }
+                                elseif($tes['month']=='7'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                  
+                                }
+                                elseif($tes['month']=='8'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                }
+                                elseif($tes['month']=='9'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+
+                                }
+                                elseif($tes['month']=='10'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                }
+                                elseif($tes['month']=='11'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save();
+
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                  
+                                }
+                                elseif($tes['month']=='12'){
+                                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
+                                    $iuranAnggota->status='lunas';
+                                    $iuranAnggota->save(); 
+                                    
+                                    $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                                    $khas->save();
+                                    $laporan->debit=$request->jumlah;
+                                    $laporan->saldo_akhir=$khas->saldo_akhir;
+                                    $laporan->save();
+                                     
+                                    $data->tanggal=$request->tanggal;
+                                    $data->KhasId=$request->KhasId;
+                                    $data->jenis_transaksi=$request->jenis_transaksi;
+                                    $data->AkunId=$request->AkunId;
+                                    $data->MemberId=$request->MemberId;
+                                    $data->keterangan=$request->keterangan;
+                                    $data->jumlah=$request->jumlah;
+                                    $data->save();
+                                }
+                            
+                        }else{
+                            $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
+                            $khas->save();
+                            $laporan->debit=$request->jumlah;
+                            $laporan->saldo_akhir=$khas->saldo_akhir;
+                            $laporan->save();
+                             
+                            $data->tanggal=$request->tanggal;
+                            $data->KhasId=$request->KhasId;
+                            $data->jenis_transaksi=$request->jenis_transaksi;
+                            $data->AkunId=$request->AkunId;
+                            $data->MemberId=$request->MemberId;
+                            $data->keterangan=$request->keterangan;
+                            $data->jumlah=$request->jumlah;
+                            $data->save();
+                        }
                     }
                     else{
                         $khas->saldo_akhir=$khas->saldo_akhir+$data->jumlah-$request->jumlah;
@@ -427,15 +946,540 @@ class transaksiController extends Controller
                         $laporan->kredit=$request->jumlah;
                         $laporan->saldo_akhir=$khas->saldo_akhir;
                         $laporan->save();
+                         
+                        $data->tanggal=$request->tanggal;
+                        $data->KhasId=$request->KhasId;
+                        $data->jenis_transaksi=$request->jenis_transaksi;
+                        $data->AkunId=$request->AkunId;
+                        $data->MemberId=$request->MemberId;
+                        $data->keterangan=$request->keterangan;
+                        $data->jumlah=$request->jumlah;
+                        $data->save();
                     }
                 }else{
                     if($data->jenis_transaksi == 'pemasukan'){
-                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
-                        $khas->save();
-                        $laporan->kredit=$request->jumlah;
-                        $laporan->debit=0;
-                        $laporan->saldo_akhir=$khas->saldo_akhir;
-                        $laporan->save();
+                        if ($data->AkunId=='1' && $request->AkunId !='1'){
+                            $bulan1=$data->tanggal;
+                            $tes=date_parse($bulan1);
+                            
+                                    if($tes['month']=='1'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+                                        
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+                                         
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                    }
+                                    elseif($tes['month']=='2'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+                                         
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                                
+                                    }
+                                    elseif($tes['month']=='3'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();        
+                                        $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                                        $khas->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+                                       
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                    }
+                                    elseif($tes['month']=='4'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                                
+                                    }
+                                    elseif($tes['month']=='5'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                                
+                                    }
+                                    elseif($tes['month']=='6'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                
+                                    }
+                                    elseif($tes['month']=='7'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                      
+                                    }
+                                    elseif($tes['month']=='8'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                    
+                                    }
+                                    elseif($tes['month']=='9'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+                                    }
+                                    elseif($tes['month']=='10'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                      
+                                    }
+                                    elseif($tes['month']=='11'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                      
+                                    }
+                                    elseif($tes['month']=='12'){
+                                        $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
+                                        $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->save();
+
+                                        $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                        $khas->save();
+                                        $laporan->kredit=$request->jumlah;
+                                        $laporan->debit=0;
+                                        $laporan->saldo_akhir=$khas->saldo_akhir;
+                                        $laporan->save();
+
+                                        $data->tanggal=$request->tanggal;
+                                        $data->KhasId=$request->KhasId;
+                                        $data->jenis_transaksi=$request->jenis_transaksi;
+                                        $data->AkunId=$request->AkunId;
+                                        $data->MemberId=$request->MemberId;
+                                        $data->keterangan=$request->keterangan;
+                                        $data->jumlah=$request->jumlah;
+                                        $data->save();
+                                    }
+                                
+                        }elseif($data->AkunId !='1' && $request->AkunId =='1'){
+                            if($tes['month']=='1'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+                                
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                            }
+                            elseif($tes['month']=='2'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                                        
+                            }
+                            elseif($tes['month']=='3'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();        
+                                $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                                $khas->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                            }
+                            elseif($tes['month']=='4'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                                        
+                            }
+                            elseif($tes['month']=='5'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                                        
+                            }
+                            elseif($tes['month']=='6'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                        
+                            }
+                            elseif($tes['month']=='7'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                              
+                            }
+                            elseif($tes['month']=='8'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                            
+                            }
+                            elseif($tes['month']=='9'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+                            }
+                            elseif($tes['month']=='10'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                              
+                            }
+                            elseif($tes['month']=='11'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                              
+                            }
+                            elseif($tes['month']=='12'){
+                                $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
+                                $iuranAnggota->status='lunas';
+                                $iuranAnggota->save();
+
+                                $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                                $khas->save();
+                                $laporan->kredit=$request->jumlah;
+                                $laporan->debit=0;
+                                $laporan->saldo_akhir=$khas->saldo_akhir;
+                                $laporan->save();
+
+                                $data->tanggal=$request->tanggal;
+                                $data->KhasId=$request->KhasId;
+                                $data->jenis_transaksi=$request->jenis_transaksi;
+                                $data->AkunId=$request->AkunId;
+                                $data->MemberId=$request->MemberId;
+                                $data->keterangan=$request->keterangan;
+                                $data->jumlah=$request->jumlah;
+                                $data->save();
+                            }
+                        }
+                        else{
+                            $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
+                            $khas->save();
+                            $laporan->kredit=$request->jumlah;
+                            $laporan->debit=0;
+                            $laporan->saldo_akhir=$khas->saldo_akhir;
+                            $laporan->save();
+
+                            $data->tanggal=$request->tanggal;
+                            $data->KhasId=$request->KhasId;
+                            $data->jenis_transaksi=$request->jenis_transaksi;
+                            $data->AkunId=$request->AkunId;
+                            $data->MemberId=$request->MemberId;
+                            $data->keterangan=$request->keterangan;
+                            $data->jumlah=$request->jumlah;
+                            $data->save();
+                        }
+                       
                     }else{
                         $khas->saldo_akhir=$khas->saldo_akhir+$data->jumlah+$request->jumlah;
                         $khas->save();
@@ -443,6 +1487,15 @@ class transaksiController extends Controller
                         $laporan->kredit=0;
                         $laporan->saldo_akhir=$khas->saldo_akhir;
                         $laporan->save();
+
+                        $data->tanggal=$request->tanggal;
+                        $data->KhasId=$request->KhasId;
+                        $data->jenis_transaksi=$request->jenis_transaksi;
+                        $data->AkunId=$request->AkunId;
+                        $data->MemberId=$request->MemberId;
+                        $data->keterangan=$request->keterangan;
+                        $data->jumlah=$request->jumlah;
+                        $data->save();
                     }
                 }
             }else{
@@ -492,14 +1545,7 @@ class transaksiController extends Controller
                 }
                 
             }
-              $data->tanggal=$request->tanggal;
-              $data->KhasId=$request->KhasId;
-              $data->jenis_transaksi=$request->jenis_transaksi;
-              $data->AkunId=$request->AkunId;
-              $data->MemberId=$request->MemberId;
-              $data->keterangan=$request->keterangan;
-              $data->jumlah=$request->jumlah;
-              $data->save();
+              
 
             $response= [
                 'message'=>'update succes ',
@@ -592,8 +1638,4 @@ class transaksiController extends Controller
     public function jenis_transaksi(Request $request){
         $data=akun::where('kategori_akun',$request->jenis_transaksi)->get();
     }
-    // public function tes(Request $request){
-    //     $
-    //     // dd();
-    // }
 }
