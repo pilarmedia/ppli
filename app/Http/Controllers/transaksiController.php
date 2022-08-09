@@ -102,6 +102,7 @@ class transaksiController extends Controller
                 if($tes['month']=='1'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -122,6 +123,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='2'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -142,6 +144,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='3'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();        
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
                     $khas->save();
@@ -161,6 +164,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='4'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -181,6 +185,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='5'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -201,6 +206,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='6'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -221,6 +227,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='7'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -241,6 +248,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='8'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -261,6 +269,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='9'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -281,6 +290,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='10'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -301,6 +311,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='11'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -321,6 +332,7 @@ class transaksiController extends Controller
                 elseif($tes['month']=='12'){
                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
                     $iuranAnggota->status='lunas';
+                    $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
                             
                     $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
@@ -423,6 +435,7 @@ class transaksiController extends Controller
                                 if($tes['month']=='1'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -444,6 +457,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='2'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -465,6 +479,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='3'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();        
                                     
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -486,6 +501,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='4'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();
                                     
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -507,6 +523,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='5'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -529,6 +546,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='6'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -550,6 +568,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='7'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -571,6 +590,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='8'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -591,6 +611,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='9'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -611,6 +632,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='10'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -632,6 +654,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='11'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -652,6 +675,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='12'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
                                     $iuranAnggota->status='belum lunas';
+                                    $iuranAnggota->jumlah=0;
                                     $iuranAnggota->save(); 
                                     
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -677,6 +701,7 @@ class transaksiController extends Controller
                                 if($tes['month']=='1'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -697,6 +722,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='2'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -718,6 +744,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='3'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();        
                                     
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -739,6 +766,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='4'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
                                     
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -760,6 +788,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='5'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -781,6 +810,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='6'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -802,6 +832,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='7'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -823,6 +854,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='8'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -843,6 +875,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='9'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -864,6 +897,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='10'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -884,6 +918,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='11'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
 
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -905,6 +940,7 @@ class transaksiController extends Controller
                                 elseif($tes['month']=='12'){
                                     $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
                                     $iuranAnggota->status='lunas';
+                                    $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save(); 
                                     
                                     $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah+$request->jumlah;
@@ -965,6 +1001,7 @@ class transaksiController extends Controller
                                     if($tes['month']=='1'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
                                         
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
@@ -986,6 +1023,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='2'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
 
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
@@ -1008,6 +1046,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='3'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();        
                                         $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
                                         $khas->save();
@@ -1031,6 +1070,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='4'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
 
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
@@ -1053,6 +1093,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='5'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
 
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
@@ -1075,6 +1116,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='6'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
 
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
@@ -1097,6 +1139,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='7'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
 
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
@@ -1119,6 +1162,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='8'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
 
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
@@ -1141,6 +1185,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='9'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
 
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
@@ -1153,6 +1198,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='10'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
 
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
@@ -1175,6 +1221,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='11'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
 
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
@@ -1197,6 +1244,7 @@ class transaksiController extends Controller
                                     elseif($tes['month']=='12'){
                                         $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
                                         $iuranAnggota->status='belum lunas';
+                                        $iuranAnggota->jumlah=0;
                                         $iuranAnggota->save();
 
                                         $khas->saldo_akhir=$khas->saldo_akhir-$data->jumlah-$request->jumlah;
