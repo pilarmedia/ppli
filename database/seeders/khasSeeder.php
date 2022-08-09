@@ -38,15 +38,26 @@ class khasSeeder extends Seeder
             $ldate = new DateTime('now');
         $data=array(
             'kode'=>'01',
-            'nama'=>'iuran',
+            'nama'=>'iuran anggota',
             'kode_akun'=>'2',
             'saldo_awal'=>0,
             'saldo_akhir'=>0,
-            'keterangan'=>'iuran',
+            'keterangan'=>'iuran anggota',
+            'tanggal'=>$ldate,
+            'edit_by'=>'admin',
+          );
+          $data1=array(
+            'kode'=>'02',
+            'nama'=>'iuran dpp',
+            'kode_akun'=>'2',
+            'saldo_awal'=>0,
+            'saldo_akhir'=>0,
+            'keterangan'=>'iuran dpp',
             'tanggal'=>$ldate,
             'edit_by'=>'admin',
           );
         //   dd($data);
     $khas=khas::create($data);
+    $khas=khas::create($data1);
     }
 }
