@@ -141,6 +141,7 @@ use App\Http\Controllers\CompanyIndustryController;
          Route::post('/rekap/transaksi', [transaksiController::class,'rekap']);
 
          Route::post('/transaksi/selectOption/akun2', [transaksiController::class,'jenis_transaksi']);
+         Route::post('/transaksi/iuran/selectOption', [transaksiController::class,'selectOptionIuran']);
 
       // iuran
       Route::get('/iuran/index',[iuranController::class,'index']); 

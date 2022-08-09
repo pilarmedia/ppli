@@ -27,13 +27,22 @@ class khasSeeder extends Seeder
             'WilayahId'=>null,
             'kode'=>'101',
             'nama_kategori'=>'pendapatan',
-            'nama_akun'=>'iuran',
+            'nama_akun'=>'iuran_anggota',
+            'induk'=>false,
+            'kategori_akun'=>'pemasukan'
+          );
+          $data3=array(
+            'WilayahId'=>null,
+            'kode'=>'101',
+            'nama_kategori'=>'pendapatan',
+            'nama_akun'=>'iuran dpp',
             'induk'=>false,
             'kategori_akun'=>'pemasukan'
           );
         //   dd($data);
     $akun=akun::create($data1);
     $akun=akun::create($data2);
+    $akun=akun::create($data3);
     date_default_timezone_set('Asia/Jakarta');
             $ldate = new DateTime('now');
         $data=array(

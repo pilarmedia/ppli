@@ -8,6 +8,7 @@ use App\Models\khas;
 use App\Models\member;
 use App\Models\laporan;
 use App\Models\transaksi;
+use App\Models\iuranAnggota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
@@ -52,6 +53,7 @@ class transaksiController extends Controller
     }
 
     public function store(Request $request) {
+       
         $validator=Validator::make($request->all(),[
             'tanggal'=>'required',
             'KhasId'=>'required',
@@ -77,28 +79,268 @@ class transaksiController extends Controller
                 'jumlah'=>$request->jumlah,
               );
         $transaksi=transaksi::create($data);
+        $bulan1=$request->tanggal;
+        $tes=date_parse($bulan1);
         $khas=khas::where('id',$request->KhasId)->first();
 
         if($request->jenis_transaksi === "pemasukan"){
-            // if ($request->AkunId=='2'){
-            //     $iuran=
+            if ($request->AkunId=='2'){
+                if($tes['month']=='1'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='2'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='3'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();        
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='4'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='5'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='6'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='7'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='8'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='9'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='10'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='11'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+                elseif($tes['month']=='12'){
+                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
+                    $iuranAnggota->status='lunas';
+                    $iuranAnggota->save();
+                            
+                    $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                    $khas->save();
+                    $data2=array(
+                        'KhasId'=>$khas->id,
+                        'debit'=>$request->jumlah,
+                        'kredit'=>0,
+                        'saldo_akhir'=>$khas->saldo_akhir
+                    );
+                    //   dd($data2);
+                    $laporan=laporan::create($data2);
+                    $response= [
+                        'message'=>'add succes ',
+                    ];
+                    return response()->json($response,Response::HTTP_CREATED);
+                }
+            }else{
+                $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
+                $khas->save();
+                $data2=array(
+                    'KhasId'=>$khas->id,
+                    'debit'=>$request->jumlah,
+                    'kredit'=>0,
+                    'saldo_akhir'=>$khas->saldo_akhir
+                );
+                //   dd($data2);
+                $laporan=laporan::create($data2);
+                $response= [
+                    'message'=>'add succes ',
+                ];
+                return response()->json($response,Response::HTTP_CREATED);
+            }
 
-            // }
-
-            $khas->saldo_akhir=$khas->saldo_akhir+$transaksi->jumlah;
-            $khas->save();
-            $data2=array(
-                'KhasId'=>$khas->id,
-                'debit'=>$request->jumlah,
-                'kredit'=>0,
-                'saldo_akhir'=>$khas->saldo_akhir
-              );
-            //   dd($data2);
-              $laporan=laporan::create($data2);
-            $response= [
-                'message'=>'add succes ',
-            ];
-            return response()->json($response,Response::HTTP_CREATED);
         }else{
             $khas->saldo_akhir=$khas->saldo_akhir-$transaksi->jumlah;
             $khas->save();
@@ -124,6 +366,16 @@ class transaksiController extends Controller
        }    
   
  
+    }
+    public function selectOptionIuran (Request $request){
+        $wilayah=member::where('id',$request->MemberId)->first()['WilayahId'];
+        $jumlah=0;
+        if($request->akun=='1'){
+            $jumlah=iuranAnggota::where('WilayahId',$wilayah)->first()['iuran'];
+            return response()->json($jumlah, 200); 
+        }else{
+            return response()->json($jumlah, 200);
+        }        
     }
 
     public function show($id)  {
