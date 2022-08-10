@@ -84,9 +84,9 @@ class RegistrasiMember extends Controller
             }
             else{
             if ($item->WilayahId == $cekRegister) {
-                    $nilai=false;
-                    if($item->status != 'Approved by DPW' ){
-                        $nilai=true; 
+                    $nilai=true;
+                    if($item->status == 'mail Verified' ){
+                        $nilai=false; 
                     }
                     // dd($nilai);
                     $regis[] = [
