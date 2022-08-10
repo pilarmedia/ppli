@@ -85,7 +85,24 @@ class AuthController extends Controller
         ]);
     }
     public function user(){
-        $user=User::all();
+        $data=User::all();
+        foreach ($data as $item) {
+            $conidition = true;
+            
+            if(($item->id == '1' )){
+                $roles[] = [
+                    'id'=>$item->id,
+                    'name'=>$item->name,
+                    'cekRoles'=>false
+                ];
+            } else{
+                $roles[] = [
+                    'id'=>$item->id,
+                    'name'=>$item->name,
+                    'cekRoles'=>true
+                ];
+            }
+        }
         return response()->json([
             'data'=>$user
         ]);
