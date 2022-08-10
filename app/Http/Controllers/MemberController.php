@@ -54,12 +54,10 @@ class MemberController extends Controller
 
         if($request->wilayah ==='0'){
             $data=member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
-
             $cek=auth()->user();
-      
              $cekRegister=$cek->WilayahId;
              $cekWilayah=Wilayah::where('id',$cekRegister)->first();
-            $regis=array();
+             $regis=array();
             foreach ($data as $item) {
                 $conidition = true;
                 
@@ -70,7 +68,7 @@ class MemberController extends Controller
                         'wilayah'=>$item->wilayah->name,
                         'email'=>$item->email,
                         'PhoneNumber'=>$item->PhoneNumber,
-                        'cekWilayah'=>false
+                        'cekWilayah'=>true
                     ];                   
                 }
                 else{
@@ -82,7 +80,7 @@ class MemberController extends Controller
                             'status'=>$item->status,
                             'email'=>$item->email,
                             'PhoneNumber'=>$item->PhoneNumber,
-                            'cekWilayah'=>false
+                            'cekWilayah'=>true
                         ];
                         $conidition = false;
                         continue;
@@ -96,7 +94,7 @@ class MemberController extends Controller
                         'email'=>$item->email,
                         'PhoneNumber'=>$item->PhoneNumber,
                         'status'=>$item->status,
-                        'cekWilayah'=>true
+                        'cekWilayah'=>false
                     ];
                 }
                 }
