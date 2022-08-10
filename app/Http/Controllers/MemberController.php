@@ -107,9 +107,56 @@ class MemberController extends Controller
         } else{
         // $wilayah=Wilayah::where('id',$request->wilayah)->first();
         $data=member::where('WilayahId',$request->wilayah)->with('Wilayah','Cities','CompanyIndustry','provinsi')->get();
-         return response()->json([
-             'data' => $data,           
-         ]);   
+        $cek=auth()->user();
+        $cekRegister=$cek->WilayahId;
+        $cekWilayah=Wilayah::where('id',$cekRegister)->first();
+        $regis=array();
+       foreach ($data as $item) {
+           $conidition = true;
+           
+           if($cek->roles == 'admin' || $cekWilayah->HQ == '1' ){
+               $regis[] = [
+                   'id'=>$item->id,
+                   'name'=>$item->name,
+                   'wilayah'=>$item->wilayah->name,
+                   'email'=>$item->email,
+                   'PhoneNumber'=>$item->PhoneNumber,
+                   'cekWilayah'=>true
+               ];                   
+           }
+           else{
+           if ($item->WilayahId == $cekRegister) {
+                   $regis[] = [
+                       'id'=>$item->id,
+                       'name'=>$item->name,
+                       'wilayah'=>$item->wilayah->name,
+                       'status'=>$item->status,
+                       'email'=>$item->email,
+                       'PhoneNumber'=>$item->PhoneNumber,
+                       'cekWilayah'=>true
+                   ];
+                   $conidition = false;
+                   continue;
+               }
+           
+           if ($conidition != false) {
+               $regis[] = [
+                   'id'=>$item->id,
+                   'name'=>$item->name,
+                   'wilayah'=>$item->wilayah->name,
+                   'email'=>$item->email,
+                   'PhoneNumber'=>$item->PhoneNumber,
+                   'status'=>$item->status,
+                   'cekWilayah'=>false
+               ];
+           }
+           }
+       }
+       $response =[
+           'message' => 'succes menampilkan member',
+           'data' => $regis
+      ];
+      return response()->json($response,Response::HTTP_OK);
          
         }
      }
