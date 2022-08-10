@@ -205,11 +205,16 @@ use App\Http\Controllers\CompanyIndustryController;
         Route::delete('/kategori/{id}', [kategoriController::class,'destroy'])->middleware('permission:kategori-delete');
  
         //statusregister
-        Route::post('/statusRegister', [statusRegisterController::class,'store'])->middleware('permission:statusRegister-store');
-        Route::get('/statusRegister', [statusRegisterController::class,'index'])->middleware('permission:statusRegister-index');
-        Route::post('/statusRegister/{id}', [statusRegisterController::class,'update'])->middleware('permission:statusRegister-update');
-        Route::get('/statusRegister/{id}', [statusRegisterController::class,'show'])->middleware('permission:statusRegister-show');
-        Route::delete('/statusRegister/{id}', [statusRegisterController::class,'destroy'])->middleware('permission:statusRegister-delete');
+        Route::post('/statusRegister', [statusRegisterController::class,'store']);
+        // ->middleware('permission:statusRegister-store');
+        Route::get('/statusRegister', [statusRegisterController::class,'index']);
+        // ->middleware('permission:statusRegister-index');
+        Route::post('/statusRegister/{id}', [statusRegisterController::class,'update']);
+        // ->middleware('permission:statusRegister-update');
+        Route::get('/statusRegister/{id}', [statusRegisterController::class,'show']);
+        // ->middleware('permission:statusRegister-show');
+        Route::delete('/statusRegister/{id}', [statusRegisterController::class,'destroy']);
+        // ->middleware('permission:statusRegister-delete');
 
       // wilayah
       Route::post('/wilayah', [WilayahController::class,'store']);
