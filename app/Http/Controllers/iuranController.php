@@ -110,4 +110,8 @@ class iuranController extends Controller
         return response()->json($data, 200); 
 
     }
+    public function showUpdate($id){
+        $data=iuran::where('id',$id)->first();
+        return response()->json($data, 200);
+    }
 }
