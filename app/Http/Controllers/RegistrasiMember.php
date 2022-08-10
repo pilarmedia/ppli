@@ -59,12 +59,9 @@ class RegistrasiMember extends Controller
                 ];
             }elseif ($cekWilayah->HQ == '1'){
                 $nilai=true;
-                $nilai1=true;
+                $nilai1=false;
                     if(($item->status == 'Approved by DPW')  ){
                         $nilai=false; 
-                    }
-                    if($item->status == 'Approved by DPP'){
-                            $nilai1=false;
                     }
                     $regis[] = [
                         'id'=>$item->id,
@@ -84,7 +81,7 @@ class RegistrasiMember extends Controller
                             'nama_perusahaan'=>$item->NamaPerushaan,
                             'wilayah'=>$item->wilayah->name,
                             'status'=>$item->status,
-                            'cekStatus'=>true,
+                            'cekStatus'=>false,
                             'cekWilayah'=>true
                         ];
                     }
@@ -92,13 +89,10 @@ class RegistrasiMember extends Controller
             else{
             if ($item->WilayahId == $cekRegister) {
                     $nilai=true;
-                    $nilai1=true;
                     if($item->status == 'mail Verified' ){
                         $nilai=false; 
                     }
-                    if($item->status == 'Approved by DPP'){
-                        $nilai1=false;
-                }
+                 
                     // dd($nilai);
                     $regis[] = [
                         'id'=>$item->id,
@@ -106,7 +100,7 @@ class RegistrasiMember extends Controller
                         'nama_perusahaan'=>$item->NamaPerushaan,
                         'wilayah'=>$item->wilayah->name,
                         'status'=>$item->status,
-                        'cekStatus'=>$nilai1,
+                        'cekStatus'=>false,
                         'cekWilayah'=>$nilai
                     ];
                     $conidition = false;
