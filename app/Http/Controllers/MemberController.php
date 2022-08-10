@@ -35,7 +35,7 @@ class MemberController extends Controller
     public function update(Request $request,$id){
         $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
         if($request->gambar){
-        $imageName = time().'.'.$request->gambar->getClientOriginalName();
+        $imageName = time().'.'.$request->gambar;
         $gambar=Storage::putFileAs('gambar',$request->gambar,$imageName);
         }
         $data->gambar=$gambar;
