@@ -81,7 +81,7 @@ class MemberController extends Controller
             $conidition = true;
             
             if(($cek->roles == 'admin' ) || ($cekWilayah->HQ == '1') ){
-                $user[] = [
+                $regis[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
                     'nama_perusahaan'=>$item->NamaPerushaan,
@@ -109,7 +109,7 @@ class MemberController extends Controller
                 }
             
             if ($conidition != false) {
-                $user[] = [
+                $regis[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
                     'nama_perusahaan'=>$item->NamaPerushaan,

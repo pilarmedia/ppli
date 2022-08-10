@@ -31,6 +31,7 @@ use App\Http\Controllers\pengumumanController;
 use App\Http\Controllers\iuranAnggotaController;
 use App\Http\Controllers\SelectOptionController;
 use App\Http\Controllers\SettingEmailController;
+use App\Http\Controllers\logRegistrasiController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\statusRegisterController;
 use App\Http\Controllers\CompanyIndustryController;
