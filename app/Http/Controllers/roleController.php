@@ -31,7 +31,7 @@ class roleController extends Controller
                     'id'=>$item->id,
                     'name'=>$item->name,
                     'cekRoles'=>true
-          
+                ];
             }
         }
         $response = [
