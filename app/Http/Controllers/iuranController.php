@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use App\Models\khas;
 use App\Models\iuran;
 use App\Models\member;
+use App\Models\laporan;
 use App\Models\transaksi;
 use App\Models\iuranAnggota;
 use Illuminate\Http\Request;
