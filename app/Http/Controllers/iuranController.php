@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use Carbon\Carbon;
+use App\Models\khas;
 use App\Models\iuran;
 use App\Models\member;
+use App\Models\transaksi;
 use App\Models\iuranAnggota;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -25,7 +27,7 @@ class iuranController extends Controller
     public function update(Request $request,$id){
         $iuran=iuran::find($id)->first();
         $member=member::find($iuran->memberId);
-        $iuranAnggota=iuranAnggota::where('WilayahId',$member->WilayahId)->get();
+        $iuranAnggota=iuranAnggota::where('WilayahId',$member->WilayahId)->first();
         
         $validator=Validator::make($request->all(),[
             'tanggal_bayar'=>'required',

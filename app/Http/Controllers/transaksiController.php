@@ -45,7 +45,7 @@ class transaksiController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
     public function selectOptionAkun(){
-        $data=akun::all();
+        $data=akun::where('induk','false')->get();
         $response =[
             'message' => 'succes menampilkan member',
             'data' => $data
