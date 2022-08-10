@@ -139,7 +139,7 @@ use App\Http\Controllers\CompanyIndustryController;
          Route::get('/laporan', [transaksiController::class,'laporan']);
          Route::get('/transaksi/selectOption/tahun', [transaksiController::class,'selectOptionTahun']);
          Route::post('/rekap/transaksi', [transaksiController::class,'rekap']);
-
+         Route::get('/member/transaksi/{id}', [transaksiController::class,'memberTransaksi']);
          Route::post('/transaksi/selectOption/akun2', [transaksiController::class,'jenis_transaksi']);
          Route::post('/transaksi/iuran/selectOption', [transaksiController::class,'selectOptionIuran']);
 

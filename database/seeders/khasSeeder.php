@@ -33,7 +33,7 @@ class khasSeeder extends Seeder
           );
           $data3=array(
             'WilayahId'=>null,
-            'kode'=>'101',
+            'kode'=>'102',
             'nama_kategori'=>'pendapatan',
             'nama_akun'=>'iuran dpp',
             'induk'=>false,
