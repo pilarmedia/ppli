@@ -291,6 +291,7 @@ use App\Http\Controllers\CompanyIndustryController;
      
       // member
       Route::get('member/index',[MemberController::class,'index']);
+      // ini
       Route::post('member/update/{id}',[MemberController::class,'update']);
       Route::get('member/show/{id}',[MemberController::class,'show']);
       Route::post('member/wlayah/show',[MemberController::class,'MemberWilayah']);
