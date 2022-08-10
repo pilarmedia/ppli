@@ -26,7 +26,7 @@ class iuranController extends Controller
     }
 
     public function update(Request $request,$id){
-        $iuran=iuran::find($id)->first();
+        $iuran=iuran::find($id);
         $member=member::find($iuran->memberId);
         $iuranAnggota=iuranAnggota::where('WilayahId',$member->WilayahId)->first();
         
@@ -49,22 +49,22 @@ class iuranController extends Controller
                     'keterangan'=>'iuran',
                     'jumlah'=>$iuranAnggota->iuran,
                   );
-            $transaksi=transaksi::create($data);
-            $khas=khas::find(1);
-            $khas->saldo_akhir=$iuranAnggota->iuran+$khas->saldo_akhir;
-            $khas->save();
-                $data2=array(
+                $transaksi=transaksi::create($data);
+                $khas=khas::find(1);
+                $khas->saldo_akhir=$iuranAnggota->iuran+$khas->saldo_akhir;
+                $khas->save();
+                    $data2=array(
                     'KhasId'=>1,
                     'debit'=>$iuranAnggota->iuran,
                     'kredit'=>0,
                     'saldo_akhir'=>$khas->saldo_akhir
                 );
                 //   dd($data2);
-                $laporan=laporan::create($data2);
-                $iuran->tanggal_bayar=$request->tanggal_bayar;
-                $iuran->status=$request->status;
-                $iuran->jumlah=$iuranAnggota->iuran;
-                $iuran->save();
+                    $laporan=laporan::create($data2);
+                    $iuran->tanggal_bayar=$request->tanggal_bayar;
+                    $iuran->status=$request->status;
+                    $iuran->jumlah=$iuranAnggota->iuran;
+                    $iuran->save();
                
                 return response()->json('update berhasil', 200);
             } else{
