@@ -20,7 +20,7 @@ class roleController extends Controller
         foreach ($data as $item) {
             $conidition = true;
             
-            if(($data->id == '1' ) || ($data->id == '2') ){
+            if(($item->id == '1' ) || ($item->id == '2') ){
                 $roles[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
