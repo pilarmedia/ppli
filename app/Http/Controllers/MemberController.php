@@ -103,7 +103,7 @@ class MemberController extends Controller
             }
             $response =[
                 'message' => 'succes menampilkan member',
-                'data' => $data
+                'data' => $regis
            ];
            return response()->json($response,Response::HTTP_OK);
         } else{
