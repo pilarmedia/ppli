@@ -90,7 +90,7 @@ class AuthController extends Controller
             $conidition = true;
             
             if(($item->id == '1' )){
-                $usr[] = [
+                $user[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
                     'email'=>$item->email,
