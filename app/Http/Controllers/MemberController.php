@@ -33,6 +33,9 @@ class MemberController extends Controller
     }
 
     public function update(Request $request,$id){
+        $request->validate([
+            'gambar' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048'
+         ]);
         $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
         if($request->gambar){
         $imageName = time().'.'.$request->gambar->getClientOriginalName();
