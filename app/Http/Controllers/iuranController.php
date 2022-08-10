@@ -67,7 +67,12 @@ class iuranController extends Controller
                     $iuran->save();
                
                 return response()->json('update berhasil', 200);
-            } else{
+            }elseif($request->status == 'lunas' && $iuran->status =='lunas'){
+                $iuran->tanggal_bayar=$request->tanggal_bayar;
+                $iuran->save();
+                return response()->json('update berhasil', 200);
+            }
+             else{
                 
             $transaksi=transaksi::where('MemberId',$member->id)->first();
             $transaksi->delete();
