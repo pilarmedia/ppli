@@ -90,15 +90,21 @@ class AuthController extends Controller
             $conidition = true;
             
             if(($item->id == '1' )){
-                $roles[] = [
+                $usr[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
+                    'email'=>$item->email,
+                    'PhoneNumber'=>$item->PhoneNumber,
+                    'roles'=>$item->roles,
                     'cekRoles'=>false
                 ];
             } else{
-                $roles[] = [
+                $user[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
+                    'email'=>$item->email,
+                    'PhoneNumber'=>$item->PhoneNumber,
+                    'roles'=>$item->roles,
                     'cekRoles'=>true
                 ];
             }
