@@ -58,7 +58,7 @@ class RegistrasiMember extends Controller
                 ];
             }elseif ($cekWilayah->HQ == '1'){
                 $nilai=true;
-                    if($item->status == 'Approved by DPW' ){
+                    if($item->status == 'Approved by DPW' || $item->status == 'Approved by DPP' ){
                         $nilai=false; 
                     }
                     $regis[] = [
