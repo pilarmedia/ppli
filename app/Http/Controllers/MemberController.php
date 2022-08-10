@@ -34,9 +34,10 @@ class MemberController extends Controller
 
     public function update(Request $request,$id){
         $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
+        if($request->gambar){
         $imageName = time().'.'.$request->gambar->getClientOriginalName();
         $gambar=Storage::putFileAs('gambar',$request->gambar,$imageName);
-
+        }
         $data->gambar=$gambar;
         $data->name=$request->name;
         $data->email=$request->email;
