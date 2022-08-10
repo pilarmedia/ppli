@@ -24,13 +24,13 @@ class roleController extends Controller
                 $roles[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
-                    'cekRoles'=>false
+                    'cekRoles'=>true
                 ];
             } else{
                 $roles[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
-                    'cekRoles'=>true
+                    'cekRoles'=>false
                 ];
             }
         }
