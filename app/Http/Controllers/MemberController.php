@@ -36,6 +36,53 @@ class MemberController extends Controller
 
         if($request->wilayah ==='0'){
             $data=member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
+
+            $cek=auth()->user();
+      
+             $cekRegister=$cek->WilayahId;
+             $cekWilayah=Wilayah::where('id',$cekRegister)->first();
+            $regis=array();
+            foreach ($data as $item) {
+                $conidition = true;
+                
+                if($cek->roles == 'admin' || $cekWilayah->HQ == '1' ){
+                    $regis[] = [
+                        'id'=>$item->id,
+                        'name'=>$item->name,
+                        'wilayah'=>$item->wilayah->name,
+                        'email'=>$item->email,
+                        'PhoneNumber'=>$item->PhoneNumber,
+                        'cekWilayah'=>false
+                    ];                   
+                }
+                else{
+                if ($item->WilayahId == $cekRegister) {
+                        $regis[] = [
+                            'id'=>$item->id,
+                            'name'=>$item->name,
+                            'wilayah'=>$item->wilayah->name,
+                            'status'=>$item->status,
+                            'email'=>$item->email,
+                            'PhoneNumber'=>$item->PhoneNumber,
+                            'cekWilayah'=>false
+                        ];
+                        $conidition = false;
+                        continue;
+                    }
+                
+                if ($conidition != false) {
+                    $regis[] = [
+                        'id'=>$item->id,
+                        'name'=>$item->name,
+                        'wilayah'=>$item->wilayah->name,
+                        'email'=>$item->email,
+                        'PhoneNumber'=>$item->PhoneNumber,
+                        'status'=>$item->status,
+                        'cekWilayah'=>true
+                    ];
+                }
+                }
+            }
             $response =[
                 'message' => 'succes menampilkan member',
                 'data' => $data

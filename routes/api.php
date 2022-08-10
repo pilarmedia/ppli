@@ -264,6 +264,7 @@ use App\Http\Controllers\CompanyIndustryController;
        Route::get('register/delete/{id}', [RegistrasiMember::class,'deleteRegister']);
        Route::get('register/show/{id}', [RegistrasiMember::class,'showRegister']);
 
+       
 
        //log register
        Route::get('/log/show',[logRegistrasiController::class,'index']);  
