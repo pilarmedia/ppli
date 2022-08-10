@@ -71,6 +71,16 @@ class RegistrasiMember extends Controller
                     ];
                     $conidition = false;
                     continue;
+                    if ($conidition != false) {
+                        $regis[] = [
+                            'id'=>$item->id,
+                            'name'=>$item->name,
+                            'nama_perusahaan'=>$item->NamaPerushaan,
+                            'wilayah'=>$item->wilayah->name,
+                            'status'=>$item->status,
+                            'cekWilayah'=>true
+                        ];
+                    }
             }
             else{
             if ($item->WilayahId == $cekRegister) {
