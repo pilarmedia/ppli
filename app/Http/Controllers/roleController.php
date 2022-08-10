@@ -17,9 +17,26 @@ class roleController extends Controller
     public function index()
     {
         $data = Role::get();
+        foreach ($data as $item) {
+            $conidition = true;
+            
+            if(($data->roles == 'admin' ) || ($data->roles == 'member') ){
+                $roles[] = [
+                    'id'=>$item->id,
+                    'name'=>$item->name,
+                    'cekRoles'=>false
+                ];
+            } else{
+                $roles[] = [
+                    'id'=>$item->id,
+                    'name'=>$item->name,
+                    'cekRoles'=>true
+          
+            }
+        }
         $response = [
             'message' => 'show role ',
-            'data' => $data
+            'data' => $roles
         ];
         return response()->json($response, Response::HTTP_CREATED);
     }
@@ -264,6 +281,7 @@ class roleController extends Controller
     }
     public function showRole($id){
         $roles=user::find($id);
+        
         return response()->json($roles,200);
     }
 }
