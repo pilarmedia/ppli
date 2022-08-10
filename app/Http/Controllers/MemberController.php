@@ -45,8 +45,6 @@ class MemberController extends Controller
         $data->status=$request->status;
         $data->alamat=$request->alamat;
         $data->BentukBadanUsaha=$request->BentukBadanUsaha;
-        $data->KotaId=$request->KotaId;
-        $data->provinsiId=$request->provinsiId;
         $data->save();
     }
 
