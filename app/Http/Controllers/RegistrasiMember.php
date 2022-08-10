@@ -59,7 +59,7 @@ class RegistrasiMember extends Controller
             } else{
             if ($item->WilayahId == $cekRegister) {
                     $nilai=false;
-                    if($item->status != 'Approved by DPP'){
+                    if($item->status != 'Approved by DPW'){
                         $nilai=true; 
                     }
                     // dd($nilai);
@@ -284,10 +284,10 @@ class RegistrasiMember extends Controller
         
             ]);  
         }
-        if($request->status== 'Approved by DPP'){
+        if($request->status== 'Approved by DPW'){
             $data = email::firstOrFail();
             self::validateTransport();
-            $dataMailDPP= TemplateMail::where('kode','Approved by DPP')->first();
+            $dataMailDPP= TemplateMail::where('kode','Approved by DPW')->first();
             $mail=$dataMailDPP->isi_email;
             $tujuan=Wilayah::where('id',$data1->WilayahId)->first();
             $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
@@ -308,12 +308,12 @@ class RegistrasiMember extends Controller
                 'status' => 'success update',
             ]); 
         }
-        if($request->status== 'Approved by DPW'){
-            if($data1->status== 'Approved by DPP'){
+        if($request->status== 'Approved by DPP'){
+            if($data1->status== 'Approved by DPW'){
                 $data = email::firstOrFail();
                 self::validateTransport();
           
-                $dataMail= TemplateMail::where('kode','Approved by DPW')->first();
+                $dataMail= TemplateMail::where('kode','Approved by DPP')->first();
                 $mail=$dataMail->isi_email;
 
                 $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
@@ -426,7 +426,7 @@ class RegistrasiMember extends Controller
     
             }else{
              return response()->json([
-                'status' => 'belum di approve dpp',
+                'status' => 'belum di approve DPW',
             ]);  
         }
 
