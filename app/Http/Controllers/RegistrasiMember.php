@@ -47,7 +47,7 @@ class RegistrasiMember extends Controller
         foreach ($data as $item) {
             $conidition = true;
             
-            if(($cek->roles == 'admin' ) || ($cekWilayah->HQ == '1') ){
+            if($cek->roles == 'admin'  ){
                 $regis[] = [
                     'id'=>$item->id,
                     'name'=>$item->name,
@@ -56,10 +56,26 @@ class RegistrasiMember extends Controller
                     'status'=>$item->status,
                     'cekWilayah'=>false
                 ];
-            } else{
+            }elseif ($cekWilayah->HQ == '1'){
+                $nilai=true;
+                    if($item->status == 'Approved by DPW' ){
+                        $nilai=false; 
+                    }
+                    $regis[] = [
+                        'id'=>$item->id,
+                        'name'=>$item->name,
+                        'nama_perusahaan'=>$item->NamaPerushaan,
+                        'wilayah'=>$item->wilayah->name,
+                        'status'=>$item->status,
+                        'cekWilayah'=>$nilai
+                    ];
+                    $conidition = false;
+                    continue;
+            }
+            else{
             if ($item->WilayahId == $cekRegister) {
                     $nilai=false;
-                    if($item->status != 'Approved by DPW'){
+                    if($item->status != 'Approved by DPW' ){
                         $nilai=true; 
                     }
                     // dd($nilai);
