@@ -102,6 +102,7 @@ class RegistrasiMember extends Controller
                         'nama_perusahaan'=>$item->NamaPerushaan,
                         'wilayah'=>$item->wilayah->name,
                         'status'=>$item->status,
+                        'cekStatus'=>true,
                         'cekWilayah'=>$nilai
                     ];
                     $conidition = false;
