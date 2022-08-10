@@ -27,6 +27,7 @@ class CreateMembersTable extends Migration
             $table->foreignId('provinsiId')->constrained('provinsis');
             $table->foreignId('KotaId')->constrained('cities');
             $table->string('BentukBadanUsaha')->nullable();
+            $table->string('alamat')->nullable();
             $table->text('AlasanBergabung')->nullable();
             $table->date('RegisterDate')->nullable();
             $table->string('status')->nullable();

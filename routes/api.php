@@ -264,7 +264,7 @@ use App\Http\Controllers\CompanyIndustryController;
        Route::get('register/delete/{id}', [RegistrasiMember::class,'deleteRegister']);
        Route::get('register/show/{id}', [RegistrasiMember::class,'showRegister']);
 
-       
+
 
        //log register
        Route::get('/log/show',[logRegistrasiController::class,'index']);  
@@ -291,6 +291,7 @@ use App\Http\Controllers\CompanyIndustryController;
      
       // member
       Route::get('member/index',[MemberController::class,'index']);
+      Route::post('member/update/{id}',[MemberController::class,'update']);
       Route::get('member/show/{id}',[MemberController::class,'show']);
       Route::post('member/wlayah/show',[MemberController::class,'MemberWilayah']);
       Route::post('member/gambar/{id}',[MemberController::class,'gambar']);

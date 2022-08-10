@@ -30,7 +30,7 @@ class member extends Model
         'KotaId',
         'BentukBadanUsaha',
         'AlasanBergabung',
-        
+        'alamat',
         'RegisterDate',
         'status',
         'roles',

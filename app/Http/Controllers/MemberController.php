@@ -24,12 +24,30 @@ class MemberController extends Controller
     public function show($id)
     {
         // dd($id);
-        $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->get();
+        $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
         $response =[
             'message' => 'detail data',
             'data' => $data
        ];
        return response()->json($response,Response::HTTP_OK);
+    }
+
+    public function update(Request $request,$id){
+        $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
+        $imageName = time().'.'.$request->gambar->getClientOriginalName();
+        $gambar=Storage::putFileAs('gambar',$request->gambar,$imageName);
+
+        $data->gambar=$gambar;
+        $data->name=$request->name;
+        $data->email=$request->email;
+        $data->NamaPerushaan=$request->NamaPerushaan;
+        $data->PhoneNumber=$request->PhoneNumber;
+        $data->status=$request->status;
+        $data->alamat=$request->alamat;
+        $data->BentukBadanUsaha=$request->BentukBadanUsaha;
+        $data->KotaId=$request->KotaId;
+        $data->provinsiId=$request->provinsiId;
+        $data->save();
     }
 
     public function MemberWilayah(Request $request){
@@ -100,18 +118,15 @@ class MemberController extends Controller
      public function gambar(Request $request,$id){
         $member=member::find($id);
         $imageName = time().'.'.$request->gambar->getClientOriginalName();
-        $nama=Storage::putFileAs('gambar',$request->gambar,$imageName);
+        $gambar=Storage::putFileAs('gambar',$request->gambar,$imageName);
         // dd($nama);
-        $member->gambar=$nama;
+        $member->gambar=$gambar;
         $member->save();
         return response()->json('berhasil upload gambar', 200);
      }
      public function getGambar($id){
         $member=member::find($id);
-        // dd($member->gambar);
         $path = storage_path('app/'.$member->gambar);
-        // return Response::download($path);  
-        // $path=
         return response()->json($path, 200 );
      }
      public function index(){
