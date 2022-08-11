@@ -33,14 +33,6 @@ class MemberController extends Controller
     }
 
     public function update(Request $request,$id){
-    
-    
-        $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
-        if($request->gambar){
-        $imageName = time().'.'.$request->gambar->getClientOriginalName();
-        $gambar=Storage::putFileAs('gambar',$request->gambar,$imageName);
-        }
-        $data->gambar=$gambar;
         $data->name=$request->name;
         $data->email=$request->email;
         $data->NamaPerushaan=$request->NamaPerushaan;
@@ -49,6 +41,7 @@ class MemberController extends Controller
         $data->alamat=$request->alamat;
         $data->BentukBadanUsaha=$request->BentukBadanUsaha;
         $data->save();
+        return response()->jsonp($data, 200);
     }
 
     public function MemberWilayah(Request $request){
@@ -107,56 +100,56 @@ class MemberController extends Controller
            return response()->json($response,Response::HTTP_OK);
         } else{
         // $wilayah=Wilayah::where('id',$request->wilayah)->first();
-        $data=member::where('WilayahId',$request->wilayah)->with('Wilayah','Cities','CompanyIndustry','provinsi')->get();
-        $cek=auth()->user();
-        $cekRegister=$cek->WilayahId;
-        $cekWilayah=Wilayah::where('id',$cekRegister)->first();
-        $regis=array();
-       foreach ($data as $item) {
-           $conidition = true;
-           
-           if($cek->roles == 'admin' || $cekWilayah->HQ == '1' ){
-               $regis[] = [
-                   'id'=>$item->id,
-                   'name'=>$item->name,
-                   'wilayah'=>$item->wilayah->name,
-                   'email'=>$item->email,
-                   'PhoneNumber'=>$item->PhoneNumber,
-                   'cekWilayah'=>true
-               ];                   
-           }
-           else{
-           if ($item->WilayahId == $cekRegister) {
-                   $regis[] = [
-                       'id'=>$item->id,
-                       'name'=>$item->name,
-                       'wilayah'=>$item->wilayah->name,
-                       'status'=>$item->status,
-                       'email'=>$item->email,
-                       'PhoneNumber'=>$item->PhoneNumber,
-                       'cekWilayah'=>true
-                   ];
-                   $conidition = false;
-                   continue;
-               }
-           
-           if ($conidition != false) {
-               $regis[] = [
-                   'id'=>$item->id,
-                   'name'=>$item->name,
-                   'wilayah'=>$item->wilayah->name,
-                   'email'=>$item->email,
-                   'PhoneNumber'=>$item->PhoneNumber,
-                   'status'=>$item->status,
-                   'cekWilayah'=>false
-               ];
-           }
-           }
-       }
-       $response =[
-           'message' => 'succes menampilkan member',
-           'data' => $regis
-      ];
+                $data=member::where('WilayahId',$request->wilayah)->with('Wilayah','Cities','CompanyIndustry','provinsi')->get();
+                $cek=auth()->user();
+                $cekRegister=$cek->WilayahId;
+                $cekWilayah=Wilayah::where('id',$cekRegister)->first();
+                $regis=array();
+            foreach ($data as $item) {
+                $conidition = true;
+                
+                if($cek->roles == 'admin' || $cekWilayah->HQ == '1' ){
+                    $regis[] = [
+                        'id'=>$item->id,
+                        'name'=>$item->name,
+                        'wilayah'=>$item->wilayah->name,
+                        'email'=>$item->email,
+                        'PhoneNumber'=>$item->PhoneNumber,
+                        'cekWilayah'=>true
+                    ];                   
+                }
+                else{
+                if ($item->WilayahId == $cekRegister) {
+                        $regis[] = [
+                            'id'=>$item->id,
+                            'name'=>$item->name,
+                            'wilayah'=>$item->wilayah->name,
+                            'status'=>$item->status,
+                            'email'=>$item->email,
+                            'PhoneNumber'=>$item->PhoneNumber,
+                            'cekWilayah'=>true
+                        ];
+                        $conidition = false;
+                        continue;
+                    }
+                
+                if ($conidition != false) {
+                    $regis[] = [
+                        'id'=>$item->id,
+                        'name'=>$item->name,
+                        'wilayah'=>$item->wilayah->name,
+                        'email'=>$item->email,
+                        'PhoneNumber'=>$item->PhoneNumber,
+                        'status'=>$item->status,
+                        'cekWilayah'=>false
+                    ];
+                }
+                }
+            }
+            $response =[
+                'message' => 'succes menampilkan member',
+                'data' => $regis
+            ];
       return response()->json($response,Response::HTTP_OK);
          
         }
@@ -235,4 +228,5 @@ class MemberController extends Controller
        ];
        return response()->json($response,Response::HTTP_OK);
     }
+ 
 }
