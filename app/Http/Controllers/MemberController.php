@@ -33,6 +33,9 @@ class MemberController extends Controller
     }
 
     public function update(Request $request,$id){
+    
+    
+        $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
         $data->name=$request->name;
         $data->email=$request->email;
         $data->NamaPerushaan=$request->NamaPerushaan;
@@ -41,7 +44,7 @@ class MemberController extends Controller
         $data->alamat=$request->alamat;
         $data->BentukBadanUsaha=$request->BentukBadanUsaha;
         $data->save();
-        return response()->jsonp($data, 200);
+        return response()->json($data, 200);
     }
 
     public function MemberWilayah(Request $request){
