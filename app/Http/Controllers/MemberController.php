@@ -37,7 +37,7 @@ class MemberController extends Controller
     
         $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
         if($request->gambar){
-        $imageName = time().'.'.$request->gambar->extension();
+        $imageName = time().'.'.$request->gambar->getClientOriginalName();
         $gambar=Storage::putFileAs('gambar',$request->gambar,$imageName);
         }
         $data->gambar=$gambar;
