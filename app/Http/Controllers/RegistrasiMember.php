@@ -172,6 +172,7 @@ class RegistrasiMember extends Controller
         ]);
 
        $registrasi=register::where('Username',$request->Username)->first();
+    //    dd('a');
         if($registrasi){
             return response()->json([
                 'message'=>"Username sudah tersedia"
@@ -209,40 +210,44 @@ class RegistrasiMember extends Controller
                 'RegisterDate'=>$ldate
 
             ]);
-
-            // $data = email::firstOrFail();
-            // self::validateTransport();
+            // dd('a');
+            $data = email::firstOrFail();
+            self::validateTransport();
             $email = $request->email;
+            // dd('a');
             $name= $request->name;
+            // dd('b');
             $datamail= TemplateMail::where('kode','mail Verified')->first();
+            // dd($datamail);
             $mail=$datamail->isi_email;
             $details['email'] =$email;
             $details['name'] =$name;
             $details['mail'] =$mail;
-            // dispatch(new SendEmailRegisterJob($details));
-                // $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
-                // ->setUsername($data->username)
-                // ->setPassword($data->password);
-                // $mailer = new Swift_Mailer($transport);
-
-                // $message = (new Swift_Message($data->receipt_subject))
-                //     ->setFrom([ $data->username=> $data->name])
-                //     ->setTo([$email=> $request->name])
-                //     ->setBody('saudara '.$name.' '.$mail, 'text/html');
-            $data1= TemplateMail::where('kode','Verified by DPP')->first();
+            dispatch(new SendEmailRegisterJob($details));
+                $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
+                ->setUsername($data->username)
+                ->setPassword($data->password);
+                $mailer = new Swift_Mailer($transport);
+                $message = (new Swift_Message($data->receipt_subject))
+                    ->setFrom([ $data->username=> $data->name])
+                    ->setTo([$email=> $request->name])
+                    ->setBody('saudara '.$name.' '.$mail, 'text/html');
+            $data1= TemplateMail::where('kode','Verified by DPW')->first();
+            // dd($data1);
             $mail=$data1->isi_email;
-            $tujuan=Wilayah::where('HQ',1)->first();
+            $tujuan=Wilayah::where('HQ',true)->first();
+            // dd($tujuan->email);
             $details['tujuan_email'] =$tujuan->email;
             $details['tujuan_name'] =$tujuan->name;
             $details['tujuan_mail'] =$mail;
             dispatch(new SendEmailRegisterJob($details));
-            //     $message2 = (new Swift_Message($data->receipt_subject))
-            //         ->setFrom([ $data->username=> $data->name])
-            //         ->setTo([$tujuan->email=> $tujuan->name])
-            //         ->setBody($mail.' saudara '.$name, 'text/html');
+                $message2 = (new Swift_Message($data->receipt_subject))
+                    ->setFrom([ $data->username=> $data->name])
+                    ->setTo([$tujuan->email=> $tujuan->name])
+                    ->setBody($mail.' saudara '.$name, 'text/html');
 
-            //     $result = $mailer->send($message);
-            //     $result1 = $mailer->send($message2);
+                $result = $mailer->send($message);
+                $result1 = $mailer->send($message2);
         
         
             // Mail::to($email)->send(new SendEmail($name,$mail));
@@ -269,21 +274,21 @@ class RegistrasiMember extends Controller
        
         $name=$data1->name;
         if($request->status == 'Rejected by DPP'){
-            // $data = email::firstOrFail();
-            // self::validateTransport();
-            // $dataMail= TemplateMail::where('kode','Rejected by DPP')->first();
-            // $mail=$dataMail->isi_email;
-            // $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
-            // ->setUsername($data->username)
-            // ->setPassword($data->password);
-            // $mailer = new Swift_Mailer($transport);
+            $data = email::firstOrFail();
+            self::validateTransport();
+            $dataMail= TemplateMail::where('kode','Rejected by DPP')->first();
+            $mail=$dataMail->isi_email;
+            $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
+            ->setUsername($data->username)
+            ->setPassword($data->password);
+            $mailer = new Swift_Mailer($transport);
 
-            // $message = (new Swift_Message($data->receipt_subject))
-            //     ->setFrom([ $data->username=> $data->name])
-            //     ->setTo([$email=> $name])
-            //     ->setBody('saudara '.$name.' '.$mail, 'text/html');
-            // $result = $mailer->send($message);
-            // // Mail::to($email)->send(new SendEmail($name,$mail));
+            $message = (new Swift_Message($data->receipt_subject))
+                ->setFrom([ $data->username=> $data->name])
+                ->setTo([$email=> $name])
+                ->setBody('saudara '.$name.' '.$mail, 'text/html');
+            $result = $mailer->send($message);
+            // Mail::to($email)->send(new SendEmail($name,$mail));
             $data1->status=$request->status;
             $data1->save();
             return response()->json([
@@ -318,21 +323,21 @@ class RegistrasiMember extends Controller
             ]);  
         }
         if($request->status== 'Approved by DPW'){
-            // $data = email::firstOrFail();
-            // self::validateTransport();
-            // $dataMailDPP= TemplateMail::where('kode','Approved by DPW')->first();
-            // $mail=$dataMailDPP->isi_email;
-            // $tujuan=Wilayah::where('id',$data1->WilayahId)->first();
-            // $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
-            // ->setUsername($data->username)
-            // ->setPassword($data->password);
-            // $mailer = new Swift_Mailer($transport);
+            $data = email::firstOrFail();
+            self::validateTransport();
+            $dataMailDPP= TemplateMail::where('kode','Approved by DPW')->first();
+            $mail=$dataMailDPP->isi_email;
+            $tujuan=Wilayah::where('id',$data1->WilayahId)->first();
+            $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
+            ->setUsername($data->username)
+            ->setPassword($data->password);
+            $mailer = new Swift_Mailer($transport);
     
-            // $message = (new Swift_Message($data->receipt_subject))
-            //     ->setFrom([ $data->username=> $data->name])
-            //     ->setTo([$tujuan->email=> $tujuan->name])
-            //     ->setBody($mail.' saudara '.$name, 'text/html');
-            // $result = $mailer->send($message);
+            $message = (new Swift_Message($data->receipt_subject))
+                ->setFrom([ $data->username=> $data->name])
+                ->setTo([$tujuan->email=> $tujuan->name])
+                ->setBody($mail.' saudara '.$name, 'text/html');
+            $result = $mailer->send($message);
     
             // Mail::to($tujuan)->send(new MailToDPW($name,$mail));
             $data1->status=$request->status;
@@ -343,22 +348,22 @@ class RegistrasiMember extends Controller
         }
         if($request->status== 'Approved by DPP'){
             if($data1->status== 'Approved by DPW'){
-                // $data = email::firstOrFail();
-                // self::validateTransport();
+                $data = email::firstOrFail();
+                self::validateTransport();
           
-                // $dataMail= TemplateMail::where('kode','Approved by DPP')->first();
-                // $mail=$dataMail->isi_email;
+                $dataMail= TemplateMail::where('kode','Approved by DPP')->first();
+                $mail=$dataMail->isi_email;
 
-                // $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
-                // ->setUsername($data->username)
-                // ->setPassword($data->password);
-                // $mailer = new Swift_Mailer($transport);
+                $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
+                ->setUsername($data->username)
+                ->setPassword($data->password);
+                $mailer = new Swift_Mailer($transport);
         
-                // $message = (new Swift_Message($data->receipt_subject))
-                //     ->setFrom([ $data->username=> $data->name])
-                //     ->setTo([$email=> $name])
-                //     ->setBody('saudara '.$name.' '.$mail, 'text/html');
-                // $result = $mailer->send($message);
+                $message = (new Swift_Message($data->receipt_subject))
+                    ->setFrom([ $data->username=> $data->name])
+                    ->setTo([$email=> $name])
+                    ->setBody('saudara '.$name.' '.$mail, 'text/html');
+                $result = $mailer->send($message);
                 // // Mail::to($email)->send(new SendEmail($name,$mail));
                 $pass=Crypt::decryptString($data1->password);
                 $data1->status=$request->status;
