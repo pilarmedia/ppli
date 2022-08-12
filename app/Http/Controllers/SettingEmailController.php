@@ -73,10 +73,7 @@ class SettingEmailController extends Controller
         public function sendEmail(Request $request)
         {
             $this->validate($request, [
-                'subject' => 'required',
-                'destinations' => 'required',
-                'destination_name' => 'required',
-                'body' => 'required',
+                'email'=>'required'
             ]);
     
             try {
@@ -91,12 +88,12 @@ class SettingEmailController extends Controller
                 ->setPassword($data->password);
     
             $mailer = new Swift_Mailer($transport);
-    
-            foreach ($request->destinations as $destination) {
+            $tes="tes";
+        
                 $message = (new Swift_Message($data->receipt_subject))
                     ->setFrom([$data->username => $data->name])
-                    ->setTo([$destination => $request->destination_name])
-                    ->setBody($request->body, 'text/html');
+                    ->setTo([$request->email => 'tes'])
+                    ->setBody($tes, 'text/html');
     
                 try {
                     $result = $mailer->send($message);
@@ -106,7 +103,7 @@ class SettingEmailController extends Controller
                 } catch (\Throwable$th) {
     
                     return response()->json('Email sent failed', 500);
-                }
+          
             }
         }
     

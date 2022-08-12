@@ -60,7 +60,8 @@ use App\Http\Controllers\CompanyIndustryController;
       // setting email
       Route::post('setting/email',[SettingEmailController::class, 'postEmailAccount']);
       Route::get('setting/email/get',[SettingEmailController::class, 'getEmailAccount']);
-
+      Route::post('setting/email/test',[SettingEmailController::class, 'sendEmail']);
+      
         // select option
       Route::get('/select/wilayah',[SelectOptionController::class,'wilayah']);
       Route::get('/select/provinsi',[SelectOptionController::class, 'provinsi']);
