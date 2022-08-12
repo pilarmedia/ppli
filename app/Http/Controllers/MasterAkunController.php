@@ -90,12 +90,11 @@ class MasterAkunController extends Controller
 
     public function show($id)  {
         $data=akun::with('wilayah')->where('id',$id)->first();
-        $cek=akun::find('id',$akun->nama_kategori)->first()['nama_akun'];
-        $akun->nama_kategori=$cek;
+        // $cek=akun::find('id',$data->nama_kategori)->first()['nama_akun'];
         $response =[
             'message' => 'detail data',
             'data' => $data,
-            'nama_kategori'=>$akun
+            // 'nama_kategori'=>$cek
        ];
        return response()->json($response,Response::HTTP_OK);
     }
