@@ -28,6 +28,6 @@ class CreateKategoriPerusahaansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kategori_perusahaans');
+        Schema::dropIfExists('kategori_perusahaan');
     }
 }

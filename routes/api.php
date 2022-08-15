@@ -58,7 +58,7 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::get('me', [AuthController::class,'userProfile']);
 
       // setting email
-      Route::post('setting/email',[SettingEmailController::class, 'postEmailAccount']);
+      Route::post('setting/email',[SettingEmailController::class, 'postEmailAccount'])->middleware('settingemail-index');
       Route::get('setting/email/get',[SettingEmailController::class, 'getEmailAccount']);
       Route::post('setting/email/test',[SettingEmailController::class, 'sendEmail']);
       
@@ -72,36 +72,27 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::get('/select/jabatan',[SelectOptionController::class,'jabatan']);
 
        // provinsi
-        //  Route::post('/provinsi', [provinsiController::class,'store']);
       Route::get('/provinsi', [provinsiController::class,'index'])->middleware('permission:provinsi-index');
-       Route::post('/provinsi', [provinsiController::class,'store'])->middleware('permission:provinsi-store');
-       Route::post('/provinsi/{id}', [provinsiController::class,'update'])->middleware('permission:provinsi-update');
-       Route::get('/provinsi/{id}', [provinsiController::class,'show'])->middleware('permission:provinsi-show');
-       Route::delete('/provinsi/{id}', [provinsiController::class,'destroy'])->middleware('permission:provinsi-delete');
-       
-         
-       //dpw
-       Route::get('/dpw', [dpwController::class,'index'])->middleware('permission:dpw-index');
-       Route::post('/dpw', [dpwController::class,'store'])->middleware('permission:dpw-store');
-       Route::post('/dpw/{id}', [dpwController::class,'update'])->middleware('permission:dpw-update');
-       Route::get('/dpw/{id}', [dpwController::class,'show'])->middleware('permission:dpw-show');
-       Route::delete('/dpw/{id}', [dpwController::class,'destroy'])->middleware('permission:dpw-delete');
+      Route::post('/provinsi', [provinsiController::class,'store'])->middleware('permission:provinsi-add');
+      Route::post('/provinsi/{id}', [provinsiController::class,'update'])->middleware('permission:provinsi-edit');
+      Route::get('/provinsi/{id}', [provinsiController::class,'show']);
+      Route::delete('/provinsi/{id}', [provinsiController::class,'destroy'])->middleware('permission:provinsi-delete');
 
          //bank
-         Route::get('/bank', [MasterBankController::class,'index']);
-         Route::post('/bank', [MasterBankController::class,'store']);
-         Route::post('/bank/{id}', [MasterBankController::class,'update']);
-         Route::get('/bank/{id}', [MasterBankController::class,'show']);
-         Route::delete('/bank/{id}', [MasterBankController::class,'destroy']);
+      Route::get('/bank', [MasterBankController::class,'index'])->middleware('permission:bank-index');
+      Route::post('/bank', [MasterBankController::class,'store'])->middleware('permission:bank-add');
+      Route::post('/bank/{id}', [MasterBankController::class,'update'])->middleware('permission:bank-edit');
+      Route::get('/bank/{id}', [MasterBankController::class,'show']);
+      Route::delete('/bank/{id}', [MasterBankController::class,'destroy'])->middleware('permission:bank-delete');
 
           //mitra
-        Route::get('/mitra', [mitraController::class,'index']);
-        Route::get('/mitra/selectOption', [mitraController::class,'selectOptionKontak']);
-        Route::get('/mitra/selectOption/mitra', [mitraController::class,'selectOptionTipeMitra']);
-        Route::post('/mitra', [mitraController::class,'store']);
-        Route::post('/mitra/{id}', [mitraController::class,'update']);
-        Route::get('/mitra/{id}', [mitraController::class,'show']);
-        Route::delete('/mitra/{id}', [mitraController::class,'destroy']);
+      Route::get('/mitra', [mitraController::class,'index'])->middleware('permission:mitra-index');
+      Route::get('/mitra/selectOption', [mitraController::class,'selectOptionKontak']);
+      Route::get('/mitra/selectOption/mitra', [mitraController::class,'selectOptionTipeMitra']);
+      Route::post('/mitra', [mitraController::class,'store'])->middleware('permission:mitra-add');
+      Route::post('/mitra/{id}', [mitraController::class,'update'])->middleware('permission:mitra-edit');
+      Route::get('/mitra/{id}', [mitraController::class,'show']);
+      Route::delete('/mitra/{id}', [mitraController::class,'destroy'])->middleware('permission:mitra-delete');
           
         
         //tipe mitra
@@ -112,11 +103,11 @@ use App\Http\Controllers\CompanyIndustryController;
         Route::delete('/tipeMitra/{id}', [tipeMitraController::class,'destroy']);
 
         //pengumuman
-        Route::get('/pengumuman', [pengumumanController::class,'index']);
-        Route::post('/pengumuman', [pengumumanController::class,'store']);
-        Route::post('/pengumuman/{id}', [pengumumanController::class,'update']);
-        Route::get('/pengumuman/{id}', [pengumumanController::class,'show']);
-        Route::delete('/pengumuman/{id}', [pengumumanController::class,'destroy']);
+        Route::get('/pengumuman', [pengumumanController::class,'index'])->middleware('permission:pengumuman-index');
+        Route::post('/pengumuman', [pengumumanController::class,'store'])->middleware('permission:pengumuman-add');
+        Route::post('/pengumuman/{id}', [pengumumanController::class,'update'])->middleware('permission:pengumuman-edit');
+        Route::get('/pengumuman/{id}', [pengumumanController::class,'show'])->middleware('permission:pengumuman-show');
+        Route::delete('/pengumuman/{id}', [pengumumanController::class,'destroy'])->middleware('permission:pengumuman-delete');
         // Route::post('setting/test',[pengumumanController::class, 'sendEmail']);
 
 
@@ -130,82 +121,82 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::delete('/akun/{id}', [MasterAkunController::class,'destroy']);
 
          //transaksi
-         Route::get('/transaksi/index', [transaksiController::class,'index']);
+         Route::get('/transaksi/index', [transaksiController::class,'index'])->middleware('permission:transaksi-index');
          Route::get('/transaksi/selectOption/member', [transaksiController::class,'selectOptionMember']);
          Route::get('/transaksi/selectOption/khas', [transaksiController::class,'selectOptionKhas']);
          Route::get('/transaksi/selectOption/akun', [transaksiController::class,'selectOptionAkun']);
          Route::get('/transaksi/selectOption/tahun', [transaksiController::class,'selectOptionRekap']);
-         Route::post('/transaksi', [transaksiController::class,'store']);
-         Route::post('/transaksi/{id}', [transaksiController::class,'update']);
+         Route::post('/transaksi', [transaksiController::class,'store'])->middleware('permission:transaksi-add');
+         Route::post('/transaksi/{id}', [transaksiController::class,'update'])->middleware('permission:transaksi-edit');
          Route::get('/transaksi/{id}', [transaksiController::class,'show']);
-         Route::delete('/transaksi/{id}', [transaksiController::class,'destroy']);
-         Route::get('/laporan', [transaksiController::class,'laporan']);
+         Route::delete('/transaksi/{id}', [transaksiController::class,'destroy'])->middleware('permission:transaksi-delete');
+         Route::get('/laporan', [transaksiController::class,'laporan'])->middleware('permission:transaksi-laporan-index');
          Route::get('/transaksi/selectOption/tahun', [transaksiController::class,'selectOptionTahun']);
-         Route::post('/rekap/transaksi', [transaksiController::class,'rekap']);
-         Route::get('/member/transaksi/{id}', [transaksiController::class,'memberTransaksi']);
+         Route::post('/rekap/transaksi', [transaksiController::class,'rekap'])->middleware('permission:transaksi-rekap-index');
+         Route::get('/member/transaksi/{id}', [transaksiController::class,'memberTransaksi'])->middleware('permission:member-transaksi-index');
          Route::post('/transaksi/selectOption/akun2', [transaksiController::class,'jenis_transaksi']);
          Route::post('/transaksi/iuran/selectOption', [transaksiController::class,'selectOptionIuran']);
 
       // iuran
-      Route::post('/iuran/index',[iuranController::class,'index']); 
-      Route::post('/iuran/update/{id}',[iuranController::class,'update']); 
-      Route::post('/iuran/updateShow/{id}',[iuranController::class,'updateShow']); 
+      Route::post('/iuran/index',[iuranController::class,'index'])->middleware('permission:iuran-index');
+      Route::post('/iuran/update/{id}',[iuranController::class,'update'])->middleware('permission:member-iuran-edit'); 
+      Route::post('/iuran/updateShow/{id}',[iuranController::class,'updateShow'])->middleware('permission:member-iuran-index'); 
       Route::get('/iuran/showUpdate/{id}',[iuranController::class,'showUpdate']); 
       Route::get('/iuran/selectOption',[iuranController::class,'selectOption']); 
       Route::get('/iuran/selectOptionBulan',[iuranController::class,'selectOptionBulan']); 
 
 
       // iuran setting
-      Route::post('/iuran/setting',[iuranAnggotaController::class,'index']); 
+      Route::post('/iuran/setting',[iuranAnggotaController::class,'index'])->middleware('permission:iuran-index');
       Route::get('/iuran/setting/show/{id}',[iuranAnggotaController::class,'show']);
       Route::post('/iuran/setting/show/{id}',[iuranAnggotaController::class,'update']);
          
 
        //khas
-       Route::get('/khas/index', [MasterKhasController::class,'index']);
+       Route::get('/khas/index', [MasterKhasController::class,'index'])->middleware('permission:daftarkas-index');
        Route::get('/khas/selectOption', [MasterKhasController::class,'selectOption']);
-       Route::post('/khas', [MasterKhasController::class,'store']);
-       Route::post('/khas/{id}', [MasterKhasController::class,'update']);
+       Route::post('/khas', [MasterKhasController::class,'store'])->middleware('permission:daftarkas-add');
+       Route::post('/khas/{id}', [MasterKhasController::class,'update'])->middleware('permission:daftarkas-edit');
        Route::get('/khas/{id}', [MasterKhasController::class,'show']);
-       Route::delete('/khas/{id}', [MasterKhasController::class,'destroy']);
+      //  Route::delete('/khas/{id}', [MasterKhasController::class,'destroy']);
   
        //kegiatan
-         Route::get('/kegiatan', [kegiatanController::class,'index'])->middleware('permission:kegiatan-index');
-         Route::post('/kegiatan', [kegiatanController::class,'store'])->middleware('permission:kegiatan-store');
-         Route::post('/kegiatan/{id}', [kegiatanController::class,'update'])->middleware('permission:kegiatan-update');
-         Route::get('/kegiatan/{id}', [kegiatanController::class,'show'])->middleware('permission:kegiatan-show');
-         Route::delete('/kegiatan/{id}', [kegiatanController::class,'destroy'])->middleware('permission:kegiatan-delete');
+      Route::get('/kegiatan', [kegiatanController::class,'index'])->middleware('permission:kegiatan-index');
+      Route::post('/kegiatan', [kegiatanController::class,'store'])->middleware('permission:kegiatan-add');
+      Route::post('/kegiatan/{id}', [kegiatanController::class,'update'])->middleware('permission:kegiatan-edit');
+      Route::get('/kegiatan/{id}', [kegiatanController::class,'show']);
+      Route::delete('/kegiatan/{id}', [kegiatanController::class,'destroy'])->middleware('permission:kegiatan-delete');
   
         //Cities
-        Route::post('/cities', [CitiesController::class,'store'])->middleware('permission:cities-store');
-        Route::get('/cities', [CitiesController::class,'index'])->middleware('permission:cities-index');
-        Route::post('/cities/{id}', [CitiesController::class,'update'])->middleware('permission:cities-update');
-        Route::get('/cities/{id}', [CitiesController::class,'show'])->middleware('permission:cities-show');
-        Route::get('/citiess/{id}', [CitiesController::class,'show2'])->middleware('permission:cities-show2');
-        Route::delete('/cities/{id}', [CitiesController::class,'destroy'])->middleware('permission:cities-delete');
+        Route::post('/cities', [CitiesController::class,'store'])->middleware('permission:city-add');
+        Route::get('/cities', [CitiesController::class,'index'])->middleware('permission:city-index');
+        Route::post('/cities/{id}', [CitiesController::class,'update'])->middleware('permission:city-edit');
+        Route::get('/cities/{id}', [CitiesController::class,'show']);
+        Route::get('/citiess/{id}', [CitiesController::class,'show2']);
+        Route::delete('/cities/{id}', [CitiesController::class,'destroy'])->middleware('permission:city-delete');
  
      
          //jabatan
-         Route::post('/jabatan', [jabatanController::class,'store'])->middleware('permission:jabatan-store');
+         Route::post('/jabatan', [jabatanController::class,'store'])->middleware('permission:jabatan-add');
          Route::get('/jabatan', [jabatanController::class,'index'])->middleware('permission:jabatan-index');
          Route::post('/jabatan/{id}', [jabatanController::class,'update'])->middleware('permission:jabatan-update');
-         Route::get('/jabatan/{id}', [jabatanController::class,'show'])->middleware('permission:jabatan-show');
+         Route::get('/jabatan/{id}', [jabatanController::class,'show']);
          Route::delete('/jabatan/{id}', [jabatanController::class,'destroy'])->middleware('permission:jabatan-delete');
   
 
        //pengurus
        Route::get('/pengurus', [pengurusController::class,'index'])->middleware('permission:pengurus-index');
-       Route::post('/pengurus', [pengurusController::class,'store'])->middleware('permission:pengurus-store');
-       Route::post('/pengurus/{id}', [pengurusController::class,'update'])->middleware('permission:pengurus-update');
-       Route::get('/pengurus/{id}', [pengurusController::class,'show'])->middleware('permission:pengurus-show');
+       Route::post('/pengurus', [pengurusController::class,'store'])->middleware('permission:pengurus-add');
+       Route::post('/pengurus/{id}', [pengurusController::class,'update'])->middleware('permission:pengurus-edit');
+       Route::get('/pengurus/{id}', [pengurusController::class,'show']);
        Route::delete('/pengurus/{id}', [pengurusController::class,'destroy'])->middleware('permission:pengurus-delete');
    
       
         //kategori
         Route::post('/kategori', [kategoriController::class,'store'])->middleware('permission:kategori-index');
-        Route::get('/kategori', [kategoriController::class,'index'])->middleware('permission:kategori-store');
-        Route::post('/kategori/{id}', [kategoriController::class,'update'])->middleware('permission:kategori-update');
-        Route::get('/kategori/{id}', [kategoriController::class,'show'])->middleware('permission:kategori-show');
+        Route::get('/kategori', [kategoriController::class,'index'])->middleware('permission:kategori-add');
+        Route::post('/kategori/{id}', [kategoriController::class,'update'])->middleware('permission:kategori-edit');
+        Route::get('/kategori/{id}', [kategoriController::class,'show']);
         Route::delete('/kategori/{id}', [kategoriController::class,'destroy'])->middleware('permission:kategori-delete');
  
         //statusregister
@@ -221,16 +212,12 @@ use App\Http\Controllers\CompanyIndustryController;
         // ->middleware('permission:statusRegister-delete');
 
       // wilayah
-      Route::post('/wilayah', [WilayahController::class,'store']);
-      // ->middleware('permission:wilayah-store');
-      Route::get('/wilayah', [WilayahController::class,'index']);
-      // ->middleware('permission:wilayah-index');
-      Route::post('/wilayah/{id}', [WilayahController::class,'update']);
-      // ->middleware('permission:wilayah-update');
+      Route::post('/wilayah', [WilayahController::class,'store'])->middleware('permission:wilayah-add');
+      Route::get('/wilayah', [WilayahController::class,'index'])->middleware('permission:wilayah-index');
+      Route::post('/wilayah/{id}', [WilayahController::class,'update'])->middleware('permission:wilayah-edit');
       Route::get('/wilayah/{id}', [WilayahController::class,'show']);
       // ->middleware('permission:wilayah-show');
-      Route::delete('/wilayah/{id}', [WilayahController::class,'destroy']);
-      // ->middleware('permission:wilayah-delete');
+      Route::delete('/wilayah/{id}', [WilayahController::class,'destroy'])->middleware('permission:wilayah-delete');
    
       // templateEmail
       Route::post('/email', [emailController::class,'store'])->middleware('permission:email-store');
@@ -241,36 +228,32 @@ use App\Http\Controllers\CompanyIndustryController;
 
 
       // kontak
-      Route::post('/kontak', [kontakController::class,'store'])->middleware('permission:kontak-store');
+      Route::post('/kontak', [kontakController::class,'store'])->middleware('permission:kontak-add');
       Route::get('/kontak', [kontakController::class,'index'])->middleware('permission:kontak-index');
-      Route::post('/kontak/{id}', [kontakController::class,'update'])->middleware('permission:kontak-update');
+      Route::post('/kontak/{id}', [kontakController::class,'update'])->middleware('permission:kontak-edit');
       Route::get('/kontak/{id}', [kontakController::class,'show'])->middleware('permission:kontak-show');
       Route::delete('/kontak/{id}', [kontakController::class,'destroy'])->middleware('permission:kontak-delete');
 
 
        //company industri
-       Route::post('/industry', [CompanyIndustryController::class,'store']);
-      //  ->middleware('permission:industry-store');
-       Route::get('/industry', [CompanyIndustryController::class,'index']);
-      //  ->middleware('permission:industry-store');
-       Route::post('/industry/{id}', [CompanyIndustryController::class,'update']);
-      //  ->middleware('permission:industry-store');
+       Route::post('/industry', [CompanyIndustryController::class,'store'])->middleware('permission:industry-add');
+       Route::get('/industry', [CompanyIndustryController::class,'index'])->middleware('permission:industry-index');
+       Route::post('/industry/{id}', [CompanyIndustryController::class,'update'])->middleware('permission:industry-edit');
        Route::get('/industry/{id}', [CompanyIndustryController::class,'show']);
-      //  ->middleware('permission:industry-store');
-       Route::delete('/industry/{id}', [CompanyIndustryController::class,'destroy'])->middleware('permission:industry-store');
+       Route::delete('/industry/{id}', [CompanyIndustryController::class,'destroy'])->middleware('permission:industry-delete');
 
       //  register
        Route::post('update/member/{id}', [RegistrasiMember::class,'update']);
       //  ->middleware('permission:industry-store');
-       Route::get('userRegister', [RegistrasiMember::class,'index']);
-       Route::get('register/delete/{id}', [RegistrasiMember::class,'deleteRegister']);
-       Route::get('register/show/{id}', [RegistrasiMember::class,'showRegister']);
+       Route::get('userRegister', [RegistrasiMember::class,'index'])->middleware('permission:register-index'); 
+       Route::get('register/delete/{id}', [RegistrasiMember::class,'deleteRegister'])->middleware('permission:register-delete');
+       Route::get('register/show/{id}', [RegistrasiMember::class,'showRegister'])->middleware('permission:register-show');
 
 
 
        //log register
-       Route::get('/log/show',[logRegistrasiController::class,'index']);  
-       Route::get('/log/delete/{id}',[logRegistrasiController::class,'destroy']);
+       Route::get('/log/show',[logRegistrasiController::class,'index'])->middleware('permission:logregister-index'); 
+      //  Route::get('/log/delete/{id}',[logRegistrasiController::class,'destroy']);
 
        //perusahaan
        Route::get('perusahaan/index',[perushaanController::class,'index']);
@@ -293,15 +276,14 @@ use App\Http\Controllers\CompanyIndustryController;
      
       // member
       Route::get('member/index',[MemberController::class,'index']);
-      // ini
-      Route::post('member/update/{id}',[MemberController::class,'update']);
-      Route::get('member/show/{id}',[MemberController::class,'show']);
-      Route::post('member/wlayah/show',[MemberController::class,'MemberWilayah']);
-      Route::post('member/gambar/{id}',[MemberController::class,'gambar']);
+      Route::post('member/update/{id}',[MemberController::class,'update'])->middleware('permission:member-edit');
+      Route::get('member/show/{id}',[MemberController::class,'show'])->middleware('permission:member-show');
+      Route::post('member/wlayah/show',[MemberController::class,'MemberWilayah'])->middleware('permission:member-index');
+      Route::post('member/gambar/{id}',[MemberController::class,'gambar'])->middleware('permission:member-edit-foto');
       Route::get('member/gambar/{id}',[MemberController::class,'getGambar']);
 
-      Route::get('role/show',[roleController::class,'index']);
-      Route::post('role/store',[roleController::class,'store']);
+      Route::get('role/show',[roleController::class,'index'])->middleware('permission:group-index');
+      Route::post('role/store',[roleController::class,'store'])->middleware('permission:group-add');
       Route::post('permission/store',[roleController::class,'storePermission']);
       Route::get('permission/show',[roleController::class,'showPermission']);
 
@@ -310,8 +292,8 @@ use App\Http\Controllers\CompanyIndustryController;
      Route::get('show_user_permission/{id}',[roleController::class,'show_permission_user']);
      Route::post('update_user_permission/{id}',[roleController::class,'update_user_permission']);
       Route::post('permission/show/{id}',[roleController::class,'updateRolePermission']);
-      Route::get('user_permission/{id}',[roleController::class,'permission_user']);
-      Route::get('role/shows/{id}',[roleController::class,'permission_role']);
+      Route::get('user_permission/{id}',[roleController::class,'permission_user'])->middleware('permission:usermanagement-privilege');
+      Route::get('role/shows/{id}',[roleController::class,'permission_role'])->middleware('permission:group-privilege');
       
 
     
@@ -319,13 +301,13 @@ use App\Http\Controllers\CompanyIndustryController;
   
     
         
-    Route::get('userManajemen',[AuthController::class,'user']);
-    Route::post('admin/adduser',[roleController::class,'addUser']);
-    Route::post('admin/update/User/{id}',[roleController::class,'updateroleUser']);
-    Route::delete('admin/delete/User/{id}',[roleController::class,'deleteUser']);
+    Route::get('userManajemen',[AuthController::class,'user'])->middleware('permission:usermanagement-index');
+    Route::post('admin/adduser',[roleController::class,'addUser'])->middleware('permission:usermanagement-add');
+    Route::post('admin/update/User/{id}',[roleController::class,'updateroleUser'])->middleware('permission:usermanagement-edit-role');
+    Route::delete('admin/delete/User/{id}',[roleController::class,'deleteUser'])->middleware('permission:usermanagement-delete');
     Route::get('admin/show/role/{id}',[roleController::class,'showUser']);
     Route::get('admin/show/roles/{id}',[roleController::class,'showRole']);
-    Route::delete('admin/delete/roles/{id}',[roleController::class,'delete_role']);
+    Route::delete('admin/delete/roles/{id}',[roleController::class,'delete_role'])->middleware('permission:group-delete');
 
 
    
@@ -333,3 +315,9 @@ use App\Http\Controllers\CompanyIndustryController;
     // Route::post('/showToDPP', [RegistrasiMember::class,'showToDPP']);
 
   
+     //dpw
+      //  Route::get('/dpw', [dpwController::class,'index'])->middleware('permission:dpw-index');
+      //  Route::post('/dpw', [dpwController::class,'store'])->middleware('permission:dpw-store');
+      //  Route::post('/dpw/{id}', [dpwController::class,'update'])->middleware('permission:dpw-update');
+      //  Route::get('/dpw/{id}', [dpwController::class,'show'])->middleware('permission:dpw-show');
+      //  Route::delete('/dpw/{id}', [dpwController::class,'destroy'])->middleware('permission:dpw-delete');
