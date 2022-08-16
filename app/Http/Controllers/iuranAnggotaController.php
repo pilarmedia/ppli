@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\iuranAnggota;
+use App\Models\IuranAnggota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,15 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
 class iuranAnggotaController extends Controller
 {
    public function index(Request $request){
-        $data=iuranAnggota::with('Wilayah')->where('tahun',$request->tahun)->where('WilayahId',$request->WilayahId)->get();
+        $data=IuranAnggota::with('Wilayah')->where('tahun',$request->tahun)->where('WilayahId',$request->WilayahId)->get();
        return response()->json($data, 200);
    }
    public function show($id){
-      $data=iuranAnggota::with('Wilayah')->first();
+      $data=IuranAnggota::with('Wilayah')->first();
       return response()->json($data, 200);
    }
    public function update(Request $request,$id){
-      $data=iuranAnggota::find($id);
+      $data=IuranAnggota::find($id);
       $validator=Validator::make($request->all(),[
          'iuran'=>'required',
          'setoran_DPP'=>'required'

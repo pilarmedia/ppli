@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use DateTime;
-use App\Models\khas;
-use App\Models\laporan;
+use App\Models\Khas;
+use App\Models\Laporan;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +14,7 @@ class MasterKhasController extends Controller
 {
     public function index(){
 
-            $data=khas::with('akun')->get();
+            $data=Khas::with('akun')->get();
             $response =[
                 'message' => 'succes menampilkan khas',
                 'data' => $data
@@ -22,7 +22,7 @@ class MasterKhasController extends Controller
            return response()->json($response,Response::HTTP_OK);       
     }
     public function selectOption(){
-        $data=akun::where('induk',false)->get();
+        $data=Akun::where('induk',false)->get();
             $response =[
                 'message' => 'succes menampilkan akun',
                 'data' => $data
@@ -59,7 +59,7 @@ class MasterKhasController extends Controller
                 'edit_by'=>$user->name,
               );
             //   dd($data);
-        $khas=khas::create($data);
+        $khas=Khas::create($data);
           $data2=array(
             'KhasId'=>$khas->id,
             'debit'=>$request->saldo_awal,
@@ -67,7 +67,7 @@ class MasterKhasController extends Controller
             'saldo_akhir'=>$request->saldo_awal
           );
         //   dd($data2);
-          $laporan=laporan::create($data2);
+          $laporan=Laporan::create($data2);
        
         $response= [
             'message'=>'add succes ',
@@ -84,7 +84,7 @@ class MasterKhasController extends Controller
     }
 
     public function show($id)  {
-        $data=khas::with('akun')->where('id',$id)->first();
+        $data=Khas::with('akun')->where('id',$id)->first();
         $response =[
             'message' => 'detail data',
             'data' => $data
@@ -93,7 +93,7 @@ class MasterKhasController extends Controller
     }
 
     public function update(Request $request, $id){
-        $khas=khas::findOrFail($id);
+        $khas=Khas::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'kode_akun'=>'required',
             'nama'=>'required',
@@ -124,7 +124,7 @@ class MasterKhasController extends Controller
     }
 
     public function destroy($id){
-        $data=khas::findOrFail($id);
+        $data=Khas::findOrFail($id);
         try {
             $data->delete();
         $response=[

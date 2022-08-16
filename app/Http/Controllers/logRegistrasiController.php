@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\logRegistrasi;
+use App\Models\LogRegistrasi;
 use Symfony\Component\HttpFoundation\Response;
 
 class logRegistrasiController extends Controller
 {
     public function index(){
-        $data=logRegistrasi::all();
+        $data=LogRegistrasi::all();
         $response =[
             'message' => 'succes menampilkan log registrasi',
             'data' => $data
@@ -18,7 +18,7 @@ class logRegistrasiController extends Controller
     }
     public function destroy($id)
     {
-        $data=logRegistrasi::findOrFail($id);
+        $data=LogRegistrasi::findOrFail($id);
         try {
             $data->delete();
         $response=[

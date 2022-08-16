@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\email;
+use App\Models\Email;
 use Exception;
 use Illuminate\Http\Request;
 use Swift_Mailer;
@@ -13,7 +13,7 @@ class SettingEmailController extends Controller
 {
     public function getEmailAccount(){
         try {
-            $data = email::firstOrFail();
+            $data = Email::firstOrFail();
                 return response()->json([
                 'data' => $data,
                 'message' => 'Email fetched Successfully',
@@ -33,10 +33,10 @@ class SettingEmailController extends Controller
             'password' => 'required',
             ]);
             // dd($request);
-            $data = email::first();
+            $data = Email::first();
             //   return $data;
             if (!$data) {
-                email::create($request->all());
+                Email::create($request->all());
             } else {
                 $data->update($request->all());
             }
@@ -46,7 +46,7 @@ class SettingEmailController extends Controller
     
         public static function validateTransport()
         {
-            $dt = email::firstOrFail();
+            $dt = Email::firstOrFail();
             if (!$dt) {
                 throw new Exception('Email setting is not set');
             }
@@ -77,7 +77,7 @@ class SettingEmailController extends Controller
             ]);
     
             try {
-                $data = email::firstOrFail();
+                $data = Email::firstOrFail();
             } catch (\Throwable$th) {
                 return response()->json('Dont have Email Account', 404);
             }

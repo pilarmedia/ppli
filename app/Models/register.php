@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Models\Cities;
 use App\Models\Wilayah;
-use App\Models\provinsi;
-use App\Models\register;
+use App\Models\Provinsi;
+
 use App\Models\CompanyIndustry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class register extends Model
+class Register extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -41,7 +41,7 @@ class register extends Model
     }
     public function provinsi ()
     {
-        return $this->belongsTo(provinsi::class,'provinsiId','id');
+        return $this->belongsTo(Provinsi::class,'provinsiId','id');
     }
     // public function CompanyIndustrys ()
     // {

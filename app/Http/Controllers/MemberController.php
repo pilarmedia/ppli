@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\member;
+use App\Models\Member;
 use App\Models\Wilayah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +24,7 @@ class MemberController extends Controller
     public function show($id)
     {
         // dd($id);
-        $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
+        $data=Member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
         $response =[
             'message' => 'detail data',
             'data' => $data
@@ -35,7 +35,7 @@ class MemberController extends Controller
     public function update(Request $request,$id){
     
     
-        $data=member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
+        $data=Member::where('id',$id)->with('wilayah','Cities','CompanyIndustry','provinsi')->first();
         $data->name=$request->name;
         $data->email=$request->email;
         $data->NamaPerushaan=$request->NamaPerushaan;
@@ -50,7 +50,7 @@ class MemberController extends Controller
     public function MemberWilayah(Request $request){
 
         if($request->wilayah ==='0'){
-            $data=member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
+            $data=Member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
             $cek=auth()->user();
              $cekRegister=$cek->WilayahId;
              $cekWilayah=Wilayah::where('id',$cekRegister)->first();
@@ -103,7 +103,7 @@ class MemberController extends Controller
            return response()->json($response,Response::HTTP_OK);
         } else{
         // $wilayah=Wilayah::where('id',$request->wilayah)->first();
-                $data=member::where('WilayahId',$request->wilayah)->with('Wilayah','Cities','CompanyIndustry','provinsi')->get();
+                $data=Member::where('WilayahId',$request->wilayah)->with('Wilayah','Cities','CompanyIndustry','provinsi')->get();
                 $cek=auth()->user();
                 $cekRegister=$cek->WilayahId;
                 $cekWilayah=Wilayah::where('id',$cekRegister)->first();
@@ -158,7 +158,7 @@ class MemberController extends Controller
         }
      }
      public function gambar(Request $request,$id){
-        $member=member::find($id);
+        $member=Member::find($id);
         $imageName = time().'.'.$request->gambar->getClientOriginalName();
         $gambar=Storage::putFileAs('public/gambar',$request->gambar,$imageName);
         $tes='/storage/gambar/'. $imageName;
@@ -168,13 +168,13 @@ class MemberController extends Controller
         return response()->json('berhasil upload gambar', 200);
      }
      public function getGambar($id){
-        $member=member::find($id);
+        $member=Member::find($id);
         $path = $member->gambar;
         // return $path;
         return response()->json($path, 200 );
      }
      public function index(){
-        $data=member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
+        $data=Member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
         $cek=auth()->user();
         // dd($data->wilayah);
         $cekRegister=$cek->WilayahId;

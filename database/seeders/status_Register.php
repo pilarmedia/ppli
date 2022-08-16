@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\statusRegister;
+use App\Models\StatusRegister;
 use Illuminate\Database\Seeder;
 
 class status_Register extends Seeder
@@ -23,7 +23,7 @@ class status_Register extends Seeder
                 'Rejected by DPW'
             ];
             foreach ($data as $key) {
-                statusRegister::create([
+                StatusRegister::create([
                     'name' => $key,
                 ]);
             }

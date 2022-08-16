@@ -5,9 +5,9 @@ use Throwable;
 use Swift_Mailer;
 use SmtpTransport;
 use Swift_Message;
-use App\Models\email;
+use App\Models\Email;
 use App\Mail\toRegister;
-use App\Models\register;
+use App\Models\Register;
 use Swift_SmtpTransport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -20,7 +20,7 @@ class messageController extends Controller
         $validator=Validator::make($request->all(),[
             'pesan' => 'required|string',            
        ]);
-        $tujuan=register::find($id)['email'];
+        $tujuan=Register::find($id)['email'];
         $pesan=$request->pesan;
         Mail::to($tujuan)->send(new toRegister($pesan));
         return response()->json([
@@ -29,7 +29,7 @@ class messageController extends Controller
     }
     public static function validateTransport()
     {
-        $dt = email::firstOrFail();
+        $dt = Email::firstOrFail();
         if (!$dt) {
             throw new Exception('Email setting is not set');
         }
@@ -58,13 +58,13 @@ class messageController extends Controller
         ]);
 
         try {
-            $data = email::firstOrFail();
+            $data = Email::firstOrFail();
         } catch (\Throwable$th) {
             return response()->json('Dont have Email Account', 404);
         }
 
         self::validateTransport();
-        $tujuan=register::find($id);
+        $tujuan=Register::find($id);
         $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
             ->setUsername($data->username)
             ->setPassword($data->password);

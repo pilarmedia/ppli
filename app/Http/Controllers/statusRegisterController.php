@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\statusRegister;
+use App\Models\StatusRegister;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +12,7 @@ class statusRegisterController extends Controller
 {
     public function index()
     {
-        $statusRegister=statusRegister::all();
+        $statusRegister=StatusRegister::all();
         $response =[
             'message' => 'succes menampilkan status register',
             'data' => $statusRegister
@@ -47,7 +47,7 @@ class statusRegisterController extends Controller
              $data=array(
                 'name' => $request->name,
               );
-        $statusRegister=statusRegister::create($data);
+        $statusRegister=StatusRegister::create($data);
         $response= [
             'message'=>'add succes ',
             'data' => $statusRegister
@@ -74,7 +74,7 @@ class statusRegisterController extends Controller
     public function show($id)
     {
         // dd($id);
-        $statusRegister=statusRegister::find($id);
+        $statusRegister=StatusRegister::find($id);
         $response =[
             'message' => 'detail data',
             'data' => $statusRegister
@@ -100,7 +100,7 @@ class statusRegisterController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->name);
-        $statusRegister=statusRegister::findOrFail($id);
+        $statusRegister=StatusRegister::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'name' => 'required'
            ]);
@@ -130,7 +130,7 @@ class statusRegisterController extends Controller
      */
     public function destroy($id)
     {
-        $statusRegister=statusRegister::findOrFail($id);
+        $statusRegister=StatusRegister::findOrFail($id);
         try {
             $statusRegister->delete();
         $response=[

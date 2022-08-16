@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\register;
+use App\Models\Register;
 use App\Mail\SendPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +15,7 @@ class ForgotPasswordController extends Controller
 {
     public function forgot(Request $request){
                
-        $data=register::where('email',$request->email)->first();
+        $data=Register::where('email',$request->email)->first();
      
         // $cek=Crypt::decryptString($data->password);
         if(!$data){

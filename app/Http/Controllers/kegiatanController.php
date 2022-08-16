@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\kegiatan;
+use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class kegiatanController extends Controller
 {
     public function index() {
-        $kegiatan=kegiatan::all();
+        $kegiatan=Kegiatan::all();
        return response()->json($kegiatan,200);
     }
 
@@ -38,7 +38,7 @@ class kegiatanController extends Controller
                 'tanggal_realisasi'=>$request->tanggal_realisasi,
                 'keterangan'=>$request->keterangan
               );
-        $kegiatan=kegiatan::create($data);
+        $kegiatan=Kegiatan::create($data);
         $response= [
             'message'=>'add succes ',
         ];
@@ -52,7 +52,7 @@ class kegiatanController extends Controller
     }
 
     public function show($id){
-        $kegiatan=kegiatan::where('id',$id)->first();
+        $kegiatan=Kegiatan::where('id',$id)->first();
         $response =[
             'message' => 'detail data',
             'data' => $kegiatan
@@ -60,7 +60,7 @@ class kegiatanController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
     public function update(Request $request, $id){
-        $kegiatan=kegiatan::findOrFail($id);
+        $kegiatan=Kegiatan::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'nama_kegiatan'=>'required',
              'sifat_kegiatan'=>'required',
@@ -87,7 +87,7 @@ class kegiatanController extends Controller
     }
     
     public function destroy($id){
-        $kegiatan=kegiatan::findOrFail($id);
+        $kegiatan=Kegiatan::findOrFail($id);
         try {
             $kegiatan->delete();
         $response=[

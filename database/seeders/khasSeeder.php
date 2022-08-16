@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use DateTime;
-use App\Models\akun;
-use App\Models\khas;
+use App\Models\Akun;
+use App\Models\Khas;
 use Illuminate\Database\Seeder;
 
 class khasSeeder extends Seeder
@@ -40,9 +40,9 @@ class khasSeeder extends Seeder
             'kategori_akun'=>'pemasukan'
           );
         //   dd($data);
-    $akun=akun::create($data1);
-    $akun=akun::create($data2);
-    $akun=akun::create($data3);
+    $akun=Akun::create($data1);
+    $akun=Akun::create($data2);
+    $akun=Akun::create($data3);
     date_default_timezone_set('Asia/Jakarta');
             $ldate = new DateTime('now');
         $data=array(
@@ -66,7 +66,7 @@ class khasSeeder extends Seeder
             'edit_by'=>'admin',
           );
         //   dd($data);
-    $khas=khas::create($data);
-    $khas=khas::create($data1);
+    $khas=Khas::create($data);
+    $khas=Khas::create($data1);
     }
 }

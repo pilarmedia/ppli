@@ -6,7 +6,7 @@ use App\Models\perusahaan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class kategori extends Model
+class Kategori extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];

@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
-use App\Models\kontak;
-use App\Models\tipeMitra;
+use App\Models\Kontak;
+use App\Models\TipeMitra;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class mitra extends Model
+class Mitra extends Model
 {
     use HasFactory;
     protected $fillable = ['kontakId','tipe_mitra','tanggal_bergabung','tanggal_bergabung','deskripsi'];
     public function kontak()
     {
-        return $this->belongsTo(kontak::class,'kontakId','id');
+        return $this->belongsTo(Kontak::class,'kontakId','id');
     }
     public function tipeMitra()
     {
-        return $this->belongsTo(tipeMitra::class,'tipe_mitra','id');
+        return $this->belongsTo(TipeMitra::class,'tipe_mitra','id');
     }
 }

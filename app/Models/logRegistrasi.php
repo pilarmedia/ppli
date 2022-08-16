@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class logRegistrasi extends Model
+class LogRegistrasi extends Model
 {
     use HasFactory;
     protected $fillable = ['nama','email','NamaPerushaan','PhoneNumber','RegisterDate'];

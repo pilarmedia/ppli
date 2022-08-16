@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
-use App\Models\member;
-use App\Models\jabatan;
+use App\Models\Member;
+use App\Models\Jabatan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class pengurus extends Model
+class Pengurus extends Model
 {
     use HasFactory;
     protected $fillable = ['jabatanId','memberId','username','status'];
     public function jabatan()
     {
-        return $this->belongsTo(jabatan::class,'jabatanId','id');
+        return $this->belongsTo(Jabatan::class,'jabatanId','id');
     }
     public function member()
     {
-        return $this->belongsTo(member::class,'memberId','id');
+        return $this->belongsTo(Member::class,'memberId','id');
     }
 }

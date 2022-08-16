@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\kategori;
-use App\Models\perusahaan;
+use App\Models\Kategori;
+use App\Models\Perusahaan;
 use App\Models\kategori_perusahaan;
 use Illuminate\Http\Request;
 
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class perushaanController extends Controller
 {
     public function index(){
-       $data=perusahaan::with('kategori')->get();
+       $data=Perusahaan::with('kategori')->get();
         $response =[
             'message' => 'show perusahaan',
             'data' => $data
@@ -22,7 +22,7 @@ class perushaanController extends Controller
     }
     public function filter($id){
         
-        $data=kategori::with('perusahaan')->where('id',$id)->get();
+        $data=Kategori::with('perusahaan')->where('id',$id)->get();
         $response =[
             'message' => 'show perusahaan',
             'data' => $data
@@ -32,7 +32,7 @@ class perushaanController extends Controller
 
     public function updatedetail(Request $request, $id){
        
-        $data=perusahaan::with('kategori','member')->where('memberId',$id)->first();
+        $data=Perusahaan::with('kategori','member')->where('memberId',$id)->first();
         $id=$data->id;
         // $data->path=$request->file('image')->store('public/images');
         // $data->title=$request->file('image')->getClientOriginalName();

@@ -8,7 +8,7 @@ use SmtpTransport;
 use Swift_Message;
 use Exception;
 use Swift_SmtpTransport;
-use App\Models\email;
+use App\Models\Email;
 use Illuminate\Mail\Mailer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -38,7 +38,7 @@ class SendEmailRegisterJob implements ShouldQueue
      */
     public function handle()
     {
-        $data = email::firstOrFail();
+        $data = Email::firstOrFail();
         $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
         ->setUsername($data->username)
         ->setPassword($data->password);

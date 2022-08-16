@@ -6,7 +6,7 @@ use App\Models\Wilayah;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class akun extends Model
+class Akun extends Model
 {
     use HasFactory;
     protected $fillable = ['WilayahId','kode','nama_kategori','nama_akun','induk','kategori_akun'];

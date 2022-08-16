@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cities;
-use App\Models\member;
-use App\Models\jabatan;
+use App\Models\Member;
+use App\Models\Jabatan;
 use App\Models\Wilayah;
-use App\Models\provinsi;
+use App\Models\Provinsi;
 use Illuminate\Http\Request;
 use App\Models\CompanyIndustry;
 
@@ -17,7 +17,7 @@ class SelectOptionController extends Controller
         return response()->json($data, 200);
     }
     public function provinsi(){
-        $data=provinsi::all();
+        $data=Provinsi::all();
         return response()->json($data, 200);
     }
     public function city($id){
@@ -33,11 +33,11 @@ class SelectOptionController extends Controller
        return response()->json($data,200);
     }
     public function member(){
-        $data=member::all();
+        $data=Member::all();
         return response()->json($data,200);
     }
     public function jabatan(){
-        $data=jabatan::all();
+        $data=Jabatan::all();
         return response()->json($data,200);
     }
 }

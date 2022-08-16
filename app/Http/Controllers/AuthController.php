@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use DateTime;
 use App\Models\User;
-use App\Models\register;
+use App\Models\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;

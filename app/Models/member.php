@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\iuran;
+use App\Models\Iuran;
 use App\Models\Cities;
 use App\Models\Wilayah;
-use App\Models\pengurus;
-use App\Models\provinsi;
+use App\Models\Pengurus;
+use App\Models\Provinsi;
 use App\Models\CompanyIndustry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class member extends Model
+class Member extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -43,11 +43,11 @@ class member extends Model
     }
     public function provinsi ()
     {
-        return $this->belongsTo(provinsi::class,'provinsiId','id');
+        return $this->belongsTo(Provinsi::class,'provinsiId','id');
     }
     public function iuran()
     {
-        return $this->hasMany(iuran::class);
+        return $this->hasMany(Iuran::class);
     }
     // public function CompanyIndustry ()
     // {
@@ -64,7 +64,7 @@ class member extends Model
     }
     public function pengurus()
     {
-        return $this->hasMany(pengurus::class);
+        return $this->hasMany(Pengurus::class);
     }
     
 }

@@ -6,7 +6,7 @@ use App\Models\Wilayah;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class iuranAnggota extends Model
+class IuranAnggota extends Model
 {
     use HasFactory;
     protected $fillable =['WilayahId','bulan','iuran','setoran_DPP','tahun'];

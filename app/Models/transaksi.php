@@ -2,26 +2,26 @@
 
 namespace App\Models;
 
-use App\Models\akun;
-use App\Models\khas;
-use App\Models\member;
+use App\Models\Akun;
+use App\Models\Khas;
+use App\Models\Member;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class transaksi extends Model
+class Transaksi extends Model
 {
     use HasFactory;
     protected $fillable = ['tanggal','KhasId','jenis_transaksi','AkunId','MemberId','keterangan','jumlah'];
     public function khas ()
     {
-        return $this->belongsTo(khas::class,'KhasId','id');
+        return $this->belongsTo(Khas::class,'KhasId','id');
     }
     public function akun ()
     {
-        return $this->belongsTo(akun::class,'AkunId','id');
+        return $this->belongsTo(Akun::class,'AkunId','id');
     }
     public function member ()
     {
-        return $this->belongsTo(member::class,'MemberId','id');
+        return $this->belongsTo(Member::class,'MemberId','id');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\jabatan;
+use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +12,7 @@ class jabatanController extends Controller
 {
     public function index()
     {
-        $jabatan=jabatan::all();
+        $jabatan=Jabatan::all();
         $response =[
             'message' => 'succes menampilkan jabatan',
             'data' => $jabatan
@@ -36,7 +36,7 @@ class jabatanController extends Controller
                 'name' => $request->name,
                 'level' => $request->level,
               );
-        $jabatan=jabatan::create($data);
+        $jabatan=Jabatan::create($data);
         $response= [
             'message'=>'add succes ',
         ];
@@ -56,7 +56,7 @@ class jabatanController extends Controller
     public function show($id)
     {
         // dd($id);
-        $jabatan=jabatan::find($id);
+        $jabatan=Jabatan::find($id);
         $response =[
             'message' => 'detail data',
             'data' => $jabatan
@@ -67,7 +67,7 @@ class jabatanController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->name);
-        $jabatan=jabatan::findOrFail($id);
+        $jabatan=Jabatan::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'name' => 'required',
             'level' => 'required'
@@ -90,7 +90,7 @@ class jabatanController extends Controller
     }
     public function destroy($id)
     {
-        $provinsi=jabatan::findOrFail($id);
+        $provinsi=Jabatan::findOrFail($id);
         try {
             $provinsi->delete();
         $response=[

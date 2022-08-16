@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\akun;
+use App\Models\Akun;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class MasterAkunController extends Controller
 {
     public function getindex(){
-        $data=akun::with('wilayah')->get();
+        $data=Akun::with('wilayah')->get();
         $response =[
             'message' => 'succes menampilkan akun',
             'data' => $data
@@ -21,7 +21,7 @@ class MasterAkunController extends Controller
 
     public function index(Request $request){
         if($request->wilayah ==='0'){
-            $data=akun::with('wilayah')->get();
+            $data=Akun::with('wilayah')->get();
             $response =[
                 'message' => 'succes menampilkan akun',
                 'data' => $data
@@ -29,7 +29,7 @@ class MasterAkunController extends Controller
            return response()->json($response,Response::HTTP_OK);
         } else{
         // $wilayah=Wilayah::where('id',$request->wilayah)->first();
-        $data=akun::where('WilayahId',$request->wilayah)->with('Wilayah')->get();
+        $data=Akun::where('WilayahId',$request->wilayah)->with('Wilayah')->get();
          return response()->json([
              'data' => $data,           
          ]);   
@@ -38,7 +38,7 @@ class MasterAkunController extends Controller
         
     }
     public function selectOption(){
-        $data=akun::where('induk',true)->get();
+        $data=Akun::where('induk',true)->get();
             $response =[
                 'message' => 'succes menampilkan kategori',
                 'data' => $data
@@ -47,7 +47,7 @@ class MasterAkunController extends Controller
     }
 
     public function store(Request $request) {
-        $cek=akun::where('kode',$request->kode)->first();
+        $cek=Akun::where('kode',$request->kode)->first();
         if($cek){
             return response()->json('kode sudah ada');
         }
@@ -72,7 +72,7 @@ class MasterAkunController extends Controller
                 'kategori_akun'=>$request->kategori_akun,
               );
             //   dd($data);
-        $akun=akun::create($data);
+        $akun=Akun::create($data);
        
         $response= [
             'message'=>'add succes ',
@@ -89,7 +89,7 @@ class MasterAkunController extends Controller
     }
 
     public function show($id)  {
-        $data=akun::with('wilayah')->where('id',$id)->first();
+        $data=Akun::with('wilayah')->where('id',$id)->first();
         // $cek=akun::find('id',$data->nama_kategori)->first()['nama_akun'];
         $response =[
             'message' => 'detail data',
@@ -100,7 +100,7 @@ class MasterAkunController extends Controller
     }
 
     public function update(Request $request, $id){
-        $akun=akun::findOrFail($id);
+        $akun=Akun::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'wilayah'=>'required',
             'kode'=>'required',
@@ -132,7 +132,7 @@ class MasterAkunController extends Controller
     }
 
     public function destroy($id){
-        $data=akun::findOrFail($id);
+        $data=Akun::findOrFail($id);
         try {
             $data->delete();
         $response=[

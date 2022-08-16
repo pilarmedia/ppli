@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\member;
-use App\Models\register;
+use App\Models\Member;
+use App\Models\Register;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -22,10 +22,10 @@ class CompanyIndustry extends Model
     // }
     public function register()
     {
-    	return $this->belongsToMany(register::class,'CompanyIndustry_register','CompanyIndustry_id','register_id');
+    	return $this->belongsToMany(Register::class,'CompanyIndustry_register','CompanyIndustry_id','register_id');
     }
     public function member()
     {
-    	return $this->belongsToMany(member::class,'company_industry_members','CompanyIndustry_id','member_id');
+    	return $this->belongsToMany(Member::class,'company_industry_members','CompanyIndustry_id','member_id');
     }
 }

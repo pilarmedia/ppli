@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\kontak;
+use App\Models\Kontak;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +12,7 @@ class kontakController extends Controller
 {
     public function index()
     {
-        $kontak=kontak::all();
+        $kontak=Kontak::all();
         $response =[
             'message' => 'succes dpw',
             'data' => $kontak
@@ -48,7 +48,7 @@ class kontakController extends Controller
                 'no_ktp'=>$request->no_ktp,
                 'npwp'=>$request->npwp
               );
-        $kontak=kontak::create($data);
+        $kontak=Kontak::create($data);
         $response= [
             'message'=>'add succes ',
         ];
@@ -63,7 +63,7 @@ class kontakController extends Controller
     }
     public function show($id) {
         // dd($id);
-        $kontak=kontak::find($id);
+        $kontak=Kontak::find($id);
         $response =[
             'message' => 'detail data',
             'data' => $kontak
@@ -73,7 +73,7 @@ class kontakController extends Controller
 
     public function update(Request $request, $id) {
         // dd($request->name);
-        $kontak=kontak::findOrFail($id);
+        $kontak=Kontak::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'nama'=>'required',
             'email'=>'required|email',
@@ -98,7 +98,7 @@ class kontakController extends Controller
     }
 
     public function destroy($id) {
-        $kontak=kontak::findOrFail($id);
+        $kontak=Kontak::findOrFail($id);
         try {
             $kontak->delete();
         $response=[
@@ -114,7 +114,7 @@ class kontakController extends Controller
     }
 
     public function gambar(Request $request,$id){
-        $kontak=kontak::find($id);
+        $kontak=Kontak::find($id);
         $imageName = time().'.'.$request->gambar->getClientOriginalName();
         $gambar=Storage::putFileAs('public/gambar',$request->gambar,$imageName);
         $tes='/storage/gambar/'. $imageName;
@@ -124,7 +124,7 @@ class kontakController extends Controller
         return response()->json('berhasil upload gambar', 200);
      }
      public function getGambar($id){
-        $kontak=kontak::find($id);
+        $kontak=Kontak::find($id);
         $path = $kontak->gambar;
         // return $path;
         return response()->json($path, 200 );

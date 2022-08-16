@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\provinsi;
+use App\Models\Provinsi;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -12,9 +12,9 @@ class provinsiController extends Controller
 {
     public function index()
     {
-        $provinsi=provinsi::all();
+        $provinsi=Provinsi::all();
         $response =[
-            'message' => 'succes menampilkan jabatan',
+            'message' => 'succes menampilkan provinsi',
             'data' => $provinsi
        ];
        return response()->json($response,Response::HTTP_OK);
@@ -47,7 +47,7 @@ class provinsiController extends Controller
              $data=array(
                 'name' => $request->name,
               );
-        $provinsi=provinsi::create($data);
+        $provinsi=Provinsi::create($data);
         $response= [
             'message'=>'add succes ',
          
@@ -68,7 +68,7 @@ class provinsiController extends Controller
     public function show($id)
     {
         // dd($id);
-        $provinsi=provinsi::find($id);
+        $provinsi=Provinsi::find($id);
         $response =[
             'message' => 'detail data',
             'data' => $provinsi
@@ -80,7 +80,7 @@ class provinsiController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->name);
-        $provinsi=provinsi::findOrFail($id);
+        $provinsi=Provinsi::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'name' => 'required'
            ]);
@@ -110,7 +110,7 @@ class provinsiController extends Controller
      */
     public function destroy($id)
     {
-        $provinsi=provinsi::findOrFail($id);
+        $provinsi=Provinsi::findOrFail($id);
         try {
             $provinsi->delete();
         $response=[

@@ -7,11 +7,11 @@ use Exception;
 use Throwable;
 use Swift_Mailer;
 use Swift_Message;
-use App\Models\email;
-use App\Models\member;
+use App\Models\Email;
+use App\Models\Member;
 use App\Models\Wilayah;
 use Swift_SmtpTransport;
-use App\Models\pengumuman;
+use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 class pengumumanController extends Controller
 {
     public function index(){
-        $data=pengumuman::with('wilayah')->where('status','tampil')->get();
+        $data=Pengumuman::with('wilayah')->where('status','tampil')->get();
       
         $response =[
             'message' => 'succes menampilkan data',
@@ -52,7 +52,7 @@ class pengumumanController extends Controller
                 'status'=>$request->status,
                 'tanggal'=>$ldate
               );
-        $pengumuman=pengumuman::create($data);
+        $pengumuman=Pengumuman::create($data);
         $response= [
             'message'=>'add succes ',
         ];
@@ -67,7 +67,7 @@ class pengumumanController extends Controller
     }
 
     public function show($id)  {
-        $data=pengumuman::with('wilayah')->where('id',$id)->first();
+        $data=Pengumuman::with('wilayah')->where('id',$id)->first();
 
         $response =[
             'message' => 'detail data',
@@ -77,7 +77,7 @@ class pengumumanController extends Controller
     }
 
     public function update(Request $request, $id){
-        $data=pengumuman::findOrFail($id);
+        $data=Pengumuman::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'wilayah' => 'required',
             'judul'=>'required',
@@ -108,7 +108,7 @@ class pengumumanController extends Controller
     }
 
     public function destroy($id){
-        $data=pengumuman::findOrFail($id);
+        $data=Pengumuman::findOrFail($id);
         try {
             $data->delete();
         $response=[

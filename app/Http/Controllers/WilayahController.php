@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use DateTime;
 use App\Models\Wilayah;
-use App\Models\iuranAnggota;
+use App\Models\IuranAnggota;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -62,7 +62,7 @@ class WilayahController extends Controller
                   'setoran_DPP'=>40000,
                   'tahun'=>$ldate
               ); 
-              $iuran=iuranAnggota::create($result);             
+              $iuran=IuranAnggota::create($result);             
              }
           $response= [
             'message'=>'add succes ',
@@ -91,7 +91,7 @@ class WilayahController extends Controller
                     'setoran_DPP'=>40000,
                     'tahun'=>$ldate
                 ); 
-                $iuran=iuranAnggota::create($result);             
+                $iuran=IuranAnggota::create($result);             
                }
             $response= [
                 'message'=>'add succes ',

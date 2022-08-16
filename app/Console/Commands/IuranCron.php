@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\iuran;
-use App\Models\member;
-use App\Models\provinsi;
+use App\Models\Iuran;
+use App\Models\Member;
+use App\Models\Provinsi;
 use Illuminate\Console\Command;
 
 class IuranCron extends Command
@@ -41,7 +41,7 @@ class IuranCron extends Command
     public function handle()
     {
 
-        $member=member::get();
+        $member=Member::get();
         foreach($member as $item){
             $bulan=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
             $ldate = date('Y');
@@ -52,7 +52,7 @@ class IuranCron extends Command
                     'tahun'=>$ldate,
                     'status'=>'belum lunas'
                 ); 
-                $iuran=iuran::create($result);             
+                $iuran=Iuran::create($result);             
             }
         }
        

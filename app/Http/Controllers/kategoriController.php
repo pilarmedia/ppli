@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\kategori;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +11,7 @@ class kategoriController extends Controller
 {
     public function index()
     {
-        $kategori=kategori::all();
+        $kategori=Kategori::all();
         $response =[
             'message' => 'succes menampilkan kategori',
             'data' => $kategori
@@ -33,7 +33,7 @@ class kategoriController extends Controller
              $data=array(
                 'name' => $request->name,
               );
-        $kategori=kategori::create($data);
+        $kategori=Kategori::create($data);
         $response= [
             'message'=>'add succes ',
         ];
@@ -54,7 +54,7 @@ class kategoriController extends Controller
     public function show($id)
     {
         // dd($id);
-        $kategori=kategori::find($id);
+        $kategori=Kategori::find($id);
         $response =[
             'message' => 'detail data',
             'data' => $kategori
@@ -65,7 +65,7 @@ class kategoriController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->name);
-        $kategori=kategori::findOrFail($id);
+        $kategori=Kategori::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'name' => 'required'
            ]);
@@ -89,7 +89,7 @@ class kategoriController extends Controller
 
     public function destroy($id)
     {
-        $kategpri=kategori::findOrFail($id);
+        $kategpri=Kategori::findOrFail($id);
         try {
             $kategori->delete();
         $response=[

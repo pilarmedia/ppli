@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\member;
-use App\Models\register;
+use App\Models\Member;
+use App\Models\Register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,14 +13,14 @@ class OperatorController extends Controller
 {
     
     public function UpdateStatus($id){
-        $user=member::where('id',$id)->first();
+        $user=Member::where('id',$id)->first();
         if($user->status=='aktif'){
             $user->status='tidak aktif';
         }else{
             $user->status='aktif';
         }
         $user->save();
-        $member=user::where('email',$user->email)->first();
+        $member=User::where('email',$user->email)->first();
         if($member->status=='aktif'){
             $member->status='tidak aktif';
         }else{
@@ -34,7 +34,7 @@ class OperatorController extends Controller
         ]);
     }
     public function member(Request $request){
-        $data=member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
+        $data=Member::with('wilayah','Cities','CompanyIndustry','provinsi')->get();
         return response()->json([
             'data' =>$data,
       
@@ -48,9 +48,9 @@ class OperatorController extends Controller
         ]);
     }
     public function updateUser(Request $request, $id){
-        $cek=member::where('username',$request->username)->first();
-        $cekemail=member::where('email',$request->email)->first();
-        $data=member::findOrFail($id);
+        $cek=Member::where('username',$request->username)->first();
+        $cekemail=Member::where('email',$request->email)->first();
+        $data=Member::findOrFail($id);
         $user=user::where('username',$data->username)->first();
         
         // if(!$cek){ 
@@ -128,7 +128,7 @@ class OperatorController extends Controller
       
     }
     public function deleteUser($id){
-        $member=member::find($id);
+        $member=Member::find($id);
         $user=User::where('email',$member->email)->first();
         try {
             $member->delete();

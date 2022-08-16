@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\pengurus;
+use App\Models\Pengurus;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class pengurusController extends Controller
 {
     public function index() {
-        $pengurus=pengurus::with('member','jabatan')->get();
+        $pengurus=Pengurus::with('member','jabatan')->get();
        return response()->json($pengurus,200);
     }
 
@@ -34,7 +34,7 @@ class pengurusController extends Controller
                 'username'=>$request->username,
                 'status'=>$request->status
               );
-        $pengurus=pengurus::create($data);
+        $pengurus=Pengurus::create($data);
         $response= [
             'message'=>'add succes ',
             'data' => $pengurus
@@ -49,7 +49,7 @@ class pengurusController extends Controller
     }
 
     public function show($id){
-        $pengurus=pengurus::where('id',$id)->first();
+        $pengurus=Pengurus::where('id',$id)->first();
         $response =[
             'message' => 'detail data',
             'data' => $pengurus
@@ -57,7 +57,7 @@ class pengurusController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
     public function update(Request $request, $id){
-        $pengurus=pengurus::findOrFail($id);
+        $pengurus=Pengurus::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'jabatanId'=>'required',
             'memberId'=>'required',
@@ -83,7 +83,7 @@ class pengurusController extends Controller
     
     public function destroy($id)
     {
-        $pengurus=pengurus::findOrFail($id);
+        $pengurus=Pengurus::findOrFail($id);
         try {
             $pengurus->delete();
         $response=[

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tipeMitra;
+use App\Models\TipeMitra;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +12,7 @@ class tipeMitraController extends Controller
 {
     public function index()
     {
-        $data=tipeMitra::all();
+        $data=TipeMitra::all();
         $response =[
             'message' => 'succes menampilkan tipe mitra',
             'data' => $data
@@ -34,7 +34,7 @@ class tipeMitraController extends Controller
              $data=array(
                 'name' => $request->name,
               );
-        $tipeMitra=tipeMitra::create($data);
+        $tipeMitra=TipeMitra::create($data);
         $response= [
             'message'=>'add succes ',
         
@@ -55,7 +55,7 @@ class tipeMitraController extends Controller
     public function show($id)
     {
         // dd($id);
-        $data=tipeMitra::find($id);
+        $data=TipeMitra::find($id);
         $response =[
             'message' => 'detail data',
             'data' => $data
@@ -67,7 +67,7 @@ class tipeMitraController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->name);
-        $tipeMitra=tipeMitra::findOrFail($id);
+        $tipeMitra=TipeMitra::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'name' => 'required'
            ]);
@@ -91,7 +91,7 @@ class tipeMitraController extends Controller
 
     public function destroy($id)
     {
-        $tipeMitra=tipeMitra::findOrFail($id);
+        $tipeMitra=TipeMitra::findOrFail($id);
         try {
             $tipeMitra->delete();
         $response=[

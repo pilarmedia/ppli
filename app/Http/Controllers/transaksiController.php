@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\akun;
-use App\Models\khas;
-use App\Models\iuran;
-use App\Models\member;
-use App\Models\laporan;
-use App\Models\transaksi;
+use App\Models\Akun;
+use App\Models\Khas;
+use App\Models\Iuran;
+use App\Models\Member;
+use App\Models\Laporan;
+use App\Models\Transaksi;
 use App\Models\iuranAnggota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +20,7 @@ class transaksiController extends Controller
 {
     public function index(){
         // dd('b');
-        $data=transaksi::with('khas','akun','member')->get();
+        $data=Transaksi::with('khas','akun','member')->get();
         // dd('a');
         $response =[
             'message' => 'succes menampilkan transaksi',
@@ -29,7 +29,7 @@ class transaksiController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
     public function selectOptionMember(){
-        $data=member::all();
+        $data=Member::all();
         $response =[
             'message' => 'succes menampilkan member',
             'data' => $data
@@ -37,7 +37,7 @@ class transaksiController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
     public function selectOptionKhas(){
-        $data=khas::all();
+        $data=Khas::all();
         $response =[
             'message' => 'succes menampilkan member',
             'data' => $data
@@ -45,7 +45,7 @@ class transaksiController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
     public function selectOptionAkun(){
-        $data=akun::where('induk','false')->get();
+        $data=Akun::where('induk','false')->get();
         $response =[
             'message' => 'succes menampilkan member',
             'data' => $data
@@ -53,14 +53,14 @@ class transaksiController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
     public function selectOptionIuran (Request $request){
-        $wilayah=member::where('id',$request->MemberId)->first()['WilayahId'];
+        $wilayah=Member::where('id',$request->MemberId)->first()['WilayahId'];
         $jumlah=0;
         if($request->akun=='1'){
-            $jumlah=iuranAnggota::where('WilayahId',$wilayah)->first()['iuran'];
+            $jumlah=IuranAnggota::where('WilayahId',$wilayah)->first()['iuran'];
             return response()->json($jumlah, 200); 
         }
         elseif($request->akun=='2'){
-            $jumlah=iuranAnggota::where('WilayahId',$wilayah)->first()['setoran_DPP'];
+            $jumlah=IuranAnggota::where('WilayahId',$wilayah)->first()['setoran_DPP'];
             return response()->json($jumlah, 200); 
         }else{
             return response()->json($jumlah, 200);
@@ -92,15 +92,15 @@ class transaksiController extends Controller
                 'keterangan'=>$request->keterangan,
                 'jumlah'=>$request->jumlah,
               );
-        $transaksi=transaksi::create($data);
+        $transaksi=Transaksi::create($data);
         $bulan1=$request->tanggal;
         $tes=date_parse($bulan1);
-        $khas=khas::where('id',$request->KhasId)->first();
+        $khas=Khas::where('id',$request->KhasId)->first();
 
         if($request->jenis_transaksi === "pemasukan"){
             if ($request->AkunId=='2'){
                 if($tes['month']=='1'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','januari')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -114,14 +114,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='2'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','februari')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -135,14 +135,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='3'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','maret')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();        
@@ -155,14 +155,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='4'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','april')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -176,14 +176,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='5'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','mei')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -197,14 +197,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='6'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','juni')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -218,14 +218,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='7'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','juli')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -239,14 +239,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='8'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','agustus')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -260,14 +260,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='9'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','september')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -281,14 +281,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='10'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','oktober')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -302,14 +302,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='11'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','november')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -323,14 +323,14 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
                     return response()->json($response,Response::HTTP_CREATED);
                 }
                 elseif($tes['month']=='12'){
-                    $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
+                    $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan','desember')->first();
                     $iuranAnggota->status='lunas';
                     $iuranAnggota->jumlah=$request->jumlah;
                     $iuranAnggota->save();
@@ -344,7 +344,7 @@ class transaksiController extends Controller
                         'saldo_akhir'=>$khas->saldo_akhir
                     );
                     //   dd($data2);
-                    $laporan=laporan::create($data2);
+                    $laporan=Laporan::create($data2);
                     $response= [
                         'message'=>'add succes ',
                     ];
@@ -360,7 +360,7 @@ class transaksiController extends Controller
                     'saldo_akhir'=>$khas->saldo_akhir
                 );
                 //   dd($data2);
-                $laporan=laporan::create($data2);
+                $laporan=Laporan::create($data2);
                 $response= [
                     'message'=>'add succes ',
                 ];
@@ -377,7 +377,7 @@ class transaksiController extends Controller
                 'saldo_akhir'=>$khas->saldo_akhir
               );
             //   dd($data2);
-              $laporan=laporan::create($data2);
+              $laporan=Laporan::create($data2);
             $response= [
                 'message'=>'add succes ',
      
@@ -395,7 +395,7 @@ class transaksiController extends Controller
     }
     public function show($id)  {
         // dd($id);
-        $data=transaksi::with('akun','member','khas')->where('id',$id)->first();
+        $data=Transaksi::with('akun','member','khas')->where('id',$id)->first();
         $response =[
             'message' => 'detail data',
             'data' => $data
@@ -424,7 +424,7 @@ class transaksiController extends Controller
         // $bulan2=self::bulan(2);
         // dd($bulan2);
                            
-        $data=transaksi::findOrFail($id);
+        $data=Transaksi::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'tanggal'=>'required',
             'KhasId'=>'required',
@@ -442,8 +442,8 @@ class transaksiController extends Controller
             
             if($data->KhasId == $request->KhasId){
                 // dd($data);
-                $khas=khas::where('id',$data->KhasId)->first();
-                $laporan=laporan::where('KhasId',$khas->id)->first();
+                $khas=Khas::where('id',$data->KhasId)->first();
+                $laporan=Laporan::where('KhasId',$khas->id)->first();
                 $bulan1=$data->tanggal;
                 $tes=date_parse($bulan1);
                 $bulan=$tes['month'];
@@ -454,7 +454,7 @@ class transaksiController extends Controller
                         // dd($request->AkunId);
                         if($data->AkunId =='2' && $request->AkunId !='2'){
                            
-                            $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan',$bulan2)->first();
+                            $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan',$bulan2)->first();
                             $iuranAnggota->status='belum lunas';
                             $iuranAnggota->jumlah=0;
                             $iuranAnggota->save();
@@ -481,7 +481,7 @@ class transaksiController extends Controller
                             return response()->json($response,Response::HTTP_CREATED);
                            
                         }elseif($data->AkunId !='2' && $request->AkunId =='2'){
-                            $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan',$bulan2)->first();
+                            $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan',$bulan2)->first();
                                     $iuranAnggota->status='lunas';
                                     $iuranAnggota->jumlah=$request->jumlah;
                                     $iuranAnggota->save();
@@ -553,7 +553,7 @@ class transaksiController extends Controller
                     if($data->jenis_transaksi == 'pemasukan'){
                         if ($data->AkunId=='1' && $request->AkunId !='1'){
 
-                            $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan',$bulan2)->first();
+                            $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan',$bulan2)->first();
                             $iuranAnggota->status='belum lunas';
                             $iuranAnggota->jumlah=0;
                             $iuranAnggota->save();
@@ -582,7 +582,7 @@ class transaksiController extends Controller
                                 
                         }elseif($data->AkunId !='1' && $request->AkunId =='1'){
 
-                            $iuranAnggota=iuran::where('memberId',$request->MemberId)->where('bulan',$bulan2)->first();
+                            $iuranAnggota=Iuran::where('memberId',$request->MemberId)->where('bulan',$bulan2)->first();
                             $iuranAnggota->status='lunas';
                             $iuranAnggota->save();
                             
@@ -654,11 +654,11 @@ class transaksiController extends Controller
                     }
                 }
             }else{
-                $khas_lama=khas::where('id',$data->KhasId)->first();
-                $laporan_lama=laporan::where('KhasId',$khas_lama->id)->first();
-                $laporan=laporan::where('id', $laporan_lama->id)->first();
+                $khas_lama=Khas::where('id',$data->KhasId)->first();
+                $laporan_lama=Laporan::where('KhasId',$khas_lama->id)->first();
+                $laporan=Laporan::where('id', $laporan_lama->id)->first();
                 $laporan->KhasId=$request->KhasId;
-                $khas_baru=khas::where('id',$request->KhasId)->first();
+                $khas_baru=Khas::where('id',$request->KhasId)->first();
                 if($data->jenis_transaksi == $request->jenis_transaksi){
                     if($data->jenis_transaksi == 'pemasukan'){
                         $khas_lama->saldo_akhir=$khas_lama->saldo_akhir-$data->jumlah;
@@ -763,8 +763,8 @@ class transaksiController extends Controller
            }
     }
     public function destroy($id){
-        $data=transaksi::findOrFail($id);
-        $khas=khas::where('id',$data->KhasId)->first();
+        $data=Transaksi::findOrFail($id);
+        $khas=Khas::where('id',$data->KhasId)->first();
         try {
             $data->delete();
             if($data->jenis_transaksi == 'pemasukan'){
@@ -788,7 +788,7 @@ class transaksiController extends Controller
     }
     public function laporan(){
         // dd('a');
-        $data=laporan::with('khas')->get();
+        $data=Laporan::with('khas')->get();
         $response =[
             'message' => 'detail data',
             'data' => $data
@@ -797,7 +797,7 @@ class transaksiController extends Controller
     }
     public function selectOptionTahun (){
 
-       $tes= khas::all()->groupBy(function($date) {
+       $tes= Khas::all()->groupBy(function($date) {
             return Carbon::parse($date->created_at)->format('Y');
         })->sortBy('created_at');
 
@@ -838,11 +838,11 @@ class transaksiController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
     public function jenis_transaksi(Request $request){
-        $data=akun::where('kategori_akun',$request->jenis_transaksi)->get();
+        $data=Akun::where('kategori_akun',$request->jenis_transaksi)->get();
         return response()->json($data, 200);
     }
     public function memberTransaksi($id){
-        $data=transaksi::where('MemberId',$id)->get();
+        $data=Transaksi::where('MemberId',$id)->get();
         return response()->json($data, 200);
     }
 }

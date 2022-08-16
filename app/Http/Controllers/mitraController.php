@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\mitra;
-use App\Models\kontak;
-use App\Models\tipeMitra;
+use App\Models\Mitra;
+use App\Models\Kontak;
+use App\Models\TipeMitra;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +14,7 @@ class mitraController extends Controller
 {
     public function index()
     {
-        $data=mitra::with('kontak')->get();
+        $data=Mitra::with('kontak')->get();
         $response =[
             'message' => 'succes menampilkan mitra',
             'data' => $data
@@ -22,11 +22,11 @@ class mitraController extends Controller
        return response()->json($response,Response::HTTP_OK);
     }
     public function selectOptionKontak(){
-        $data=kontak::all();
+        $data=Kontak::all();
         return response()->json($data, 200);
     }
     public function selectOptionTipeMitra(){
-        $data=tipeMitra::all();
+        $data=TipeMitra::all();
         return response()->json($data, 200);
     }
 
@@ -51,7 +51,7 @@ class mitraController extends Controller
                 'tanggal_bergabung'=>$request->tanggal_bergabung,
                 'deskripsi'=>$request->deskripsi
               );
-        $mitra=mitra::create($data);
+        $mitra=Mitra::create($data);
         $response= [
             'message'=>'add succes ',
         ];
@@ -69,7 +69,7 @@ class mitraController extends Controller
     public function show($id)
     {
 
-        $data=mitra::with('kontak')->where('id',$id)->first();
+        $data=Mitra::with('kontak')->where('id',$id)->first();
         $response =[
             'message' => 'detail data',
             'data' => $data
@@ -81,7 +81,7 @@ class mitraController extends Controller
     public function update(Request $request, $id)
     {
         
-        $data=mitra::findOrFail($id);
+        $data=Mitra::findOrFail($id);
         $validator=Validator::make($request->all(),[
             'kontakId'=>'required',
             'tipe_mitra'=>'required',
@@ -109,7 +109,7 @@ class mitraController extends Controller
   
     public function destroy($id)
     {
-        $data=mitra::findOrFail($id);
+        $data=Mitra::findOrFail($id);
         try {
             $data->delete();
         $response=[
