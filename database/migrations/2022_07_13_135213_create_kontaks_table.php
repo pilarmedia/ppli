@@ -25,6 +25,7 @@ class CreateKontaksTable extends Migration
             $table->string('tanggal_lahir')->nullable();
             $table->string('no_ktp')->nullable();
             $table->string('npwp')->nullable();
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }

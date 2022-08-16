@@ -112,4 +112,21 @@ class kontakController extends Controller
         }
         
     }
+
+    public function gambar(Request $request,$id){
+        $kontak=kontak::find($id);
+        $imageName = time().'.'.$request->gambar->getClientOriginalName();
+        $gambar=Storage::putFileAs('public/gambar',$request->gambar,$imageName);
+        $tes='/storage/gambar/'. $imageName;
+        // dd($nama);
+        $kontak->gambar=$tes;
+        $kontak->save();
+        return response()->json('berhasil upload gambar', 200);
+     }
+     public function getGambar($id){
+        $kontak=kontak::find($id);
+        $path = $kontak->gambar;
+        // return $path;
+        return response()->json($path, 200 );
+     }
 }

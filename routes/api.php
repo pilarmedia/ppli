@@ -233,7 +233,8 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::post('/kontak/{id}', [kontakController::class,'update'])->middleware('permission:kontak-edit');
       Route::get('/kontak/{id}', [kontakController::class,'show'])->middleware('permission:kontak-show');
       Route::delete('/kontak/{id}', [kontakController::class,'destroy'])->middleware('permission:kontak-delete');
-
+      Route::post('/kontak/gambar/{id}',[kontakController::class,'gambar']);
+      Route::get('/kontak/getgambar/{id}',[kontakController::class,'getGambar']);
 
        //company industri
        Route::post('/industry', [CompanyIndustryController::class,'store'])->middleware('permission:industri-add');
