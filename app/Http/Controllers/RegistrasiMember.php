@@ -181,8 +181,11 @@ class RegistrasiMember extends Controller
             if (!$cek){
             date_default_timezone_set('Asia/Jakarta');
             $ldate = new DateTime('now');
-       
-           
+            $cekWilayah=wilayah::where('HQ',true)->first();
+            $status='mail Verified';
+            if($cekWilayah->id == $request->WilayahId){
+                $status='Approved by DPW';
+            }
             $user= register::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -196,7 +199,7 @@ class RegistrasiMember extends Controller
                 'BentukBadanUsaha' => $request->bentukusaha,
                 'AlasanBergabung' => $request->alasan,
                 'RegisterDate' => $ldate,
-                'status' =>'mail Verified',
+                'status' =>$status,
                 'roles'=>'member'
             ]);
     
@@ -268,7 +271,7 @@ class RegistrasiMember extends Controller
         $data1=register::find($id);
         // dd($data1);
         $email=$data1->email;
-       
+       $cekWilayah=wilayah::where('HQ',true)->first();
         $name=$data1->name;
         if($request->status == 'Rejected by DPP'){
             $data = email::firstOrFail();
@@ -319,7 +322,7 @@ class RegistrasiMember extends Controller
         
             ]);  
         }
-        if($request->status== 'Approved by DPW'){
+        if($request->status == 'Approved by DPW'){
             //email 
                 // $data = email::firstOrFail();
                 // self::validateTransport();
@@ -344,7 +347,8 @@ class RegistrasiMember extends Controller
                 'status' => 'success update',
             ]); 
         }
-        if($request->status== 'Approved by DPP'){
+
+        if($request->status== 'Approved by DPP' ){
             if($data1->status== 'Approved by DPW'){
             //email    
                 // $data = email::firstOrFail();
