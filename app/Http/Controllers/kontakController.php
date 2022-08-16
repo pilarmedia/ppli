@@ -45,7 +45,7 @@ class kontakController extends Controller
                 'status'=>$request->status,
                 'agama'=>$request->agama,
                 'tanggal_lahir'=>$request->tanggal_lahir,
-                'no_ktp'=>$request->nomor_ktp,
+                'no_ktp'=>$request->no_ktp,
                 'npwp'=>$request->npwp
               );
         $kontak=kontak::create($data);

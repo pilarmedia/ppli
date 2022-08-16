@@ -58,7 +58,7 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::get('me', [AuthController::class,'userProfile']);
 
       // setting email
-      Route::post('setting/email',[SettingEmailController::class, 'postEmailAccount'])->middleware('settingemail-index');
+      Route::post('setting/email',[SettingEmailController::class, 'postEmailAccount'])->middleware('permission:settingemail-index');
       Route::get('setting/email/get',[SettingEmailController::class, 'getEmailAccount']);
       Route::post('setting/email/test',[SettingEmailController::class, 'sendEmail']);
       

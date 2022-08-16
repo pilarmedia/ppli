@@ -41,14 +41,14 @@ class IuranCron extends Command
     public function handle()
     {
 
-        $member=member::get()['id'];
+        $member=member::get();
         foreach($member as $item){
             $bulan=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
             $ldate = date('Y');
             for($i=1;$i<13;$i++){
                 $result = array(
                     'bulan' => $bulan[$i-1],
-                    'memberId' => $item,
+                    'memberId' => $item->id,
                     'tahun'=>$ldate,
                     'status'=>'belum lunas'
                 ); 
