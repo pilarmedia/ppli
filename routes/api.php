@@ -179,7 +179,7 @@ use App\Http\Controllers\CompanyIndustryController;
          //jabatan
          Route::post('/jabatan', [jabatanController::class,'store'])->middleware('permission:jabatan-add');
          Route::get('/jabatan', [jabatanController::class,'index'])->middleware('permission:jabatan-index');
-         Route::post('/jabatan/{id}', [jabatanController::class,'update'])->middleware('permission:jabatan-update');
+         Route::post('/jabatan/{id}', [jabatanController::class,'update'])->middleware('permission:jabatan-edit');
          Route::get('/jabatan/{id}', [jabatanController::class,'show']);
          Route::delete('/jabatan/{id}', [jabatanController::class,'destroy'])->middleware('permission:jabatan-delete');
   
@@ -236,11 +236,11 @@ use App\Http\Controllers\CompanyIndustryController;
 
 
        //company industri
-       Route::post('/industry', [CompanyIndustryController::class,'store'])->middleware('permission:industry-add');
-       Route::get('/industry', [CompanyIndustryController::class,'index'])->middleware('permission:industry-index');
-       Route::post('/industry/{id}', [CompanyIndustryController::class,'update'])->middleware('permission:industry-edit');
+       Route::post('/industry', [CompanyIndustryController::class,'store'])->middleware('permission:industri-add');
+       Route::get('/industry', [CompanyIndustryController::class,'index'])->middleware('permission:industri-index');
+       Route::post('/industry/{id}', [CompanyIndustryController::class,'update'])->middleware('permission:industri-edit');
        Route::get('/industry/{id}', [CompanyIndustryController::class,'show']);
-       Route::delete('/industry/{id}', [CompanyIndustryController::class,'destroy'])->middleware('permission:industry-delete');
+       Route::delete('/industry/{id}', [CompanyIndustryController::class,'destroy'])->middleware('permission:industri-delete');
 
       //  register
        Route::post('update/member/{id}', [RegistrasiMember::class,'update']);
