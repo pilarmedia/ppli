@@ -27,6 +27,8 @@ class CreateKontaksTable extends Migration
             $table->string('npwp')->nullable();
             $table->string('gambar')->nullable();
             $table->string('logo')->nullable();
+            $table->float('longitude')->nullable();
+            $table->float('latitude')->nullable();
             $table->timestamps();
         });
     }

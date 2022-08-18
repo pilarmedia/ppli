@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kontak;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -94,6 +95,28 @@ class kontakController extends Controller
             return response()->json([
                 'message'=>"failed".$e->errorInfo
             ]);
+           }
+    }
+    public function map(Request $request ,$id){
+        $kontak=Kontak::findOrFail($id);
+        $validator=Validator::make($request->all(),[
+            'longitude'=>'required',
+            'latitude'=>'required'
+           ]);
+           if($validator->fails()){
+             return response()->json($validator->errors(), 
+             Response::HTTP_UNPROCESSABLE_ENTITY);
+           }
+           try {
+            $kontak->latitude=$request->latitude;
+            $kontak->longitude=$request->longitude;
+            $kontak->save();
+            $response= [
+                'message'=>'update succes ',
+            ];
+            return response()->json($response,200);
+           } catch (\Throwable $th) {
+            return response()->json('gagal',500);
            }
     }
 
