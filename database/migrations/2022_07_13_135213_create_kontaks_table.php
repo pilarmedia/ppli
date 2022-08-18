@@ -26,6 +26,7 @@ class CreateKontaksTable extends Migration
             $table->string('no_ktp')->nullable();
             $table->string('npwp')->nullable();
             $table->string('gambar')->nullable();
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

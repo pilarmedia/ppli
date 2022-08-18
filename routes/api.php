@@ -235,6 +235,8 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::delete('/kontak/{id}', [kontakController::class,'destroy'])->middleware('permission:kontak-delete');
       Route::post('/kontak/gambar/{id}',[kontakController::class,'gambar']);
       Route::get('/kontak/getgambar/{id}',[kontakController::class,'getGambar']);
+      Route::post('/kontak/gambarlogo/{id}',[kontakController::class,'gambarlogo']);
+      Route::get('/kontak/getgambarlogo/{id}',[kontakController::class,'getGambarlogo']);
 
        //company industri
        Route::post('/industry', [CompanyIndustryController::class,'store'])->middleware('permission:industri-add');
