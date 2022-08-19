@@ -119,6 +119,10 @@ class kontakController extends Controller
             return response()->json('gagal',500);
            }
     }
+    public function getmap($id){
+        $kontak=Kontak::findOrFail($id);
+        return response()->json($kontak, 200);
+    }
 
     public function destroy($id) {
         $kontak=Kontak::findOrFail($id);

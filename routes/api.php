@@ -237,6 +237,7 @@ use App\Http\Controllers\CompanyIndustryController;
       Route::get('/kontak/getgambar/{id}',[kontakController::class,'getGambar']);
       Route::post('/kontak/gambarlogo/{id}',[kontakController::class,'gambarlogo']);
       Route::post('/kontak/map/{id}',[kontakController::class,'map']);
+      Route::get('/kontak/getmap/{id}',[kontakController::class,'getmap']);
       Route::get('/kontak/getgambarlogo/{id}',[kontakController::class,'getGambarlogo']);
 
        //company industri
