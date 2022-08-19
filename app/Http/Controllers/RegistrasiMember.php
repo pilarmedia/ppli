@@ -221,7 +221,7 @@ class RegistrasiMember extends Controller
                 $name= $request->name;
                 $datamail= TemplateMail::where('kode','mail Verified')->first();
                 //queue
-                    // $mail=$datamail->isi_email;
+                    $mail=$datamail->isi_email;
                     // $details['email'] =$email;
                     // $details['name'] =$name;
                     // $details['mail'] =$mail;
