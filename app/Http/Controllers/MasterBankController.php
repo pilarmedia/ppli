@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\b\Bank;
+
+use App\Models\Bank;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
