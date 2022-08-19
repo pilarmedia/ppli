@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
-
+//jemb
 class jabatanController extends Controller
 {
     public function index()
