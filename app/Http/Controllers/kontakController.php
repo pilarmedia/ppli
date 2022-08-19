@@ -142,6 +142,13 @@ class kontakController extends Controller
 
     public function gambar(Request $request,$id){
         $kontak=Kontak::find($id);
+        $validator=Validator::make($request->all(),[
+            'gambar'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+           ]);
+           if($validator->fails()){
+             return response()->json($validator->errors(), 
+             Response::HTTP_UNPROCESSABLE_ENTITY);
+           }
         $imageName = time().'.'.$request->gambar->getClientOriginalName();
         $gambar=Storage::putFileAs('public/gambar',$request->gambar,$imageName);
         $tes='/storage/gambar/'. $imageName;
@@ -158,6 +165,13 @@ class kontakController extends Controller
      }
      public function gambarlogo(Request $request,$id){
         $kontak=Kontak::find($id);
+        $validator=Validator::make($request->all(),[
+            'logo'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+           ]);
+           if($validator->fails()){
+             return response()->json($validator->errors(), 
+             Response::HTTP_UNPROCESSABLE_ENTITY);
+           }
         $imageName = time().'.'.$request->logo->getClientOriginalName();
         $gambar=Storage::putFileAs('public/gambar',$request->logo,$imageName);
         $tes='/storage/gambar/'. $imageName;

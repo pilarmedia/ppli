@@ -159,6 +159,13 @@ class MemberController extends Controller
      }
      public function gambar(Request $request,$id){
         $member=Member::find($id);
+        $validator=Validator::make($request->all(),[
+            'gambar'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+           ]);
+           if($validator->fails()){
+             return response()->json($validator->errors(), 
+             Response::HTTP_UNPROCESSABLE_ENTITY);
+           }
         $imageName = time().'.'.$request->gambar->getClientOriginalName();
         $gambar=Storage::putFileAs('public/gambar',$request->gambar,$imageName);
         $tes='/storage/gambar/'. $imageName;
