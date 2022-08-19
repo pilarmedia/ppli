@@ -350,122 +350,127 @@ class RegistrasiMember extends Controller
 
         if($request->status== 'Approved by DPP' ){
             if($data1->status== 'Approved by DPW'){
-            // email    
-                $data = Email::firstOrFail();
-                self::validateTransport();
-          
-                $dataMail= TemplateMail::where('kode','Approved by DPP')->first();
-                $mail=$dataMail->isi_email;
-
-                $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
-                ->setUsername($data->username)
-                ->setPassword($data->password);
-                $mailer = new Swift_Mailer($transport);
-        
-                $message = (new Swift_Message($data->receipt_subject))
-                    ->setFrom([ $data->username=> $data->name])
-                    ->setTo([$email=> $name])
-                    ->setBody('saudara '.$name.' '.$mail, 'text/html');
-                $result = $mailer->send($message);
-            // end email    
-                // // Mail::to($email)->send(new SendEmail($name,$mail));
-                $pass=Crypt::decryptString($data1->password);
-                $data1->status=$request->status;
-                $data1->save();
-                $user = user::create([
-                    'name' => $data1->name,
-                    'email' => $data1->email,
-                    'password' => Hash::make($pass),
-                    'Username' => $data1->Username,
-                    'NamaPerushaan'=>$data1->NamaPerushaan,
-                    'PhoneNumber' =>$data1->PhoneNumber,
-                    // 'CompanyIndustryId' => $data->CompanyIndustryId,
-                    'WilayahId'=>$data1->WilayahId,
-                    'provinsiId' => $data1->provinsiId,
-                    'KotaId' => $data1->KotaId,
-                    'BentukBadanUsaha' => $data1->BentukBadanUsaha,
-                    'AlasanBergabung' => $data1->AlasanBergabung,
-                    'RegisterDate' => $data1->RegisterDate,
-                    'status' =>'aktif',
-                    'roles'=>'member'
-                ]);
-            
-            
-                $kontak=Kontak::create([
-                    'nama'=>$data1->name,
-                    'email'=>$data1->email,
-                    'nomor'=>$data1->PhoneNumber,
-                    'nama_perusahaan'=>$data1->NamaPerushaan,
-                    'status'=>'aktif'
-                ]);
-                // $user=User::all();
-                // dd($user->id);
-            
-                $member = member::create([
-                    'name' => $data1->name,
-                    'email' => $data1->email,
-                    'password' => $data1->password,
-                    'username' => $data1->Username,
-                    'NamaPerushaan'=>$data1->NamaPerushaan,
-                    'PhoneNumber' =>$data1->PhoneNumber,
-                    // 'CompanyIndustryId' => $data->CompanyIndustryId,
-                    'WilayahId'=>$data1->WilayahId,
-                    'provinsiId' => $data1->provinsiId,
-                    'KotaId' => $data1->KotaId,
-                    'BentukBadanUsaha' => $data1->BentukBadanUsaha,
-                    'AlasanBergabung' => $data1->AlasanBergabung,
-                    'RegisterDate' => $data1->RegisterDate,
-                    'status' =>'aktif',
-                
-                ]);
-                $company=CompanyIndustry_register::where('register_id',$data1->id)->get();
-                // dd($company->CompanyIndustry_id);
-
-                $result1=array();
-                foreach($company as $item){
-                    $result1[]=$item->CompanyIndustry_id;
-                }
-                dd($result1);
-                $member->CompanyIndustry()->attach($result1);
-                $bulan=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
-                $ldate = date('Y');
-                for($i=1;$i<13;$i++){
-                    $result = array(
-                        'bulan' => $bulan[$i-1],
-                        'memberId' => $member->id,
-                        'tahun'=>$ldate,
-                        'status'=>'belum lunas'
-                    ); 
-                    $iuran=Iuran::create($result);             
-                }
-
-            
-                // dd($company->CompanyIndustry);
-            
-                $perusahaan=Perusahaan::create([
-                    'memberId'=>$member->id
-                ]);
-                $has_permission = DB::table('role_has_permissions')->leftJoin('permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')->where('role_id', $id)->get(); 
-                $count=count($has_permission);
-                $data_permission=[];
-                for ($i=0;$i<$count;$i++){
-                array_push($data_permission,$has_permission[$i]->name);
-                }
-                
-                $user->syncPermissions($data_permission);
-        
-                
-            
-                $token = Auth::login($user);
-                return response()->json([
-                    'status' => 'success update',
-                    'message' => 'User created successfully',
-                    'authorisation' => [
-                        'token' => $token,
-                        'type' => 'bearer',
-                    ]
-                ]);
+                try {
+                    $data = Email::firstOrFail();
+                    self::validateTransport();
+              
+                    $dataMail= TemplateMail::where('kode','Approved by DPP')->first();
+                    $mail=$dataMail->isi_email;
     
+                    $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
+                    ->setUsername($data->username)
+                    ->setPassword($data->password);
+                    $mailer = new Swift_Mailer($transport);
+            
+                    $message = (new Swift_Message($data->receipt_subject))
+                        ->setFrom([ $data->username=> $data->name])
+                        ->setTo([$email=> $name])
+                        ->setBody('saudara '.$name.' '.$mail, 'text/html');
+                    $result = $mailer->send($message);
+                 // end email    
+                    // // Mail::to($email)->send(new SendEmail($name,$mail));
+                    $pass=Crypt::decryptString($data1->password);
+                    $data1->status=$request->status;
+                    $data1->save();
+                    $user = user::create([
+                        'name' => $data1->name,
+                        'email' => $data1->email,
+                        'password' => Hash::make($pass),
+                        'Username' => $data1->Username,
+                        'NamaPerushaan'=>$data1->NamaPerushaan,
+                        'PhoneNumber' =>$data1->PhoneNumber,
+                        // 'CompanyIndustryId' => $data->CompanyIndustryId,
+                        'WilayahId'=>$data1->WilayahId,
+                        'provinsiId' => $data1->provinsiId,
+                        'KotaId' => $data1->KotaId,
+                        'BentukBadanUsaha' => $data1->BentukBadanUsaha,
+                        'AlasanBergabung' => $data1->AlasanBergabung,
+                        'RegisterDate' => $data1->RegisterDate,
+                        'status' =>'aktif',
+                        'roles'=>'member'
+                    ]);
+                
+                
+                    $kontak=Kontak::create([
+                        'nama'=>$data1->name,
+                        'email'=>$data1->email,
+                        'nomor'=>$data1->PhoneNumber,
+                        'nama_perusahaan'=>$data1->NamaPerushaan,
+                        'status'=>'aktif'
+                    ]);
+                    // $user=User::all();
+                    // dd($user->id);
+                
+                    $member = member::create([
+                        'name' => $data1->name,
+                        'email' => $data1->email,
+                        'password' => $data1->password,
+                        'username' => $data1->Username,
+                        'NamaPerushaan'=>$data1->NamaPerushaan,
+                        'PhoneNumber' =>$data1->PhoneNumber,
+                        // 'CompanyIndustryId' => $data->CompanyIndustryId,
+                        'WilayahId'=>$data1->WilayahId,
+                        'provinsiId' => $data1->provinsiId,
+                        'KotaId' => $data1->KotaId,
+                        'BentukBadanUsaha' => $data1->BentukBadanUsaha,
+                        'AlasanBergabung' => $data1->AlasanBergabung,
+                        'RegisterDate' => $data1->RegisterDate,
+                        'status' =>'aktif',
+                    
+                    ]);
+                    $company=CompanyIndustry_register::where('register_id',$data1->id)->get();
+                    // dd($company->CompanyIndustry_id);
+    
+                    $result1=array();
+                    foreach($company as $item){
+                        $result1[]=$item->CompanyIndustry_id;
+                    }
+                    dd($result1);
+                    $member->CompanyIndustry()->attach($result1);
+                    $bulan=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
+                    $ldate = date('Y');
+                    for($i=1;$i<13;$i++){
+                        $result = array(
+                            'bulan' => $bulan[$i-1],
+                            'memberId' => $member->id,
+                            'tahun'=>$ldate,
+                            'status'=>'belum lunas'
+                        ); 
+                        $iuran=Iuran::create($result);             
+                    }
+    
+                
+                    // dd($company->CompanyIndustry);
+                
+                    $perusahaan=Perusahaan::create([
+                        'memberId'=>$member->id
+                    ]);
+                    $has_permission = DB::table('role_has_permissions')->leftJoin('permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')->where('role_id', $id)->get(); 
+                    $count=count($has_permission);
+                    $data_permission=[];
+                    for ($i=0;$i<$count;$i++){
+                    array_push($data_permission,$has_permission[$i]->name);
+                    }
+                    
+                    $user->syncPermissions($data_permission);
+            
+                    
+                
+                    $token = Auth::login($user);
+                    return response()->json([
+                        'status' => 'success update',
+                        'message' => 'User created successfully',
+                        'authorisation' => [
+                            'token' => $token,
+                            'type' => 'bearer',
+                        ]
+                    ]);
+        
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+                // email    
+               
             }else{
              return response()->json([
                 'status' => 'belum di approve DPW',
