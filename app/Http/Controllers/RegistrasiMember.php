@@ -353,7 +353,6 @@ class RegistrasiMember extends Controller
                 try {
                     $data = Email::firstOrFail();
                     self::validateTransport();
-              
                     $dataMail= TemplateMail::where('kode','Approved by DPP')->first();
                     $mail=$dataMail->isi_email;
     
@@ -425,7 +424,7 @@ class RegistrasiMember extends Controller
                     foreach($company as $item){
                         $result1[]=$item->CompanyIndustry_id;
                     }
-                    dd($result1);
+                    // dd($result1);
                     $member->CompanyIndustry()->attach($result1);
                     $bulan=array('januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember');
                     $ldate = date('Y');
