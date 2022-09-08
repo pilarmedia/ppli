@@ -238,7 +238,7 @@ class RegistrasiMember extends Controller
                         ->setBody('saudara '.$name.' '.$mail, 'text/html');
                 $data1= TemplateMail::where('kode','Verified by DPW')->first();
                 $mail=$data1->isi_email;
-                $tujuan=Wilayah::where('HQ',true)->first();
+                $tujuan=Wilayah::where('id',$request->WilayahId)->first();
                 // queue
                     // dd($tujuan->email);
                     // $details['tujuan_email'] =$tujuan->email;
