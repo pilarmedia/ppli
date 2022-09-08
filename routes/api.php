@@ -247,11 +247,11 @@ use App\Http\Controllers\CompanyIndustryController;
        Route::get('/industry/{id}', [CompanyIndustryController::class,'show']);
        Route::delete('/industry/{id}', [CompanyIndustryController::class,'destroy'])->middleware('permission:industri-delete');
 
-      //  register
+      //   register
        Route::post('update/member/{id}', [RegistrasiMember::class,'update']);
       //  ->middleware('permission:industry-store');
        Route::get('userRegister', [RegistrasiMember::class,'index'])->middleware('permission:register-index'); 
-       Route::get('register/delete/{id}', [RegistrasiMember::class,'deleteRegister'])->middleware('permission:register-delete');
+       Route::delete('register/delete/{id}', [RegistrasiMember::class,'deleteRegister'])->middleware('permission:register-delete');
        Route::get('register/show/{id}', [RegistrasiMember::class,'showRegister'])->middleware('permission:register-show');
 
 
