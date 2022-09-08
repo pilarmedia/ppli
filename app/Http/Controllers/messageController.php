@@ -5,6 +5,7 @@ use Throwable;
 use Swift_Mailer;
 use SmtpTransport;
 use Swift_Message;
+use App\Models\User;
 use App\Models\Email;
 use App\Mail\toRegister;
 use App\Models\Register;
@@ -55,6 +56,7 @@ class messageController extends Controller
     public function sendEmail(Request $request,$id){
         $this->validate($request, [
             'pesan' => 'required',
+            'email' => 'required'
         ]);
 
         try {
@@ -64,16 +66,16 @@ class messageController extends Controller
         }
 
         self::validateTransport();
-        $tujuan=Register::find($id);
+        $tujuan=User::find($id);
         $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
             ->setUsername($data->username)
-            ->setPassword($data->password);
-
+            ->setPassword($data->password)
+            ->setStreamOptions(array('ssl' => array('allow_self_signed' => true, 'verify_peer' => false, 'verify_peer_name' => false)));
         $mailer = new Swift_Mailer($transport);
 
             $message = (new Swift_Message($data->receipt_subject))
                 ->setFrom([ $data->username=> $data->name])
-                ->setTo([$tujuan->email=> $tujuan->name])
+                ->setTo([$request->email=> $tujuan->name])
                 ->setBody($request->pesan, 'text/html');
 
             try {

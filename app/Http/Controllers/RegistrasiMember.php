@@ -229,7 +229,8 @@ class RegistrasiMember extends Controller
                 //endqueue
                     $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
                     ->setUsername($data->username)
-                    ->setPassword($data->password);
+                    ->setPassword($data->password)
+                    ->setStreamOptions(array('ssl' => array('allow_self_signed' => true, 'verify_peer' => false, 'verify_peer_name' => false)));
                     $mailer = new Swift_Mailer($transport);
                     $message = (new Swift_Message($data->receipt_subject))
                         ->setFrom([ $data->username=> $data->name])
@@ -280,7 +281,8 @@ class RegistrasiMember extends Controller
             $mail=$dataMail->isi_email;
             $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
             ->setUsername($data->username)
-            ->setPassword($data->password);
+            ->setPassword($data->password)
+            ->setStreamOptions(array('ssl' => array('allow_self_signed' => true, 'verify_peer' => false, 'verify_peer_name' => false)));
             $mailer = new Swift_Mailer($transport);
 
             $message = (new Swift_Message($data->receipt_subject))
@@ -305,7 +307,8 @@ class RegistrasiMember extends Controller
 
             $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
             ->setUsername($data->username)
-            ->setPassword($data->password);
+            ->setPassword($data->password)
+            ->setStreamOptions(array('ssl' => array('allow_self_signed' => true, 'verify_peer' => false, 'verify_peer_name' => false)));
             $mailer = new Swift_Mailer($transport);
 
             $message = (new Swift_Message($data->receipt_subject))
@@ -331,7 +334,8 @@ class RegistrasiMember extends Controller
                 $tujuan=Wilayah::where('id',$data1->WilayahId)->first();
                 $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
                 ->setUsername($data->username)
-                ->setPassword($data->password);
+                ->setPassword($data->password)
+                ->setStreamOptions(array('ssl' => array('allow_self_signed' => true, 'verify_peer' => false, 'verify_peer_name' => false)));
                 $mailer = new Swift_Mailer($transport);
         
                 $message = (new Swift_Message($data->receipt_subject))
@@ -358,7 +362,8 @@ class RegistrasiMember extends Controller
     
                     $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
                     ->setUsername($data->username)
-                    ->setPassword($data->password);
+                    ->setPassword($data->password)
+                    ->setStreamOptions(array('ssl' => array('allow_self_signed' => true, 'verify_peer' => false, 'verify_peer_name' => false)));
                     $mailer = new Swift_Mailer($transport);
             
                     $message = (new Swift_Message($data->receipt_subject))
