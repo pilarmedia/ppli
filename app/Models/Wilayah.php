@@ -12,7 +12,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Wilayah extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','email','kota','alamat','nomor','HQ'];
+    // protected $fillable = ['name','email','kota','alamat','nomor','HQ'];
+    public $guarded = [
+        'id'
+    ];
 
     public function member()
     {
