@@ -33,7 +33,9 @@ class WilayahController extends Controller
             'email' => 'required|string|email',
             'kota' => 'required',
             'alamat' => 'required|string',
-            'nomor'=>'required|numeric|min:6',
+            'nomor'=>'required|min:6',
+            'pic'=>'required',
+            'jabatan'=>'required',
        ]);
      
        if($validator->fails()){
@@ -49,6 +51,8 @@ class WilayahController extends Controller
                 'kota' =>$request->kota,
                 'alamat'=>$request->alamat,
                 'nomor' =>$request->nomor,
+                'pic' =>$request->pic,
+                'jabatan' =>$request->jabatan,
                 'HQ'=>1
               );       
           $wilayah=Wilayah::create($data);
@@ -77,6 +81,8 @@ class WilayahController extends Controller
                 'kota' =>$request->kota,
                 'alamat'=>$request->alamat,
                 'nomor' =>$request->nomor,
+                'pic' =>$request->pic,
+                'jabatan' =>$request->jabatan,
                 'HQ'=>($request->HQ ? true : false)
               );  
             $wilayah=Wilayah::create($data);
@@ -127,7 +133,9 @@ class WilayahController extends Controller
             'email' => 'required|string|email',
             'kota' => 'required',
             'alamat' => 'required|string',
-            'nomor'=>'required|numeric|min:6',
+            'nomor'=>'required|min:6',
+            'pic'=>'required',
+            'jabatan'=>'required',
            ]);
            if($validator->fails()){
              return response()->json($validator->errors(), 
@@ -150,6 +158,8 @@ class WilayahController extends Controller
                 'kota' =>$request->kota,
                 'alamat'=>$request->alamat,
                 'nomor' =>$request->nomor,
+                'pic' =>$request->pic,
+                'jabatan' =>$request->jabatan,
                 'HQ'=>($request->HQ ? true : false)
               );
             $wilayah->update($data);
