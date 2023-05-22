@@ -34,8 +34,8 @@ class WilayahController extends Controller
             'kota' => 'required',
             'alamat' => 'required|string',
             'nomor'=>'required|min:6',
-            'pic'=>'required',
-            'jabatan'=>'required',
+            // 'pic'=>'required',
+            // 'jabatan'=>'required',
        ]);
      
        if($validator->fails()){
@@ -134,8 +134,8 @@ class WilayahController extends Controller
             'kota' => 'required',
             'alamat' => 'required|string',
             'nomor'=>'required|min:6',
-            'pic'=>'required',
-            'jabatan'=>'required',
+            // 'pic'=>'required',
+            // 'jabatan'=>'required',
            ]);
            if($validator->fails()){
              return response()->json($validator->errors(), 
