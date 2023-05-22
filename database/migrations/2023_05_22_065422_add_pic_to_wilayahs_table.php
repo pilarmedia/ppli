@@ -14,8 +14,8 @@ class AddPicToWilayahsTable extends Migration
     public function up()
     {
         Schema::table('wilayahs', function (Blueprint $table) {
-            $table->string('pic');
-            $table->string('jabatan');
+            $table->string('pic')->nullable();
+            $table->string('jabatan')->nullable();
         });
     }
 
