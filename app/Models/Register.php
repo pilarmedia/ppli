@@ -13,28 +13,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Register extends Model
 {
     use HasFactory;
-    protected $fillable = [
-       
-        'name',
-        'email',
-        'password',
-        'Username',
-        'Email_verified_at',
-        'Password',
-        'NamaPerushaan',
-        'PhoneNumber',
-        'CompanyIndustryId',
-        'WilayahId',
-        'provinsiId',
-        'KotaId',
-        'BentukBadanUsaha',
-        'AlasanBergabung',
-        'status_DPP',
-        'status_DPW',
-        'RegisterDate',
-        'status',
-        'roles'
+
+    public $guarded = [
+        'id'
     ];
+
     public function Cities ()
     {
         return $this->belongsTo(Cities::class,'KotaId','id');

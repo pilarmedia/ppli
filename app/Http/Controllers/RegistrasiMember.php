@@ -46,7 +46,7 @@ class RegistrasiMember extends Controller
         // dd($cekStatus);
         foreach ($data as $item) {
             $conidition = true;
-            
+
             if($cek->roles == 'admin'  ){
                 $regis[] = [
                     'id'=>$item->id,
@@ -61,7 +61,7 @@ class RegistrasiMember extends Controller
                 $nilai=true;
                 $nilai1=false;
                     if(($item->status == 'Approved by DPW' )  ){
-                        $nilai=false; 
+                        $nilai=false;
                     }
                     $regis[] = [
                         'id'=>$item->id,
@@ -90,9 +90,9 @@ class RegistrasiMember extends Controller
             if ($item->WilayahId == $cekRegister) {
                     $nilai=true;
                     if($item->status == 'mail Verified' ){
-                        $nilai=false; 
+                        $nilai=false;
                     }
-                 
+
                     // dd($nilai);
                     $regis[] = [
                         'id'=>$item->id,
@@ -106,7 +106,7 @@ class RegistrasiMember extends Controller
                     $conidition = false;
                     continue;
                 }
-            
+
             if ($conidition != false) {
                 $regis[] = [
                     'id'=>$item->id,
@@ -127,7 +127,7 @@ class RegistrasiMember extends Controller
        ];
        return response()->json($response,Response::HTTP_OK);
     }
-    
+
     public static function validateTransport(){
         $dt = Email::firstOrFail();
         if (!$dt) {
@@ -153,9 +153,8 @@ class RegistrasiMember extends Controller
         }
     }
     public function register(Request $request){
-        
         $cek=Register::where('email',$request->email)->first();
-    
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -175,7 +174,7 @@ class RegistrasiMember extends Controller
             if($registrasi){
                 return response()->json([
                     'message'=>"Username sudah tersedia"
-                ]); 
+                ]);
         }
         try {
             if (!$cek){
@@ -202,7 +201,7 @@ class RegistrasiMember extends Controller
                 'status' =>$status,
                 'roles'=>'member'
             ]);
-    
+           
             $user->CompanyIndustry()->attach($request->companyindustry);
             $logRegitrasi=LogRegistrasi::create([
                 'nama'=>$request->name,
@@ -212,12 +211,12 @@ class RegistrasiMember extends Controller
                 'RegisterDate'=>$ldate
 
             ]);
- 
+
             // email
                 $data = Email::firstOrFail();
                 self::validateTransport();
                 $email = $request->email;
-              
+
                 $name= $request->name;
                 $datamail= TemplateMail::where('kode','mail Verified')->first();
                 //queue
@@ -253,7 +252,7 @@ class RegistrasiMember extends Controller
 
                     $result = $mailer->send($message);
                     $result1 = $mailer->send($message2);
-            
+                   
             // end email
             return response()->json([
                 'message' => 'User created successfully',
@@ -264,9 +263,9 @@ class RegistrasiMember extends Controller
                 ]);
             }
         } catch (\Throwable $th) {
-            //throw $th;
-        } 
-       
+            throw $th;
+        }
+
     }
     public function update(Request $request,$id){
         $data1=Register::find($id);
@@ -295,7 +294,7 @@ class RegistrasiMember extends Controller
             $data1->save();
             return response()->json([
                 'status' => 'success update',
-          
+
             ]);
         }
         if($request->status== 'Rejected by DPW'){
@@ -322,11 +321,11 @@ class RegistrasiMember extends Controller
             $data1->save();
             return response()->json([
                 'status' => 'success update',
-        
-            ]);  
+
+            ]);
         }
         if($request->status == 'Approved by DPW'){
-            // email 
+            // email
                 $data = Email::firstOrFail();
                 self::validateTransport();
                 $dataMailDPP= TemplateMail::where('kode','Approved by DPW')->first();
@@ -337,7 +336,7 @@ class RegistrasiMember extends Controller
                 ->setPassword($data->password)
                 ->setStreamOptions(array('ssl' => array('allow_self_signed' => true, 'verify_peer' => false, 'verify_peer_name' => false)));
                 $mailer = new Swift_Mailer($transport);
-        
+
                 $message = (new Swift_Message($data->receipt_subject))
                     ->setFrom([ $data->username=> $data->name])
                     ->setTo([$tujuan->email=> $tujuan->name])
@@ -349,7 +348,7 @@ class RegistrasiMember extends Controller
             $data1->save();
             return response()->json([
                 'status' => 'success update',
-            ]); 
+            ]);
         }
 
         if($request->status== 'Approved by DPP' ){
@@ -359,19 +358,19 @@ class RegistrasiMember extends Controller
                     self::validateTransport();
                     $dataMail= TemplateMail::where('kode','Approved by DPP')->first();
                     $mail=$dataMail->isi_email;
-    
+
                     $transport = (new Swift_SmtpTransport($data->host, $data->port, $data->encryption))
                     ->setUsername($data->username)
                     ->setPassword($data->password)
                     ->setStreamOptions(array('ssl' => array('allow_self_signed' => true, 'verify_peer' => false, 'verify_peer_name' => false)));
                     $mailer = new Swift_Mailer($transport);
-            
+
                     $message = (new Swift_Message($data->receipt_subject))
                         ->setFrom([ $data->username=> $data->name])
                         ->setTo([$email=> $name])
                         ->setBody('saudara '.$name.' '.$mail, 'text/html');
                     $result = $mailer->send($message);
-                 // end email    
+                 // end email
                     // // Mail::to($email)->send(new SendEmail($name,$mail));
                     $pass=Crypt::decryptString($data1->password);
                     $data1->status=$request->status;
@@ -393,8 +392,8 @@ class RegistrasiMember extends Controller
                         'status' =>'aktif',
                         'roles'=>'member'
                     ]);
-                
-                
+
+
                     $kontak=Kontak::create([
                         'nama'=>$data1->name,
                         'email'=>$data1->email,
@@ -404,7 +403,7 @@ class RegistrasiMember extends Controller
                     ]);
                     // $user=User::all();
                     // dd($user->id);
-                
+
                     $member = member::create([
                         'name' => $data1->name,
                         'email' => $data1->email,
@@ -420,11 +419,11 @@ class RegistrasiMember extends Controller
                         'AlasanBergabung' => $data1->AlasanBergabung,
                         'RegisterDate' => $data1->RegisterDate,
                         'status' =>'aktif',
-                    
+
                     ]);
                     $company=CompanyIndustry_register::where('register_id',$data1->id)->get();
                     // dd($company->CompanyIndustry_id);
-    
+
                     $result1=array();
                     foreach($company as $item){
                         $result1[]=$item->CompanyIndustry_id;
@@ -439,27 +438,27 @@ class RegistrasiMember extends Controller
                             'memberId' => $member->id,
                             'tahun'=>$ldate,
                             'status'=>'belum lunas'
-                        ); 
-                        $iuran=Iuran::create($result);             
+                        );
+                        $iuran=Iuran::create($result);
                     }
-    
-                
+
+
                     // dd($company->CompanyIndustry);
-                
+
                     $perusahaan=Perusahaan::create([
                         'memberId'=>$member->id
                     ]);
-                    $has_permission = DB::table('role_has_permissions')->leftJoin('permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')->where('role_id', $id)->get(); 
+                    $has_permission = DB::table('role_has_permissions')->leftJoin('permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')->where('role_id', $id)->get();
                     $count=count($has_permission);
                     $data_permission=[];
                     for ($i=0;$i<$count;$i++){
                     array_push($data_permission,$has_permission[$i]->name);
                     }
-                    
+
                     $user->syncPermissions($data_permission);
-            
-                    
-                
+
+
+
                     $token = Auth::login($user);
                     return response()->json([
                         'status' => 'success update',
@@ -469,16 +468,16 @@ class RegistrasiMember extends Controller
                             'type' => 'bearer',
                         ]
                     ]);
-        
+
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
-                // email    
-               
+                // email
+
             }else{
              return response()->json([
                 'status' => 'belum di approve DPW',
-            ]);  
+            ]);
         }
 
         }
@@ -507,18 +506,18 @@ class RegistrasiMember extends Controller
         $data=Member::where('status',$request->status)->with('wilayah','Cities','CompanyIndustry','provinsi')->get();
         // dd($data);
         return response()->json([
-            'data' => $data,           
-        ]);  
-          
+            'data' => $data,
+        ]);
+
     }
     public function MemberWilayah(Request $request){
        $wilayah=Wilayah::where('name',$request->name)->first();
        $data=Member::where('WilayahId',$wilayah->id)->with('wilayah','Cities','CompanyIndustry','provinsi')->get();
     // $data=member::with('Wilayah')->get();
         return response()->json([
-            'data' => $data,           
-        ]);       
+            'data' => $data,
+        ]);
     }
 
-    
+
 }
